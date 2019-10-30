@@ -2,6 +2,7 @@
 package com.mkprovedor.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -40,6 +41,14 @@ public class Historico implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "parcela_id", nullable = false)
 	private Parcela parcela;
+
+	@Override
+	public String toString() {
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		return "Pagamento Nº: " + id + " para a Parcela " + parcela.getParcela() + " realizado "
+				+ format.format(dataPagamento) + " no Valor de R$ " + valor + " para " + cliente;
+	}
 
 	public Long getId() {
 		return id;
