@@ -44,7 +44,8 @@ public class Parcelas implements Serializable {
 		if (mensalidade != null && mensalidade.getId() != null)
 			mensalidadeId = mensalidade.getId().toString();
 
-		this.entityManager.createNativeQuery("CALL excluir_parcelas_and_mensalidade(" + mensalidadeId + ")").executeUpdate();
+		this.entityManager.createNativeQuery("CALL excluir_parcelas_and_mensalidade(" + mensalidadeId + ")")
+				.executeUpdate();
 	}
 
 	public void deleteByMensalidade(Mensalidade mensalidade) {
@@ -72,6 +73,23 @@ public class Parcelas implements Serializable {
 		criteria.addOrder(Order.asc("parcela"));
 
 		return criteria.list();
+	}
+
+	@SuppressWarnings("deprecation")
+	public Parcela findByParcelaVencida(Mensalidade mensalidade) {
+		Session session = entityManager.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Parcela.class);
+		criteria.createAlias("mensalidade", "mensalidade");
+
+		if (mensalidade != null && mensalidade.getId() != null)
+			criteria.add(Restrictions.eq("mensalidade.id", mensalidade.getId()));
+		else
+			criteria.add(Restrictions.eq("mensalidade.id", (long) 0));
+
+		criteria.add(
+				Restrictions.and(Restrictions.sqlRestriction("`dataPagamento` IS NULL AND `dataVencimento` <= NOW()")));
+
+		return (Parcela) criteria.uniqueResult();
 	}
 
 }

@@ -310,7 +310,7 @@ ui-inputswitch-on ui-state-active {
 	font-family: Arial;
 	font-weight: bold;
  }
-
+ 
 .ui-widget-content .ui-datatable-empty-message {
 	font-family: Arial;
  	font-size: 14px;
@@ -325,6 +325,21 @@ ui-inputswitch-on ui-state-active {
 .pagamento {
 	font-weight: bold !important;
 	font-size: 18px !important;
+}
+
+.atrasada {
+	padding: 3px;
+	font-weight: bold !important;
+	font-size: 16px !important;
+	color: white;
+	text-transform: uppercase;
+}
+
+.pagamentoAtrasado {
+	text-transform: uppercase !important;
+	font-family: Arial;
+	font-weight: bold;
+	background: #ffc1c1;
 }
 
 .sdbtitle{

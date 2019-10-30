@@ -194,12 +194,26 @@ CREATE TABLE `historico` (
   KEY `FKan21jxla9jlp8838x9x9c1n76` (`parcela_id`),
   CONSTRAINT `FKan21jxla9jlp8838x9x9c1n76` FOREIGN KEY (`parcela_id`) REFERENCES `parcela` (`id`),
   CONSTRAINT `FKht0a4wmayrghk1afytfvyttb9` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 /*Data for the table `historico` */
 
 insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (1,'2019-10-29',80,1,6);
-insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (2,'2019-10-29',80,1,6);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (2,'2019-10-29',80,1,7);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (3,'2019-10-30',85,1,6);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (4,'2019-10-30',55,2,8);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (5,'2019-10-30',89,1,6);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (6,'2019-10-30',55,2,8);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (7,'2019-10-30',80,1,6);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (8,'2019-10-30',55,2,8);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (9,'2019-10-30',98,1,6);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (10,'2019-10-30',51,2,8);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (11,'2019-10-30',80,1,6);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (12,'2019-10-30',80,2,8);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (13,'2019-10-30',80,1,7);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (14,'2019-10-30',80,2,9);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (15,'2019-10-30',80,1,6);
+insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`parcela_id`) values (16,'2019-10-30',80,2,8);
 
 /*Table structure for table `mensalidade` */
 
@@ -5763,9 +5777,9 @@ CREATE TABLE `parcela` (
 
 /*Data for the table `parcela` */
 
-insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (6,NULL,'2019-10-28 00:00:00','1/2','\0',80,2);
+insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (6,'2019-10-30 00:00:00','2019-10-28 00:00:00','1/2','',80,2);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (7,NULL,'2019-11-28 00:00:00','2/2','\0',80,2);
-insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (8,NULL,'2019-10-28 00:00:00','1/3','\0',50,3);
+insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (8,'2019-10-30 00:00:00','2019-10-28 00:00:00','1/3','',50,3);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (9,NULL,'2019-11-28 00:00:00','2/3','\0',50,3);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (10,NULL,'2019-12-28 00:00:00','3/3','\0',50,3);
 

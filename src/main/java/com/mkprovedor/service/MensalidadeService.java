@@ -33,6 +33,11 @@ public class MensalidadeService implements Serializable {
 	}
 
 	@Transactional
+	public Mensalidade findById(Long id) {
+		return mensalidades.findById(id);
+	}
+
+	@Transactional
 	public List<Mensalidade> findAll() {
 		return mensalidades.findAll();
 	}

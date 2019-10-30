@@ -32,13 +32,14 @@
 			<h1 class="aw-page-title">Boletos</h1>
 
 			<p:autoUpdate />
-			<p:messages closable="true" />
+			<p:growl closable="true" />
 
 			<p:toolbar>
 				<p:toolbarGroup>
-					<p:commandButton value="Pesquisar" icon="fa fa-search"
+					<p:commandButton value="Atualizar" icon="fa fa-refresh"
 						action="#{boletoPesquisaBean.pesquisar}" update="form" />
 				</p:toolbarGroup>
+
 				<p:toolbarGroup align="right">
 					<p:button value="Novo Boleto" icon="fa fa-plus"
 						outcome="/boleto/cadastro" />
@@ -55,7 +56,8 @@
 					var="mensalidade" emptyMessage="Nenhuma mensalidade encontrada"
 					rows="6" paginator="true" paginatorAlwaysVisible="true"
 					paginatorPosition="bottom" rowKey="#{mensalidade}"
-					rowStyleClass="boletos" selectionMode="single" styleClass="abertos">
+					rowStyleClass="#{!boletoPesquisaBean.mensalidadeEmDia(mensalidade)? 'pagamentoAtrasado' : 'boletos'}"
+					selectionMode="single" styleClass="abertos">
 
 					<f:facet name="header">
 						<p:outputLabel
@@ -73,7 +75,10 @@
 					</p:column>
 
 					<p:column headerText="Nome" sortBy="#{mensalidade.cliente.nome}">
-						<h:outputText value="#{mensalidade.cliente.nome}" />
+						<h:outputText id="nome" value="#{mensalidade.cliente.nome}" />
+
+						<p:tooltip for="nome" rendered="true" position="top"
+							value="Existem parcelas atrasadas!" styleClass="atrasada" />
 					</p:column>
 
 					<p:column headerText="CPF/CNPJ"
@@ -99,8 +104,9 @@
 					value="#{boletoPesquisaBean.parcelas}" var="parcela"
 					emptyMessage="Nenhuma parcela encontrada" rows="6" paginator="true"
 					paginatorAlwaysVisible="true" paginatorPosition="bottom"
-					rowKey="#{parcela}" rowStyleClass="boletos" selectionMode="single"
-					styleClass="fechados">
+					rowKey="#{parcela}"
+					rowStyleClass="#{!boletoPesquisaBean.parcelaEmDia(parcela)? 'pagamentoAtrasado' : 'boletos'}"
+					selectionMode="single" styleClass="fechados">
 
 					<p:ajax event="rowSelect"
 						listener="#{boletoPesquisaBean.onRowParcelaSelect}"
@@ -164,7 +170,7 @@
 				<p:toolbarGroup align="right">
 					<p:commandButton value="PAGAR PARCELA" icon="fa fa-money"
 						id="btPagar" styleClass="btConfirmar"
-						disabled="#{boletoPesquisaBean.parcelaSelecionada.id == null}"
+						disabled="#{boletoPesquisaBean.desativarBtPagar}"
 						style="padding: 5px 10px 5px 10px; margin-right: 10px; font-weight: bold"
 						oncomplete="PF('pagamento').show()" process="@this"
 						update="pagamentoDialog"
@@ -247,12 +253,33 @@
 
 					<p:commandButton id="btFinalizar" value="FINALIZAR"
 						icon="fa fa-money" disabled="#{!boletoPesquisaBean.validacao()}"
-						oncomplete="PF('pagamento').hide();" styleClass="btConfirmar"
+						oncomplete="PF('confirmacaoPag').show();" styleClass="btConfirmar"
 						style="padding: 5px; margin-right: 10px; font-weight: bold"
-						action="#{boletoPesquisaBean.pagarParcela}" process="@this"
-						update=":form:mensalidadesTable" />
+						process="@this" update="confirmacaoPagDialog" />
 				</div>
 			</p:dialog>
+
+			<p:confirmDialog header="Confirmar Pagamento"
+				id="confirmacaoPagDialog"
+				message="Deseja efetuar o pagamento da Parcela #{boletoPesquisaBean.parcelaSelecionada.parcela}?"
+				widgetVar="confirmacaoPag">
+
+				<h:form id="frmConfirmacaoPag">
+
+					<h:panelGrid cellspacing="2" columns="2" style="margin: auto;">
+
+						<p:button value="Não" icon="fa fa-times-circle"
+							styleClass="btCancelar"
+							onclick="PF('confirmacaoPag').hide(); return false;" />
+
+						<p:commandButton value="Sim" icon="fa fa-check-square"
+							update=":form:mensalidadesTable :form:parcelasTable" styleClass="btConfirmar"
+							oncomplete="PF('confirmacaoPag').hide(); PF('pagamento').hide();"
+							action="#{boletoPesquisaBean.pagarParcela}" process="@this">
+						</p:commandButton>
+					</h:panelGrid>
+				</h:form>
+			</p:confirmDialog>
 		</h:form>
 
 	</ui:define>

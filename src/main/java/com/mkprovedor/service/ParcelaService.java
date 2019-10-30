@@ -33,6 +33,11 @@ public class ParcelaService implements Serializable {
 	}
 
 	@Transactional
+	public Parcela findById(Long id) {
+		return parcelas.findById(id);
+	}
+
+	@Transactional
 	public void deleteByMensalidade(Mensalidade mensalidade) {
 		parcelas.deleteByMensalidade(mensalidade);
 	}
@@ -45,6 +50,11 @@ public class ParcelaService implements Serializable {
 	@Transactional
 	public void deleteMensalidadeAndParcela(Mensalidade mensalidade) {
 		parcelas.deleteMensalidadeAndParcela(mensalidade);
+	}
+
+	@Transactional
+	public Parcela findByParcelaVencida(Mensalidade mensalidade) {
+		return parcelas.findByParcelaVencida(mensalidade);
 	}
 
 }
