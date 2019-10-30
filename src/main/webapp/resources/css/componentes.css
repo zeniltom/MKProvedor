@@ -1,0 +1,60 @@
+/* TOGGLE */
+.aw-toggle {
+	float: left;
+	line-height: 50px;
+	margin-right: 20px;
+	margin-left: 30px;
+	font-size: 24px;
+	color: #fff;
+	margin-right: 20px;
+}
+
+/* MENU */
+.aw-menu {
+	font-size: 1.1em;
+}
+
+.aw-menu>ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.aw-menu>ul a {
+	display: block;
+	padding: 10px 15px;
+	text-decoration: none;
+	font-weight: 500;
+	color: #373737;
+	text-transform: uppercase;
+}
+
+.aw-menu>ul i {
+	margin-right: 6px;
+}
+
+.aw-menu>ul a:hover, .aw-menu>ul a:focus {
+	background-color: #dfdfdf;
+}
+
+.aw-menu>ul .is-selected {
+	border-left: 3px solid #3B5998;
+	background-color: #f3f3f3;
+}
+
+.aw-menu>ul .is-selected a  {
+	font-weight: bold;
+	margin-left: -3px !important;
+	color: #3B5998 !important;}
+
+.aw-menu>ul a {
+
+}
+
+/* PAGE-TITLE */
+.aw-page-title {
+	margin: 0;
+	padding: 20px 0;
+	font-size: 1.5em;
+	color: #373737;
+}

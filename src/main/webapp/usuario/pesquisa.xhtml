@@ -1,0 +1,109 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core" template="/usuario/Layout.xhtml">
+
+	<ui:define name="titulo">Lista de Usuários</ui:define>
+
+	<h:outputStylesheet library="css" name="sistema.css" />
+
+	<f:metadata>
+		<f:event listener="#{empregadoPesquisaBean.pesquisar}"
+			type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<h:form id="frmPesquisa">
+			<h1 class="aw-page-title">Lista de Usuários</h1>
+
+			<p:autoUpdate />
+			<p:messages closable="true" />
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" icon="fa fa-search"
+						action="#{empregadoPesquisaBean.pesquisar}" update="form" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup style="margin-left: 10px">
+					<p:inputText id="nome" size="60" placeholder="Ex.: Gilberto"
+						value="#{empregadoPesquisaBean.empregado.nome}" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button value="Novo Usuário" icon="fa fa-plus"
+						outcome="/usuario/cadastro" />
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:form>
+
+		<h:form id="form">
+			<p:dataTable id="empregadosTable"
+				value="#{empregadoPesquisaBean.empregadosFiltrados}" var="empregado"
+				style="margin-top:20px;" emptyMessage="Nenhum usuário encontrado"
+				rows="8" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom" rowKey="#{empregado}"
+				selectionMode="single">
+
+				<p:column headerText="Cód." style="text-align: center; width: 50px"
+					sortBy="#{empregado.id}">
+					<h:outputText value="#{empregado.id}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{empregado.nome}">
+					<h:outputText value="#{empregado.nome}" />
+				</p:column>
+
+				<p:column headerText="Cargo" style="text-align: center;"
+					sortBy="#{empregado.cargo}">
+					<h:outputText value="#{empregado.cargo}" />
+				</p:column>
+
+				<p:column headerText="Salário" style="text-align: center;"
+					sortBy="#{empregado.salario}">
+					<h:outputText value="#{empregado.salario}" />
+				</p:column>
+
+				<p:column headerText="Permissão" style="text-align: center">
+					<h:outputText
+						value="#{empregado.grupos == '[]' ? 'SEM PERMISSÃO' : empregado.grupos.toString().replace('[', '').replace(']', '')}" />
+				</p:column>
+
+				<p:column style="text-align: center; width: 200px"
+					headerText="Ações">
+					<p:button outcome="/usuario/cadastro" value="Editar"
+						icon="fa fa-pencil-square-o">
+						<f:param name="empregado" value="#{empregado.id}" />
+					</p:button>
+
+					<p:commandButton value="Excluir" icon="fa fa-trash"
+						styleClass="btCancelar"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":form:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener value="#{empregado}"
+							target="#{empregadoPesquisaBean.empregadoSelecionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog header="Exclusão de Empregado"
+				id="confirmacaoExclusaoDialog"
+				message="Tem certeza que deseja excluir o usuário #{empregadoPesquisaBean.empregadoSelecionado}?"
+				widgetVar="confirmacaoExclusao">
+
+				<div style="float: right;">
+					<p:button value="Não" icon="fa fa-times-circle"
+						styleClass="btCancelar"
+						onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+					<p:commandButton value="Sim" icon="fa fa-check-square"
+						oncomplete="PF('confirmacaoExclusao').hide();"
+						styleClass="btConfirmar" action="#{empregadoPesquisaBean.excluir}"
+						process="@this" update=":form:empregadosTable" />
+				</div>
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

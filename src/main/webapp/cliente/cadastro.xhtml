@@ -1,0 +1,253 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui" template="/cliente/Layout.xhtml">
+
+	<ui:define name="titulo">#{clienteCadastroBean.editando ? 'Edição de Cliente' : 'Novo Cliente'}</ui:define>
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			<o:viewParam name="cliente" value="#{clienteCadastroBean.cliente}" />
+			<f:event listener="#{clienteCadastroBean.inicializar}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+
+		<h:form id="frmCadastro">
+			<h1 class="aw-page-title">#{clienteCadastroBean.editando ?
+				'Edição de Cliente' : 'Novo Cliente'}</h1>
+
+			<p:autoUpdate />
+			<p:messages closable="true" />
+
+			<p:toolbar>
+				<p:toolbarGroup>
+
+					<p:button value="Novo" outcome="/cliente/cadastro"
+						icon="fa fa-plus" />
+
+					<p:commandButton id="botaoSalvar" value="Salvar"
+						action="#{clienteCadastroBean.salvar}" ajax="false"
+						icon="fa fa-save" styleClass="btConfirmar" />
+
+					<p:commandButton value="Excluir" icon="fa fa-trash"
+						styleClass="btCancelar" rendered="#{clienteCadastroBean.editando}"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update="frmCadastro:confirmacaoExclusaoDialog" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button value="Listar Clientes" outcome="/cliente/pesquisa"
+						icon="fa fa-search" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<h:panelGrid columns="1" style="width: 100%; margin-top: 10px;">
+
+				<p:fieldset legend="Dados Pessoais">
+					<p:panelGrid columns="7" id="painel1" styleClass="sem-borda">
+
+						<p:outputLabel value="Nome" for="nome" />
+						<p:inputText id="nome" maxlength="80" size="50"
+							value="#{clienteCadastroBean.cliente.nome}" />
+
+						<p:selectBooleanCheckbox id="jd" itemLabel="Judírica"
+							value="#{clienteCadastroBean.cliente.juridica}">
+							<p:ajax update="cpf cnpj" />
+						</p:selectBooleanCheckbox>
+
+						<p:outputLabel value="CPF" for="cpf"
+							rendered="#{!clienteCadastroBean.cliente.juridica}" />
+						<p:inputMask rendered="#{!clienteCadastroBean.cliente.juridica}"
+							id="cpf" maxlength="14" mask="999.999.999-99" size="14"
+							value="#{clienteCadastroBean.cliente.cpfCnpj}" />
+
+						<p:outputLabel value="CNPJ" for="cnpj"
+							rendered="#{clienteCadastroBean.cliente.juridica}" />
+						<p:inputMask rendered="#{clienteCadastroBean.cliente.juridica}"
+							id="cnpj" maxlength="18" mask="99.999.999/9999-99" size="18"
+							value="#{clienteCadastroBean.cliente.cpfCnpj}" />
+
+						<p:outputLabel value="Telefone" for="telefone" />
+						<p:inputMask id="telefone" mask="(99) 99999-9999" maxlength="15"
+							size="15" value="#{clienteCadastroBean.cliente.telefone}" />
+					</p:panelGrid>
+				</p:fieldset>
+
+				<p:fieldset legend="Endereço">
+
+					<p:panelGrid columns="6" id="painel2" styleClass="sem-borda"
+						style="margin-top: 5px">
+
+						<p:outputLabel value="UF" for="uf" />
+						<p:selectOneMenu id="uf" required="true"
+							requiredMessage="UF é obrigatório"
+							value="#{clienteCadastroBean.municipio.uf}">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{clienteCadastroBean.ufs}" var="uf"
+								itemValue="#{uf}" itemLabel="#{uf}" />
+
+							<p:ajax listener="#{clienteCadastroBean.carregarMunicipios}"
+								update="municipio" event="change" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Município" for="municipio" />
+						<p:selectOneMenu id="municipio" filter="true" required="true"
+							requiredMessage="Município é obrigatório"
+							value="#{clienteCadastroBean.municipio}">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{clienteCadastroBean.municipios}"
+								var="municipio" itemValue="#{municipio}"
+								itemLabel="#{municipio}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="CEP" for="cep" />
+						<p:inputMask id="cep" maxlength="9" mask="99999-999" size="10"
+							value="#{clienteCadastroBean.cliente.cep}" />
+
+						<p:outputLabel value="Endereço" for="endereco" />
+						<p:inputText id="endereco" maxlength="80" size="50"
+							value="#{clienteCadastroBean.cliente.enredeco}" />
+
+						<p:outputLabel value="Complemento" for="complemento" />
+						<p:inputText id="complemento" maxlength="80" size="30"
+							value="#{clienteCadastroBean.cliente.complemento}" />
+
+						<p:outputLabel value="Número" for="numero" />
+						<p:inputText id="numero" maxlength="80" size="10"
+							value="#{clienteCadastroBean.cliente.numero}" />
+
+					</p:panelGrid>
+
+				</p:fieldset>
+
+				<p:fieldset legend="Conexão">
+
+					<p:panelGrid columns="6" id="painel3" styleClass="sem-borda"
+						style="margin-top: 5px">
+
+						<p:outputLabel value="Usuário PPOE" for="usuarioPPOE" />
+						<p:inputText id="usuarioPPOE" maxlength="80"
+							value="#{clienteCadastroBean.cliente.usuarioPPPOE}" />
+
+						<p:outputLabel value="Senha" for="senha" />
+						<p:inputText id="senha" maxlength="80" feedback="true"
+							value="#{clienteCadastroBean.cliente.senha}" />
+
+						<p:outputLabel value="Confirmar senha" for="senha2" />
+						<p:inputText id="senha2" maxlength="80"
+							value="#{clienteCadastroBean.cliente.senha}" />
+
+					</p:panelGrid>
+
+				</p:fieldset>
+
+				<p:tabView id="tab">
+					<p:tab title="Financeiro">
+
+						<p:toolbar>
+							<p:toolbarGroup>
+								<p:selectBooleanCheckbox value="#{clienteCadastroBean.edicao}"
+									itemLabel="Bloquear" style="padding: 5px">
+									<p:ajax
+										update="tab frmCadastro:confirmacaoEdicaoFinanceiroDialog"
+										oncomplete="PF('confirmacaoEdicaoFinanceiro').show()" />
+								</p:selectBooleanCheckbox>
+							</p:toolbarGroup>
+						</p:toolbar>
+
+						<p:panelGrid columns="6" id="financeiro" styleClass="sem-borda">
+
+							<p:outputLabel value="Descrição" for="descricao"
+								style="#{clienteCadastroBean.edicao? 'color: gray' : ''}" />
+							<p:inputText id="descricao" maxlength="150" size="50"
+								value="#{clienteCadastroBean.contrato.descricao}"
+								disabled="#{clienteCadastroBean.edicao}" />
+
+							<p:outputLabel value="Duração do contrato" for="qtdMeses"
+								style="#{clienteCadastroBean.edicao? 'color: gray' : ''}" />
+							<p:inputNumber id="qtdMeses" maxValue="12" minValue="1"
+								decimalPlaces="0" size="10" maxlength="2"
+								value="#{clienteCadastroBean.contrato.qtdMeses}"
+								disabled="#{clienteCadastroBean.edicao}" />
+
+							<p:outputLabel value="Data do contrato" for="dataContrato"
+								style="#{clienteCadastroBean.edicao? 'color: gray' : ''}" />
+							<p:calendar id="dataContrato" size="10" pattern="dd/MM/yyyy"
+								maxlength="10"
+								value="#{clienteCadastroBean.contrato.dataContrato}"
+								disabled="#{clienteCadastroBean.edicao}" />
+
+							<p:outputLabel value="Planos" for="plano"
+								style="#{clienteCadastroBean.edicao? 'color: gray' : ''}" />
+							<p:selectOneMenu id="plano" required="true"
+								requiredMessage="Escolha um plano"
+								disabled="#{clienteCadastroBean.edicao}"
+								value="#{clienteCadastroBean.contrato.servico}">
+								<f:selectItem itemLabel="Selecione um plano" />
+								<f:selectItems var="servico" itemValue="#{servico}"
+									itemLabel="#{servico}" value="#{clienteCadastroBean.planos}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Primeira parcela" for="parcela"
+								style="#{clienteCadastroBean.edicao? 'color: gray' : ''}" />
+							<p:calendar id="parcela" size="10" pattern="dd/MM/yyyy"
+								disabled="#{clienteCadastroBean.edicao}" maxlength="10"
+								value="#{clienteCadastroBean.dataPrimeiraParcela}" />
+
+						</p:panelGrid>
+
+					</p:tab>
+				</p:tabView>
+
+			</h:panelGrid>
+
+			<p:confirmDialog header="Exclusão de Cliente"
+				id="confirmacaoExclusaoDialog"
+				message="Tem certeza que deseja excluir o Cliente #{clienteCadastroBean.cliente.nome}?"
+				widgetVar="confirmacaoExclusao">
+
+				<div style="float: right;">
+					<p:button value="Não" icon="fa fa-times-circle"
+						styleClass="btCancelar"
+						onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+					<p:commandButton value="Sim" icon="fa fa-check-square"
+						styleClass="btConfirmar"
+						oncomplete="PF('confirmacaoExclusao').hide();"
+						action="#{clienteCadastroBean.excluir}" process="@this" />
+				</div>
+			</p:confirmDialog>
+
+			<p:confirmDialog header="Controle de Integridade"
+				id="confirmacaoEdicaoFinanceiroDialog" closable="false" width="400"
+				widgetVar="confirmacaoEdicaoFinanceiro">
+
+				<f:facet name="message">
+					<p:outputLabel
+						style="font-weight: bold; font-size: 18px; text-align: justify; margin: 5px"
+						value="Habilitando a edição do Financeiro, todas as Parcelas, Mensalidade e Contrato estão sujeitos a alterações permanentes. Deseja continuar?" />
+				</f:facet>
+
+				<div style="float: right;">
+					<p:commandButton value="BLOQUEAR" icon="fa fa-times-circle"
+						styleClass="btCancelar"
+						actionListener="#{clienteCadastroBean.permitirAlteracaoFinanceiro(true)}"
+						oncomplete="PF('confirmacaoEdicaoFinanceiro').hide(); return false;"
+						process="@this" update="tab"
+						style="padding: 5px; font-weight: bold" />
+
+					<p:commandButton value="Liberar financeiro"
+						icon="fa fa-check-square" styleClass="btConfirmar"
+						oncomplete="PF('confirmacaoEdicaoFinanceiro').hide();"
+						actionListener="#{clienteCadastroBean.permitirAlteracaoFinanceiro(false)}"
+						process="@this" update="tab"
+						style="padding: 5px; font-weight: bold" />
+				</div>
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

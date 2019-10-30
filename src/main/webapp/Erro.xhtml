@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/template/LayoutPadrao.xhtml">
+
+	<ui:define name="titulo">Erro</ui:define>
+
+	<ui:define name="toolbar" />
+
+	<ui:define name="corpo">
+
+		<h1 class="aw-page-title">Erro ao processar sua requisição.</h1>
+
+		<p:button outcome="/Home" icon="fa fa-home"
+			style="width: 350px; margin-top: 30px; font-size: 18px; font-weight: bold; height: 40px;"
+			value="Voltar a página principal" />
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Login</title>
+	<h:outputStylesheet library="css" name="sistema.css" />
+	<h:outputStylesheet
+		name="webjars/font-awesome/4.4.0/css/font-awesome.css" />
+
+	<h:outputStylesheet id="btLogin">
+					.ui-button {
+						font-weight: bold;
+ 						background: transparent;					 
+					}
+					
+					.ui-button.ui-state-hover {
+						font-weight: bold;
+ 						color: white;
+						background: transparent;
+						background-color: green !important;
+					}
+	</h:outputStylesheet>
+</h:head>
+
+<h:body styleClass="login-screen">
+
+	<f:metadata>
+		<f:param name="dummy" />
+		<f:event listener="#{loginBean.preRender}" type="preRenderView" />
+	</f:metadata>
+
+	<div id="login-dialog">
+
+		<h:graphicImage styleClass="login-logo" library="images"
+			style="width: 160px; height: 30px;" name="logo.png" />
+
+		<h1
+			style="padding: 5px 0; color: white; text-align: center; font-size: 14px;">Entre
+			com suas credenciais</h1>
+
+		<h:form id="frm" prependId="false">
+
+			<p:autoUpdate />
+			<p:growl id="messages" closable="true" sticky="true" />
+
+			<h:panelGrid columns="1" styleClass="grid-login">
+
+				<p:inputText placeholder="Login" size="30" id="j_username"
+					value="#{loginBean.login}"
+					style="width: 242px; margin-top: 5px; font-size: 1.2rem;" />
+
+				<p:password placeholder="Senha" size="30" id="j_password"
+					style="width: 242px; margin-top: 5px; font-size: 1.2rem;" />
+
+				<p:commandButton value="Entrar" action="#{loginBean.login}"
+					ajax="false" styleClass="btLogin"
+					style="text-transform: uppercase; height: 40px; width: 252px; margin-top: 10px;" />
+
+			</h:panelGrid>
+		</h:form>
+	</div>
+</h:body>
+</html>

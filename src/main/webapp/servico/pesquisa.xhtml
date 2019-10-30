@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core" template="/servico/Layout.xhtml">
+
+	<ui:define name="titulo">Lista de Planos</ui:define>
+
+	<h:outputStylesheet library="css" name="sistema.css" />
+
+	<f:metadata>
+		<f:event listener="#{servicoPesquisaBean.pesquisar}"
+			type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<h:form id="frmPesquisa">
+			<h1 class="aw-page-title">Lista de Planos</h1>
+
+			<p:autoUpdate />
+			<p:messages closable="true" />
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" icon="fa fa-search"
+						action="#{servicoPesquisaBean.pesquisar}" update="form" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup style="margin-left: 10px">
+					<p:inputText id="descricao" size="60" placeholder="Ex.: Plano básico"
+						value="#{servicoPesquisaBean.servico.descricao}" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button value="Novo Plano" icon="fa fa-plus"
+						outcome="/servico/cadastro" />
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:form>
+
+		<h:form id="form">
+			<p:dataTable id="servicosTable"
+				value="#{servicoPesquisaBean.servicosFiltrados}" var="servico"
+				style="margin-top:20px;" emptyMessage="Nenhum serviço encontrado"
+				rows="8" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom" rowKey="#{servico}"
+				selectionMode="single">
+
+				<p:column headerText="Cód." style="text-align: center; width: 50px"
+					sortBy="#{servico.id}">
+					<h:outputText value="#{servico.id}" />
+				</p:column>
+
+				<p:column headerText="Descrição" style="text-align: center;"
+					sortBy="#{servico.descricao}">
+					<h:outputText value="#{servico.descricao}" />
+				</p:column>
+
+				<p:column headerText="Plano"
+					style="text-align: center"
+					sortBy="#{servico.tipoPlano}">
+					<h:outputText value="#{servico.tipoPlano}" />
+				</p:column>
+
+				<p:column headerText="Serviço"
+					style="text-align: center;"
+					sortBy="#{servico.tipoServico}">
+					<h:outputText value="#{servico.tipoServico}" />
+				</p:column>
+
+				<p:column headerText="Valor R$"
+					style="text-align: center; width: 130px"
+					sortBy="#{servico.valorPlano}">
+					<h:outputText value="R$ #{servico.valorPlano}" />
+				</p:column>
+
+				<p:column style="text-align: center; width: 200px"
+					headerText="Ações">
+					<p:button outcome="/servico/cadastro" value="Editar"
+						icon="fa fa-pencil-square-o">
+						<f:param name="servico" value="#{servico.id}" />
+					</p:button>
+
+					<p:commandButton value="Excluir" icon="fa fa-trash"
+						styleClass="btCancelar"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":form:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener value="#{servico}"
+							target="#{servicoPesquisaBean.servicoSelecionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog header="Exclusão de Serviço"
+				id="confirmacaoExclusaoDialog"
+				message="Tem certeza que deseja excluir o servico #{servicoPesquisaBean.servicoSelecionado}?"
+				widgetVar="confirmacaoExclusao">
+
+				<div style="float: right;">
+					<p:button value="Não" icon="fa fa-times-circle"
+						styleClass="btCancelar"
+						onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+					<p:commandButton value="Sim" icon="fa fa-check-square"
+						oncomplete="PF('confirmacaoExclusao').hide();"
+						styleClass="btConfirmar" action="#{servicoPesquisaBean.excluir}"
+						process="@this" update=":form:servicosTable" />
+				</div>
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

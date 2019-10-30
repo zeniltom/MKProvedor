@@ -1,0 +1,238 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui" template="/usuario/Layout.xhtml">
+
+	<ui:define name="titulo">#{empregadoCadastroBean.editando ? 'Edição de Usuário' : 'Novo Usuário'}</ui:define>
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			<o:viewParam name="empregado"
+				value="#{empregadoCadastroBean.empregado}" />
+			<f:event listener="#{empregadoCadastroBean.inicializar}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+
+		<h:form id="frmCadastro">
+			<h1 class="aw-page-title">#{empregadoCadastroBean.editando ?
+				'Edição de Usuário' : 'Novo Usuário'}</h1>
+
+			<p:autoUpdate />
+			<p:messages closable="true" />
+
+			<p:toolbar>
+				<p:toolbarGroup>
+
+					<p:button value="Novo" outcome="/usuario/cadastro"
+						icon="fa fa-plus" />
+
+					<p:commandButton id="botaoSalvar" value="Salvar"
+						action="#{empregadoCadastroBean.salvar}" ajax="false"
+						icon="fa fa-save" styleClass="btConfirmar" />
+
+					<p:commandButton value="Excluir" icon="fa fa-trash"
+						styleClass="btCancelar"
+						rendered="#{empregadoCadastroBean.editando}"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update="frmCadastro:confirmacaoExclusaoDialog" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button value="Listar Usuários" outcome="/usuario/pesquisa"
+						icon="fa fa-search" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<h:panelGrid columns="1" style="width: 100%; margin-top: 10px;">
+
+				<p:fieldset legend="Dados Pessoais">
+					<p:panelGrid columns="6" id="painel1" styleClass="sem-borda">
+
+						<p:outputLabel value="Nome" for="nome" />
+						<p:inputText id="nome" maxlength="80" size="40"
+							value="#{empregadoCadastroBean.empregado.nome}" />
+
+						<p:outputLabel value="CPF" for="cpf" />
+						<p:inputMask id="cpf" maxlength="20" mask="999.999.999-99"
+							value="#{empregadoCadastroBean.empregado.cpf}" />
+
+						<p:outputLabel value="Telefone" for="telefone" />
+						<p:inputMask id="telefone" mask="(99) 99999-9999" maxlength="20"
+							value="#{empregadoCadastroBean.empregado.telefone}" />
+					</p:panelGrid>
+				</p:fieldset>
+
+				<p:fieldset legend="Endereço">
+
+					<p:panelGrid columns="6" id="painel2" styleClass="sem-borda"
+						style="margin-top: 5px">
+
+						<p:outputLabel value="UF" for="uf" />
+						<p:selectOneMenu id="uf" required="true"
+							requiredMessage="Estado é obrigatório"
+							value="#{empregadoCadastroBean.empregado.estado}">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{empregadoCadastroBean.ufs}" var="uf"
+								itemValue="#{uf}" itemLabel="#{uf}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Município" for="municipio" />
+						<p:inputText id="municipio" maxlength="80" size="50"
+							value="#{empregadoCadastroBean.empregado.cidade}" />
+
+						<p:outputLabel value="CEP" for="cep" />
+						<p:inputMask id="cep" maxlength="9" mask="99999-999" size="10"
+							value="#{empregadoCadastroBean.empregado.cep}" />
+
+						<p:outputLabel value="Endereço" for="endereco" />
+						<p:inputText id="endereco" maxlength="80" size="50"
+							value="#{empregadoCadastroBean.empregado.endereco}" />
+
+						<p:outputLabel value="Complemento" for="complemento" />
+						<p:inputText id="complemento" maxlength="80" size="30"
+							value="#{empregadoCadastroBean.empregado.complemento}" />
+
+						<p:outputLabel value="Número" for="numero" />
+						<p:inputText id="numero" maxlength="80" size="10"
+							value="#{empregadoCadastroBean.empregado.numero}" />
+
+					</p:panelGrid>
+
+				</p:fieldset>
+
+				<p:fieldset legend="Conexão">
+
+					<p:panelGrid columns="8" id="painel3" styleClass="sem-borda"
+						style="margin-top: 5px">
+
+						<p:outputLabel value="Login" for="login" />
+						<p:inputText id="login" maxlength="80"
+							value="#{empregadoCadastroBean.empregado.login}" />
+
+						<p:outputLabel value="E-mail" for="email" />
+						<p:inputText id="email" maxlength="80"
+							value="#{empregadoCadastroBean.empregado.email}"
+							validatorMessage="Insira um e-mail válido">
+
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+						</p:inputText>
+
+						<p:outputLabel value="Senha" for="senha1" />
+						<p:password id="senha1" maxlength="80" feedback="true"
+							goodLabel="Muito boa" weakLabel="Muito fácil" inline="true"
+							strongLabel="Muito forte" promptLabel="Insira sua senha"
+							value="#{empregadoCadastroBean.empregado.senha}" match="senha2"
+							validatorMessage="As senhas são diferentes" />
+
+						<p:outputLabel value="Confirmar senha" for="senha2" />
+						<p:password id="senha2" maxlength="80"
+							value="#{empregadoCadastroBean.empregado.senha}" />
+					</p:panelGrid>
+
+				</p:fieldset>
+
+				<p:fieldset legend="Financeiro">
+					<p:panelGrid columns="6" id="painel4" styleClass="sem-borda">
+
+						<p:outputLabel value="Cargo" for="cargo" />
+						<p:inputText id="cargo" maxlength="80"
+							value="#{empregadoCadastroBean.empregado.cargo}" />
+
+						<p:outputLabel value="Salário" for="salario" />
+						<p:inputNumber id="salario" minValue="0" maxValue="10.0"
+							decimalPlaces="2"
+							value="#{empregadoCadastroBean.empregado.salario}" />
+
+					</p:panelGrid>
+				</p:fieldset>
+
+			</h:panelGrid>
+
+			<ui:include src="/WEB-INF/template/usuario/PermissoesUsuario.xhtml" />
+
+			<p:confirmDialog header="Exclusão de Usuário"
+				id="confirmacaoExclusaoDialog"
+				message="Tem certeza que deseja excluir o usuário #{empregadoCadastroBean.empregado.nome}?"
+				widgetVar="confirmacaoExclusao">
+
+				<div style="float: right;">
+					<p:button value="Não" icon="fa fa-times-circle"
+						styleClass="btCancelar"
+						onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+					<p:commandButton value="Sim" icon="fa fa-check-square"
+						styleClass="btConfirmar"
+						oncomplete="PF('confirmacaoExclusao').hide();"
+						action="#{empregadoCadastroBean.excluir}" process="@this" />
+				</div>
+			</p:confirmDialog>
+
+		</h:form>
+
+		<p:confirmDialog header="Adição de Permissão"
+			id="confirmacaoAdicaoDialog" message="Selecione a permissão:"
+			widgetVar="confirmacaoAdicao">
+
+			<h:form id="frmDialogAdicaoPermissao">
+				<h:panelGrid id="painel" columns="2">
+
+					<p:selectOneMenu id="grupo" required="true"
+						requiredMessage="Escolha uma permissão"
+						value="#{empregadoCadastroBean.empregadoGrupo.grupo}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{empregadoCadastroBean.listaGrupos}"
+							var="grupo" itemLabel="#{grupo}" itemValue="#{grupo}" />
+
+						<p:ajax update="@this" event="change" />
+
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+
+				<p:button value="Não" icon="fa fa-times-circle"
+					styleClass="btCancelar"
+					onclick="PF('confirmacaoAdicao').hide(); return false;" />
+
+				<p:commandButton value="Sim" icon="fa fa-check-square"
+					oncomplete="PF('confirmacaoAdicao').hide();"
+					styleClass="btConfirmar"
+					update=":frmCadastro:tab:permissaoTable :frmDialogAdicaoPermissao"
+					action="#{empregadoCadastroBean.adicionarPermissao}"
+					process="@this">
+
+				</p:commandButton>
+			</h:form>
+		</p:confirmDialog>
+
+		<p:confirmDialog header="Exclusão de Permissão"
+			id="confirmacaoExclusaoDialog"
+			message="Tem certeza que deseja excluir a permissão de #{empregadoCadastroBean.grupoSelecionado.nome.toUpperCase()} 
+			para o usuário #{empregadoCadastroBean.empregado.nome}?"
+			widgetVar="confirmacaoExclusao">
+
+			<h:form id="frmDialogExclusaoPermissao">
+
+				<h:panelGrid cellspacing="2" columns="2" style="margin: auto;">
+
+					<p:button value="Não" icon="fa fa-times-circle"
+						styleClass="btCancelar"
+						onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+					<p:commandButton value="Sim" icon="fa fa-check-square"
+						update=":confirmacaoExclusaoDialog :frmCadastro:tab:permissaoTable"
+						styleClass="btConfirmar"
+						oncomplete="PF('confirmacaoExclusao').hide();"
+						action="#{empregadoCadastroBean.excluirPermissao}" process="@this">
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:confirmDialog>
+
+	</ui:define>
+</ui:composition>

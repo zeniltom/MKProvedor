@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core" template="/cliente/Layout.xhtml">
+
+	<ui:define name="titulo">Lista de Clientes</ui:define>
+
+	<h:outputStylesheet library="css" name="sistema.css" />
+
+	<f:metadata>
+		<f:event listener="#{clientePesquisaBean.pesquisar}"
+			type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<h:form id="frmPesquisa">
+			<h1 class="aw-page-title">Lista de Clientes</h1>
+
+			<p:autoUpdate />
+			<p:messages closable="true" />
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" icon="fa fa-search"
+						action="#{clientePesquisaBean.pesquisar}" update="form" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup style="margin-left: 10px">
+					<p:selectBooleanCheckbox id="jd" itemLabel="Judírico?"
+						value="#{clientePesquisaBean.juridico}">
+						<p:ajax update="cpf cnpj" />
+					</p:selectBooleanCheckbox>
+
+					<p:inputMask rendered="#{!clientePesquisaBean.juridico}" id="cpf"
+						maxlength="14" mask="999.999.999-99"
+						value="#{clientePesquisaBean.cliente.cpfCnpj}" placeholder="CPF" />
+
+					<p:inputMask rendered="#{clientePesquisaBean.juridico}" id="cnpj"
+						maxlength="16" mask="99.99.999/9999-99"
+						value="#{clientePesquisaBean.cliente.cpfCnpj}" placeholder="CNPJ" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button value="Novo Cliente" icon="fa fa-plus"
+						outcome="/cliente/cadastro" />
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:form>
+
+		<h:form id="form">
+			<p:dataTable id="clientesTable"
+				value="#{clientePesquisaBean.clientesFiltrados}" var="cliente"
+				style="margin-top:20px;" emptyMessage="Nenhum cliente encontrado"
+				rows="8" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom" rowKey="#{cliente}"
+				rowStyleClass="#{clientePesquisaBean.contratoCliente(cliente) == 'Sem plano'? 'semPlano' : ''}"
+				selectionMode="single">
+
+				<p:column headerText="Cód." style="text-align: center; width: 50px"
+					sortBy="#{cliente.id}">
+					<h:outputText value="#{cliente.id}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{cliente.nome}"
+					filterBy="#{cliente.nome}">
+					<h:outputText value="#{cliente.nome}" />
+				</p:column>
+
+				<p:column headerText="CPF/CNPJ"
+					style="text-align: center; width: 140px"
+					sortBy="#{cliente.cpfCnpj}">
+					<h:outputText value="#{cliente.cpfCnpj}" />
+				</p:column>
+
+				<p:column headerText="Plano" style="text-align: center; width: 75px"
+					sortBy="#{clientePesquisaBean.contratoCliente(cliente)}">
+					<h:outputText
+						value="#{clientePesquisaBean.contratoCliente(cliente)}" />
+				</p:column>
+
+				<p:column headerText="Tempo Contrato (Mês)"
+					style="text-align: center; width: 130px"
+					sortBy="#{clientePesquisaBean.contratoTempo(cliente)}">
+					<h:outputText value="#{clientePesquisaBean.contratoTempo(cliente)}" />
+				</p:column>
+
+				<p:column style="text-align: center; width: 200px"
+					headerText="Ações">
+					<p:button outcome="/cliente/cadastro" value="Editar"
+						icon="fa fa-pencil-square-o">
+						<f:param name="cliente" value="#{cliente.id}" />
+					</p:button>
+
+					<p:commandButton value="Excluir" icon="fa fa-trash"
+						styleClass="btCancelar"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":form:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener value="#{cliente}"
+							target="#{clientePesquisaBean.clienteSelecionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog header="Exclusão de Cliente"
+				id="confirmacaoExclusaoDialog"
+				message="Tem certeza que deseja excluir o cliente #{clientePesquisaBean.clienteSelecionado}?"
+				widgetVar="confirmacaoExclusao">
+
+				<div style="float: right;">
+					<p:button value="Não" icon="fa fa-times-circle"
+						styleClass="btCancelar"
+						onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+					<p:commandButton value="Sim" icon="fa fa-check-square"
+						oncomplete="PF('confirmacaoExclusao').hide();"
+						styleClass="btConfirmar" action="#{clientePesquisaBean.excluir}"
+						process="@this" update=":form:clientesTable" />
+				</div>
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui" template="/relatorio/Layout.xhtml">
+
+	<ui:define name="titulo">Relatório</ui:define>
+
+	<f:metadata>
+		<f:event listener="#{relatorioBean.pesquisar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+
+		<h:form id="frmCadastro">
+			<h1 class="aw-page-title">Relatório</h1>
+
+			<p:autoUpdate />
+			<p:messages closable="true" />
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton id="btEmitir" value="Emitir" icon="fa fa-print"
+						action="#{relatorioBean.emitir}" ajax="false" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="1" id="painel"
+				style="width: 100%; margin-top: 10px" columnClasses="rotulo, campo">
+				<p:outputLabel value="Data de criação" />
+
+				<h:panelGroup>
+					<p:calendar value="#{relatorioBean.dataInicio}" label="Data inicial"
+						pattern="dd/MM/yyyy" size="10" />
+					<p:spacer width="8" />
+
+					<h:outputText value="a" />
+
+					<p:spacer width="8" />
+					<p:calendar value="#{relatorioBean.dataFim}" label="Data final"
+						pattern="dd/MM/yyyy" size="10" />
+				</h:panelGroup>
+
+				<p:dataTable id="historicosTable"
+					value="#{relatorioBean.historicos}" style="margin-top: 10px"
+					var="historico" emptyMessage="Não há histórico no dia de hoje"
+					rows="6" paginator="true" paginatorAlwaysVisible="false"
+					paginatorPosition="bottom" rowKey="#{historico}"
+					rowStyleClass="boletos" selectionMode="single" styleClass="abertos">
+
+					<p:ajax event="rowSelect"
+						listener="#{relatorioBean.onRowHistoricoSelect}"
+						update="frmCadastro:btEmitir" />
+
+					<p:column headerText="Cód." style="text-align: center; width: 30px"
+						sortBy="#{historico.id}">
+						<h:outputText value="#{historico.id}" />
+					</p:column>
+
+					<p:column headerText="Cliente" sortBy="#{historico.cliente.nome}">
+						<h:outputText value="#{historico.cliente.nome}" />
+					</p:column>
+
+					<p:column headerText="Plano" style="text-align: center;">
+						<h:outputText
+							value="#{caixaBean.contratoCliente(historico.cliente)}" />
+					</p:column>
+
+					<p:column headerText="Parcelas"
+						style="text-align: center; width: 75px">
+						<h:outputText value="#{historico.parcela.parcela}" />
+					</p:column>
+
+					<p:column headerText="Data do Pagamento"
+						style="text-align: center;  width: 160px">
+						<h:outputText value="#{historico.dataPagamento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Valor"
+						style="text-align: center; width: 80px">
+						<h:outputText value="#{historico.valor}">
+							<f:convertNumber type="currency" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+
+			</p:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

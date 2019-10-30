@@ -1,0 +1,132 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui" template="/chamado/Layout.xhtml">
+
+	<ui:define name="titulo">#{chamadoCadastroBean.editando ? 'Edição de Chamado' : 'Novo Chamado'}</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:outputStylesheet id="switch">
+			.ui-state-active, .ui-widget-content .ui-state-active{
+				color: white;
+				background-color: green !important;
+			}
+		</h:outputStylesheet>
+
+		<f:metadata>
+			<o:viewParam name="chamado" value="#{chamadoCadastroBean.chamado}" />
+			<f:event listener="#{chamadoCadastroBean.inicializar}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+
+		<h:form id="frmCadastro">
+			<h1 class="aw-page-title">#{chamadoCadastroBean.editando ?
+				'Edição de Chamado' : 'Novo Chamado'}</h1>
+
+			<p:autoUpdate />
+			<p:messages closable="true" />
+
+			<p:toolbar>
+				<p:toolbarGroup>
+
+					<p:button value="Novo" outcome="/chamado/cadastro"
+						icon="fa fa-plus" />
+
+					<p:commandButton id="botaoSalvar" value="Salvar"
+						action="#{chamadoCadastroBean.salvar}" ajax="false"
+						icon="fa fa-save" styleClass="btConfirmar" />
+
+					<p:commandButton value="Excluir" icon="fa fa-trash"
+						styleClass="btCancelar" rendered="#{chamadoCadastroBean.editando}"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update="frmCadastro:confirmacaoExclusaoDialog" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button value="Listar Chamados" outcome="/chamado/pesquisa"
+						icon="fa fa-search" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<h:panelGrid columns="1" style="width: 100%; margin-top: 10px;">
+
+				<p:panelGrid columns="3" id="panel" styleClass="sem-borda">
+
+					<p:outputLabel value="Cliente" for="cliente" />
+					<p:inputText id="cliente"
+						value="#{chamadoCadastroBean.chamado.cliente.nome}"
+						required="true" requiredMessage="Cliente é obrigatório"
+						readonly="#{facesContext.currentPhaseId.name eq 'RENDER_RESPONSE'}"
+						size="48" />
+
+					<p:commandButton icon="fa fa-search" title="Pesquisa"
+						action="#{clienteSelecaoBean.abrirDialogo}" process="@this"
+						update="@none">
+						<p:ajax event="dialogReturn"
+							listener="#{chamadoCadastroBean.clienteSelecionado}"
+							process="@this" update="cliente" />
+						<p:resetInput target="cliente" />
+					</p:commandButton>
+
+					<p:outputLabel value="Funcionário" for="funcionario" />
+					<p:inputText id="funcionario" required="true"
+						requiredMessage="Funcionário é obrigatório"
+						value="#{chamadoCadastroBean.chamado.empregado.nome}"
+						readonly="#{facesContext.currentPhaseId.name eq 'RENDER_RESPONSE'}"
+						size="48" />
+
+					<p:commandButton icon="fa fa-search" title="Pesquisa"
+						action="#{empregadoSelecaoBean.abrirDialogo}" process="@this"
+						update="@none">
+						<p:ajax event="dialogReturn"
+							listener="#{chamadoCadastroBean.empregadoSelecionado}"
+							process="@this" update="funcionario" />
+						<p:resetInput target="funcionario" />
+					</p:commandButton>
+
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" id="panel2" styleClass="sem-borda">
+
+					<p:outputLabel value="Data da abertura" for="dataAbertura" />
+					<p:calendar id="dataAbertura" pattern="dd/MM/yyyy HH:mm"
+						maxlength="15" value="#{chamadoCadastroBean.chamado.dataChamado}"
+						showTodayButton="true" showOn="button" showButtonPanel="true" />
+
+					<p:outputLabel value="Descrição" for="descricao" />
+					<p:inputTextarea id="descricao" rows="2" cols="50" maxlength="255"
+						autoResize="false"
+						value="#{chamadoCadastroBean.chamado.descricao}" />
+
+
+					<p:outputLabel value="Situação" for="situacao" />
+					<p:inputSwitch styleClass="switch" id="situacao" offLabel="Fechado"
+						onLabel="Aberto" value="#{chamadoCadastroBean.chamado.situacao}" />
+
+				</p:panelGrid>
+			</h:panelGrid>
+
+			<p:confirmDialog header="Exclusão de Chamado"
+				id="confirmacaoExclusaoDialog"
+				message="Tem certeza que deseja excluir o Chamado #{chamadoCadastroBean.chamado.descricao}?"
+				widgetVar="confirmacaoExclusao">
+
+				<div style="float: right;">
+					<p:button value="Não" icon="fa fa-times-circle"
+						styleClass="btCancelar"
+						onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+					<p:commandButton value="Sim" icon="fa fa-check-square"
+						styleClass="btConfirmar"
+						oncomplete="PF('confirmacaoExclusao').hide();"
+						action="#{chamadoCadastroBean.excluir}" process="@this" />
+				</div>
+			</p:confirmDialog>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

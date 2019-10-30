@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<p:tabView style="margin-top: 20px" id="tab">
+		<p:tab title="Permissões">
+			<p:toolbar>
+				<p:toolbarGroup align="right">
+					<p:commandButton value="Adicionar Permissão" icon="fa fa-plus"
+						oncomplete="PF('confirmacaoAdicao').show()" process="@this">
+					</p:commandButton>
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:dataTable id="permissaoTable"
+				value="#{empregadoCadastroBean.gruposEmpregado}" var="grupo"
+				rowIndexVar="linha" emptyMessage="Não há permissões" rows="8"
+				paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom">
+
+				<p:column headerText="Permissão"
+					style="text-align: center; width: 300px;" sortBy="#{grupo.nome}">
+					<h:outputText value="#{grupo.nome}" />
+				</p:column>
+
+				<p:column headerText="Descrição">
+					<h:outputText value="#{grupo.descricao}" />
+				</p:column>
+
+				<p:column headerText="Ações"
+					style="text-align: center; width: 200px">
+
+					<p:commandButton value="Excluir" icon="fa fa-trash"
+						styleClass="btCancelar"
+						update=":frmCadastro:tab:permissaoTable :frmDialogAdicaoPermissao :confirmacaoExclusaoDialog"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this">
+						<f:setPropertyActionListener value="#{grupo}"
+							target="#{empregadoCadastroBean.grupoSelecionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</p:tab>
+	</p:tabView>
+</ui:composition>

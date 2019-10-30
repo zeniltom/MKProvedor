@@ -1,0 +1,180 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core" template="/chamado/Layout.xhtml">
+
+	<ui:define name="titulo">Lista de Chamados</ui:define>
+
+	<h:outputStylesheet library="css" name="sistema.css" />
+
+	<f:metadata>
+		<f:event listener="#{chamadoPesquisaBean.listar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<h:form id="frmPesquisa">
+			<h1 class="aw-page-title">Lista de Chamados</h1>
+
+			<p:autoUpdate />
+			<p:messages closable="true" />
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Listar chamados" icon="fa fa-list"
+						action="#{chamadoPesquisaBean.listar}" update="form" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button value="Abrir novo chamado" icon="fa fa-bullhorn"
+						outcome="/chamado/cadastro" />
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:form>
+
+		<h:form id="form">
+			<p:dataTable id="chamadosTable" widgetVar="cta"
+				value="#{chamadoPesquisaBean.chamadosAbertos}" var="chamado"
+				style="margin-top:20px;" emptyMessage="Nenhum chamado registrado"
+				rows="8" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom" rowKey="#{chamado}"
+				rowStyleClass="normal" selectionMode="single" styleClass="abertos">
+
+				<f:facet name="header">
+					<p:outputLabel
+						style="text-align: left; font-size: 16px; padding: 5px;"
+						value="Chamados abertos ou em andamento" />
+				</f:facet>
+
+				<p:column headerText="Cód." style="text-align: center; width: 50px"
+					sortBy="#{chamado.id}" filterBy="#{chamado.id}">
+					<h:outputText value="#{chamado.id}" />
+				</p:column>
+
+				<p:column headerText="Cliente" sortBy="#{chamado.cliente.nome}"
+					filterBy="#{chamado.cliente.nome}">
+					<h:outputText value="#{chamado.cliente.nome}" />
+				</p:column>
+
+				<p:column headerText="Funcionário"
+					sortBy="#{chamado.empregado.nome}"
+					filterBy="#{chamado.empregado.nome}">
+					<h:outputText value="#{chamado.empregado.nome}" />
+				</p:column>
+
+				<p:column headerText="Data Abertura"
+					style="text-align: center; width: 125px"
+					sortBy="#{chamado.dataChamado}">
+
+					<!-- <f:facet name="filter">
+						<p:calendar pattern="dd/MM/yyyy" size="10">
+							<p:ajax event="dateSelect" oncomplete="PF('cta').filter()" />
+						</p:calendar>
+					</f:facet> -->
+
+					<h:outputText value="#{chamado.dataChamado}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Situação"
+					style="text-align: center; width: 75px">
+
+					<p:outputPanel rendered="#{chamado.situacao}">
+						<i class="fa fa-unlock" style="font-size: 24px; color: green"
+							title="Em aberto" />
+					</p:outputPanel>
+				</p:column>
+
+				<p:column style="text-align: center; width: 200px"
+					headerText="Ações">
+					<p:button outcome="/chamado/cadastro" value="Abrir/Fechar"
+						icon="fa fa-pencil-square-o">
+						<f:param name="chamado" value="#{chamado.id}" />
+					</p:button>
+				</p:column>
+			</p:dataTable>
+
+			<p:spacer />
+
+			<p:dataTable id="chamadosEncerradosTable"
+				value="#{chamadoPesquisaBean.chamadosFechados}" var="chamado"
+				style="margin-top:20px;" emptyMessage="Nenhum chamado registrado"
+				rows="8" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom" rowKey="#{chamado}"
+				selectionMode="single" styleClass="fechados" rowStyleClass="normal">
+
+				<f:facet name="header">
+					<p:outputLabel value="Chamados encerrados"
+						style="text-align: left; font-size: 16px; padding: 5px" />
+				</f:facet>
+
+				<p:column headerText="Cód." style="text-align: center; width: 50px"
+					sortBy="#{chamado.id}">
+					<h:outputText value="#{chamado.id}" />
+				</p:column>
+
+				<p:column headerText="Cliente" sortBy="#{chamado.cliente.nome}"
+					filterBy="#{chamado.cliente.nome}">
+					<h:outputText value="#{chamado.cliente.nome}" />
+				</p:column>
+
+				<p:column headerText="Funcionário"
+					sortBy="#{chamado.empregado.nome}"
+					filterBy="#{chamado.empregado.nome}">
+					<h:outputText value="#{chamado.empregado.nome}" />
+				</p:column>
+
+				<p:column headerText="Data Abertura"
+					style="text-align: center; width: 125px"
+					sortBy="#{chamado.dataChamado}">
+
+					<!-- <f:facet name="filter">
+						<p:calendar pattern="dd/MM/yyyy" size="10">
+							<p:ajax event="dateSelect" oncomplete="PF('cta').filter()" />
+						</p:calendar>
+					</f:facet> -->
+
+					<h:outputText value="#{chamado.dataChamado}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Situação"
+					style="text-align: center; width: 70px">
+
+					<p:outputPanel rendered="#{!chamado.situacao}">
+						<i class="fa fa-lock" style="font-size: 24px; color: #033b62"
+							title="Fechado" />
+					</p:outputPanel>
+				</p:column>
+
+				<p:column style="text-align: center; width: 200px"
+					headerText="Ações">
+					<p:button outcome="/chamado/cadastro" value="Abrir/Fechar"
+						icon="fa fa-pencil-square-o">
+						<f:param name="chamado" value="#{chamado.id}" />
+					</p:button>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog header="Exclusão de Chamado"
+				id="confirmacaoExclusaoDialog"
+				message="Tem certeza que deseja excluir o chamado #{chamadoPesquisaBean.chamadoSelecionado}?"
+				widgetVar="confirmacaoExclusao">
+
+				<div style="float: right;">
+					<p:button value="Não" icon="fa fa-times-circle"
+						styleClass="btCancelar"
+						onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+					<p:commandButton value="Sim" icon="fa fa-check-square"
+						oncomplete="PF('confirmacaoExclusao').hide();"
+						styleClass="btConfirmar" action="#{chamadoPesquisaBean.excluir}"
+						process="@this" update=":form:chamadosTable" />
+				</div>
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
