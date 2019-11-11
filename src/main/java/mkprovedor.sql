@@ -69,6 +69,32 @@ insert  into `cliente`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`
 insert  into `cliente`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (4,NULL,'','','666.044.980-93',NULL,'','\0','Andreia Lima','','123456','','mariamelo',76);
 insert  into `cliente`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (5,NULL,'','','803.620.360-04',NULL,'','\0','Lara Santos','','123456','','lara',1);
 
+/*Table structure for table `cliente_backup` */
+
+DROP TABLE IF EXISTS `cliente_backup`;
+
+CREATE TABLE `cliente_backup` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `bairro` varchar(255) DEFAULT NULL,
+  `cep` varchar(255) DEFAULT NULL,
+  `complemento` varchar(255) DEFAULT NULL,
+  `cpfCnpj` varchar(30) DEFAULT NULL,
+  `descricao` varchar(255) DEFAULT NULL,
+  `enredeco` varchar(255) DEFAULT NULL,
+  `juridica` bit(1) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `numero` varchar(255) DEFAULT NULL,
+  `senha` varchar(255) NOT NULL,
+  `telefone` varchar(255) DEFAULT NULL,
+  `usuarioPPPOE` varchar(255) NOT NULL,
+  `municipio_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Data for the table `cliente_backup` */
+
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (1,NULL,'','','282.675.280-40',NULL,'','\0','Afrânio Calisto Brito','','123456','','afranio',2114);
+
 /*Table structure for table `contrato` */
 
 DROP TABLE IF EXISTS `contrato`;
@@ -5777,11 +5803,30 @@ CREATE TABLE `parcela` (
 
 /*Data for the table `parcela` */
 
-insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (6,'2019-10-30 00:00:00','2019-10-28 00:00:00','1/2','',80,2);
+insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (6,'2019-10-30 00:00:00','2019-10-28 00:00:00','1/2','',85,2);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (7,NULL,'2019-11-28 00:00:00','2/2','\0',80,2);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (8,'2019-10-30 00:00:00','2019-10-28 00:00:00','1/3','',50,3);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (9,NULL,'2019-11-28 00:00:00','2/3','\0',50,3);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (10,NULL,'2019-12-28 00:00:00','3/3','\0',50,3);
+
+/*Table structure for table `parcela_backup` */
+
+DROP TABLE IF EXISTS `parcela_backup`;
+
+CREATE TABLE `parcela_backup` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `dataPagamento` datetime DEFAULT NULL,
+  `dataVencimento` datetime DEFAULT NULL,
+  `parcela` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+/*Data for the table `parcela_backup` */
+
+insert  into `parcela_backup`(`id`,`dataPagamento`,`dataVencimento`,`parcela`) values (11,'2019-10-30 00:00:00','2019-10-28 00:00:00','2');
+insert  into `parcela_backup`(`id`,`dataPagamento`,`dataVencimento`,`parcela`) values (12,'2019-10-30 00:00:00','2019-10-28 00:00:00','3');
+insert  into `parcela_backup`(`id`,`dataPagamento`,`dataVencimento`,`parcela`) values (13,'2019-10-30 00:00:00','2019-10-28 00:00:00','0');
+insert  into `parcela_backup`(`id`,`dataPagamento`,`dataVencimento`,`parcela`) values (14,'2019-10-30 00:00:00','2019-10-28 00:00:00','1');
 
 /*Table structure for table `servico` */
 
@@ -5801,6 +5846,46 @@ CREATE TABLE `servico` (
 insert  into `servico`(`id`,`descricao`,`tipoPlano`,`tipoServico`,`valorPlano`) values (1,'Básico','10 MB','Internet',50);
 insert  into `servico`(`id`,`descricao`,`tipoPlano`,`tipoServico`,`valorPlano`) values (2,'Premium','30MB','Internet',80);
 
+/* Trigger structure for table `cliente` */
+
+DELIMITER $$
+
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `cliente_executar_backup` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `cliente_executar_backup` AFTER UPDATE ON `cliente` FOR EACH ROW BEGIN
+ INSERT INTO cliente_backup values (
+null, 
+    OLD.bairro, 
+    OLD.cep, 
+    OLD.complemento, 
+    OLD.cpfCnpj, 
+    OLD.descricao, 
+    OLD.enredeco, 
+    OLD.juridica, 
+    OLD.nome, 
+    OLD.numero, 
+    OLD.senha, 
+    OLD.telefone, 
+    OLD.usuarioPPPOE, 
+    OLD.municipio_id);
+END */$$
+
+
+DELIMITER ;
+
+/* Trigger structure for table `parcela` */
+
+DELIMITER $$
+
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `parcela_gerar_novas` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `parcela_gerar_novas` AFTER UPDATE ON `parcela` FOR EACH ROW BEGIN
+	call `gerar_novas_parcelas_and_mensalidade`(old.mensalidade_id);
+END */$$
+
+
+DELIMITER ;
+
 /* Procedure structure for procedure `excluir_parcelas_and_mensalidade` */
 
 /*!50003 DROP PROCEDURE IF EXISTS  `excluir_parcelas_and_mensalidade` */;
@@ -5811,6 +5896,37 @@ DELIMITER $$
 BEGIN
 	DELETE FROM `parcela` where `mensalidade_id` = mensalidadeId;
 	DELETE FROM `mensalidade` where `id` = mensalidadeId;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `gerar_novas_parcelas_and_mensalidade` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `gerar_novas_parcelas_and_mensalidade` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `gerar_novas_parcelas_and_mensalidade`(mensalidadeId LONG)
+BEGIN
+	
+	DECLARE codProd INT DEFAULT 0;
+	DECLARE qtdParcelaNova INT DEFAULT 0;
+	DECLARE contador INT DEFAULT 0;
+	
+	SELECT `id` FROM `parcela` WHERE `situacao` = 0 AND `mensalidade_id` = old.mensalidade_id ORDER BY 1 DESC LIMIT 1 INTO codProd;
+	
+	SELECT `qtdParcela` FROM `mensalidade` WHERE id IN (SELECT `mensalidade_id` FROM `parcela` WHERE old.id) LIMIT 1 INTO qtdParcelaNova;
+		    
+	IF(codProd != 0) THEN 
+	
+		WHILE (contador < qtdParcelaNova) DO
+		
+--		    INSERT INTO `parcela_backup` VALUES (NULL, old.dataPagamento, old.dataVencimento, new.parcela);
+		    SET contador = contador + 1;
+		    
+		END WHILE;	  
+		
+	END IF;
+	
 END */$$
 DELIMITER ;
 
