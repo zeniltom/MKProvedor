@@ -67,7 +67,7 @@
 
 				<p:column headerText="Permissão" style="text-align: center">
 					<h:outputText
-						value="#{empregado.grupos == '[]' ? 'SEM PERMISSÃO' : empregado.grupos.toString().replace('[', '').replace(']', '')}" />
+						value="#{empregadoPesquisaBean.listarPermissoes(empregado)}" />
 				</p:column>
 
 				<p:column style="text-align: center; width: 200px"
