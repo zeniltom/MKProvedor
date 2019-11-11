@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.mkprovedor.model.Empregado;
+import com.mkprovedor.model.Grupo;
 import com.mkprovedor.repository.EmpregadoGrupos;
 import com.mkprovedor.service.EmpregadoService;
 import com.mkprovedor.util.jsf.FacesUtil;
@@ -34,18 +35,28 @@ public class EmpregadoPesquisaBean implements Serializable {
 		empregado = new Empregado();
 	}
 
+	public void pesquisar() {
+		empregadoesFiltrados = cadastroEmpregadoService.filter(empregado);
+	}
+
 	public void excluir() {
 		try {
 			cadastroEmpregadoService.delete(empregadoSelecionado);
 			FacesUtil.addInfoMessage("Empregado " + empregadoSelecionado.getNome() + " excluído com sucesso!");
 
 		} catch (Exception e) {
-			FacesUtil.addErrorMessage("Não foi possível excluir " + empregadoSelecionado.getNome() + ", consulte o suporte!");
+			FacesUtil.addErrorMessage(
+					"Não foi possível excluir " + empregadoSelecionado.getNome() + ", consulte o suporte!");
 		}
 	}
 
-	public void pesquisar() {
-		empregadoesFiltrados = cadastroEmpregadoService.filter(empregado);
+	public String listarPermissoes(Empregado empregado) {
+		StringBuilder builder = new StringBuilder();
+
+		for (Grupo g : empregado.getGrupos())
+			builder.append(g.getNome() + ", ");
+
+		return !builder.toString().equals("") ? builder.substring(0, builder.toString().length() - 2) : "";
 	}
 
 	public Empregado getEmpregado() {
