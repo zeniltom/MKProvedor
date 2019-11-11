@@ -22,20 +22,11 @@ public class MensalidadeService implements Serializable {
 		mensalidades.persist(mensalidade);
 	}
 
-	@Transactional
-	public void update(Mensalidade mensalidade) {
-		mensalidades.update(mensalidade);
-	}
+	
 
-	@Transactional
-	public void delete(Mensalidade mensalidade) {
-		mensalidades.delete(mensalidade);
-	}
+	
 
-	@Transactional
-	public Mensalidade findById(Long id) {
-		return mensalidades.findById(id);
-	}
+	
 
 	@Transactional
 	public List<Mensalidade> findAll() {

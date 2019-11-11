@@ -17,10 +17,7 @@ public class MunicipioService implements Serializable {
 	@Inject
 	private Municipios municipios;
 
-	@Transactional
-	public void createNew(Municipio obj) {
-		municipios.persist(obj);
-	}
+	
 
 	@Transactional
 	public List<Municipio> findAll() {

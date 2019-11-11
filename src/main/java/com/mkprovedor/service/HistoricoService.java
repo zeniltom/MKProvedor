@@ -22,20 +22,11 @@ public class HistoricoService implements Serializable {
 		historicos.persist(historico);
 	}
 
-	@Transactional
-	public void update(Historico historico) {
-		historicos.update(historico);
-	}
+	
 
-	@Transactional
-	public void delete(Historico historico) {
-		historicos.delete(historico);
-	}
+	
 
-	@Transactional
-	public List<Historico> findAll() {
-		return historicos.findAll();
-	}
+	
 
 	@Transactional
 	public List<Historico> findByHistoricoDia(Date date) {

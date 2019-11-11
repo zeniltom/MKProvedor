@@ -31,10 +31,7 @@ public class ClienteService implements Serializable {
 		clientes.delete(cliente);
 	}
 
-	@Transactional
-	public List<Cliente> findAll() {
-		return clientes.findAll();
-	}
+	
 
 	@Transactional
 	public List<Cliente> filter(Cliente empregado) {

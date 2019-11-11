@@ -47,7 +47,7 @@ public class Historicos implements Serializable {
 		Session session = entityManager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Historico.class);
 
-		if (date != null && !date.equals(""))
+		if (date != null)
 			criteria.add(Restrictions.eq("dataPagamento", date));
 
 		criteria.addOrder(Order.desc("dataPagamento"));

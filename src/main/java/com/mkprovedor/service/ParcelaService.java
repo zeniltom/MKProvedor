@@ -27,10 +27,7 @@ public class ParcelaService implements Serializable {
 		parcelas.update(parcela);
 	}
 
-	@Transactional
-	public void delete(Parcela parcela) {
-		parcelas.delete(parcela);
-	}
+	
 
 	@Transactional
 	public Parcela findById(Long id) {
