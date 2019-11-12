@@ -75,8 +75,8 @@ public class Parcelas implements Serializable {
 		return criteria.list();
 	}
 
-	@SuppressWarnings("deprecation")
-	public Parcela findByParcelaVencida(Mensalidade mensalidade) {
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	public List<Parcela> findByParcelaVencida(Mensalidade mensalidade) {
 		Session session = entityManager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Parcela.class);
 		criteria.createAlias("mensalidade", "mensalidade");
@@ -89,7 +89,7 @@ public class Parcelas implements Serializable {
 		criteria.add(
 				Restrictions.and(Restrictions.sqlRestriction("`dataPagamento` IS NULL AND `dataVencimento` <= NOW()")));
 
-		return (Parcela) criteria.uniqueResult();
+		return criteria.list();
 	}
 
 }

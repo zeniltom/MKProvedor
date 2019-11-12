@@ -77,7 +77,7 @@ public class BoletoPesquisaBean implements Serializable {
 			historico.setCliente(this.cliente);
 			historico.setParcela(this.parcelaSelecionada);
 			historico.setDataPagamento(this.parcelaSelecionada.getDataPagamento());
-			historico.setValor(this.valorPago);
+			historico.setValor(this.parcelaSelecionada.getValor());
 
 			historicoService.createNew(historico);
 
@@ -106,10 +106,10 @@ public class BoletoPesquisaBean implements Serializable {
 	}
 
 	public boolean mensalidadeEmDia(Mensalidade mensalidade) {
-		Parcela parcela = null;
+		List<Parcela> parcela = null;
 		parcela = parcelaService.findByParcelaVencida(mensalidade);
 
-		return parcela != null ? false : true;
+		return parcela.size() > 0 ? false : true;
 	}
 
 	public boolean parcelaEmDia(Parcela parcela) {

@@ -50,7 +50,7 @@ public class ParcelaService implements Serializable {
 	}
 
 	@Transactional
-	public Parcela findByParcelaVencida(Mensalidade mensalidade) {
+	public List<Parcela> findByParcelaVencida(Mensalidade mensalidade) {
 		return parcelas.findByParcelaVencida(mensalidade);
 	}
 
