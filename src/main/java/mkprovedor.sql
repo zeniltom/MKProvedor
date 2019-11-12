@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS `chamado`;
 CREATE TABLE `chamado` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `dataChamado` datetime NOT NULL,
+  `dataEncerramento` datetime DEFAULT NULL,
   `descricao` varchar(255) NOT NULL,
   `situacao` bit(1) NOT NULL,
   `cliente_id` bigint(20) NOT NULL,
@@ -36,8 +37,8 @@ CREATE TABLE `chamado` (
 
 /*Data for the table `chamado` */
 
-insert  into `chamado`(`id`,`dataChamado`,`descricao`,`situacao`,`cliente_id`,`empregado_id`) values (1,'2019-10-26 15:11:00','Internet lenta.','',1,1);
-insert  into `chamado`(`id`,`dataChamado`,`descricao`,`situacao`,`cliente_id`,`empregado_id`) values (2,'2019-10-27 15:21:00','Internet caiu.','\0',2,1);
+insert  into `chamado`(`id`,`dataChamado`,`dataEncerramento`,`descricao`,`situacao`,`cliente_id`,`empregado_id`) values (1,'2019-10-26 15:11:00','2019-11-12 17:05:00','Internet lenta.','\0',1,1);
+insert  into `chamado`(`id`,`dataChamado`,`dataEncerramento`,`descricao`,`situacao`,`cliente_id`,`empregado_id`) values (2,'2019-10-27 15:21:00',NULL,'Internet caiu.','',2,1);
 
 /*Table structure for table `cliente` */
 
@@ -5895,25 +5896,6 @@ insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (2,NULL,'2019-12-10 00:00:00','2/2','\0',50,1);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (3,NULL,'2019-07-01 00:00:00','1/2','\0',80,2);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (4,NULL,'2019-08-01 00:00:00','2/2','\0',80,2);
-
-/*Table structure for table `parcela_backup` */
-
-DROP TABLE IF EXISTS `parcela_backup`;
-
-CREATE TABLE `parcela_backup` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `dataPagamento` datetime DEFAULT NULL,
-  `dataVencimento` datetime DEFAULT NULL,
-  `parcela` varchar(255) DEFAULT NULL,
-  `situacao` bit(1) NOT NULL,
-  `valor` double NOT NULL,
-  `mensalidade_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pb_fk` (`mensalidade_id`),
-  CONSTRAINT `pb_fk` FOREIGN KEY (`mensalidade_id`) REFERENCES `mensalidade` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
-
-/*Data for the table `parcela_backup` */
 
 /*Table structure for table `servico` */
 
