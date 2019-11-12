@@ -14,6 +14,10 @@
 				color: white;
 				background-color: green !important;
 			}
+			
+			.ui-panelgrid td {
+   				 width: 120px !important;
+			}
 		</h:outputStylesheet>
 
 		<f:metadata>
@@ -101,10 +105,20 @@
 						autoResize="false"
 						value="#{chamadoCadastroBean.chamado.descricao}" />
 
-
 					<p:outputLabel value="Situação" for="situacao" />
 					<p:inputSwitch styleClass="switch" id="situacao" offLabel="Fechado"
-						onLabel="Aberto" value="#{chamadoCadastroBean.chamado.situacao}" />
+						onLabel="Aberto" value="#{chamadoCadastroBean.chamado.situacao}">
+						<p:ajax update="frmCadastro" />
+					</p:inputSwitch>
+
+					<p:outputLabel rendered="#{!chamadoCadastroBean.chamado.situacao}"
+						value="Data de encerramento" for="dataEncerramento" />
+					<p:calendar rendered="#{!chamadoCadastroBean.chamado.situacao}"
+						id="dataEncerramento" pattern="dd/MM/yyyy HH:mm" maxlength="15"
+						value="#{chamadoCadastroBean.chamado.dataEncerramento}"
+						showTodayButton="true" showOn="button" showButtonPanel="true"
+						required="true"
+						requiredMessage="Data de encerramento é obrigatória" />
 
 				</p:panelGrid>
 			</h:panelGrid>

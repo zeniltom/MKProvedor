@@ -35,6 +35,9 @@ public class Chamado implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataChamado;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataEncerramento;
+
 	private boolean situacao;
 
 	@ManyToOne
@@ -72,6 +75,14 @@ public class Chamado implements Serializable {
 
 	public void setDataChamado(Date dataChamado) {
 		this.dataChamado = dataChamado;
+	}
+
+	public Date getDataEncerramento() {
+		return dataEncerramento;
+	}
+
+	public void setDataEncerramento(Date dataEncerramento) {
+		this.dataEncerramento = dataEncerramento;
 	}
 
 	public boolean isSituacao() {

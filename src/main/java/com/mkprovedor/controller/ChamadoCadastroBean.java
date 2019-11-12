@@ -28,6 +28,8 @@ public class ChamadoCadastroBean implements Serializable {
 
 	private Chamado chamado;
 
+	private boolean encerrar;
+
 	public ChamadoCadastroBean() {
 		limpar();
 	}
@@ -58,6 +60,7 @@ public class ChamadoCadastroBean implements Serializable {
 		chamado.setCliente(new Cliente());
 		chamado.setSituacao(true);
 		chamado.setDataChamado(new Date());
+		encerrar = false;
 	}
 
 	public void listar() throws IOException {
@@ -73,6 +76,9 @@ public class ChamadoCadastroBean implements Serializable {
 			listar();
 
 		} else {
+
+			if (this.chamado.isSituacao())
+				this.chamado.setDataEncerramento(null);
 
 			chamadoService.update(this.chamado);
 			FacesUtil.addInfoMessage("Chamado atualizado com sucesso!");
@@ -93,12 +99,24 @@ public class ChamadoCadastroBean implements Serializable {
 		}
 	}
 
+	public void encerrarChamado(boolean encerrar) {
+		this.encerrar = encerrar;
+	}
+
 	public Chamado getChamado() {
 		return chamado;
 	}
 
 	public void setChamado(Chamado Chamado) {
 		this.chamado = Chamado;
+	}
+
+	public boolean isEncerrar() {
+		return encerrar;
+	}
+
+	public void setEncerrar(boolean encerrar) {
+		this.encerrar = encerrar;
 	}
 
 	public boolean isEditando() {
