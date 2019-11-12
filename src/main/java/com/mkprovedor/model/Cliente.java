@@ -1,6 +1,7 @@
 package com.mkprovedor.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -54,6 +57,11 @@ public class Cliente implements Serializable {
 	private String numero;
 
 	private String cep;
+
+	private String status;
+
+	@Temporal(TemporalType.DATE)
+	private Date dataDesativacao;
 
 	private boolean juridica;
 
@@ -162,12 +170,28 @@ public class Cliente implements Serializable {
 		this.cep = cep;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public boolean isJuridica() {
 		return juridica;
 	}
 
 	public void setJuridica(boolean juridica) {
 		this.juridica = juridica;
+	}
+
+	public Date getDataDesativacao() {
+		return dataDesativacao;
+	}
+
+	public void setDataDesativacao(Date dataDesativacao) {
+		this.dataDesativacao = dataDesativacao;
 	}
 
 	public Municipio getMunicipio() {

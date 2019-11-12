@@ -31,8 +31,6 @@ public class ClienteService implements Serializable {
 		clientes.delete(cliente);
 	}
 
-	
-
 	@Transactional
 	public List<Cliente> filter(Cliente empregado) {
 		return clientes.filter(empregado);
@@ -48,4 +46,8 @@ public class ClienteService implements Serializable {
 		return clientes.findByCpfCnpj(cliente);
 	}
 
+	@Transactional
+	public List<Cliente> findByDesativados() {
+		return clientes.findByDesativados();
+	}
 }

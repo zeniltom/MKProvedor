@@ -51,11 +51,16 @@
 		<h:form id="form">
 			<p:dataTable id="clientesTable"
 				value="#{clientePesquisaBean.clientesFiltrados}" var="cliente"
-				style="margin-top:20px;" emptyMessage="Nenhum cliente encontrado"
+				style="margin-top: 5px;" emptyMessage="Nenhum cliente encontrado"
 				rows="8" paginator="true" paginatorAlwaysVisible="false"
-				paginatorPosition="bottom" rowKey="#{cliente}"
-				rowStyleClass="#{clientePesquisaBean.contratoCliente(cliente) == 'Sem plano'? 'semPlano' : ''}"
+				paginatorPosition="bottom" rowKey="#{cliente}" styleClass="ativos"
+				rowStyleClass="#{clientePesquisaBean.status(cliente)}"
 				selectionMode="single">
+
+				<f:facet name="header">
+					<p:outputLabel value="Clientes ativos"
+						style="text-align: left; font-size: 16px; padding: 5px" />
+				</f:facet>
 
 				<p:column headerText="Cód." style="text-align: center; width: 50px"
 					sortBy="#{cliente.id}">
@@ -83,6 +88,76 @@
 					style="text-align: center; width: 130px"
 					sortBy="#{clientePesquisaBean.contratoTempo(cliente)}">
 					<h:outputText value="#{clientePesquisaBean.contratoTempo(cliente)}" />
+				</p:column>
+
+				<p:column headerText="Status" sortBy="#{cliente.status}"
+					style="text-align: center; width: 100px">
+					<h:outputText value="#{cliente.status}" />
+				</p:column>
+
+				<p:column style="text-align: center; width: 200px"
+					headerText="Ações">
+					<p:button outcome="/cliente/cadastro" value="Editar"
+						icon="fa fa-pencil-square-o">
+						<f:param name="cliente" value="#{cliente.id}" />
+					</p:button>
+
+					<p:commandButton value="Excluir" icon="fa fa-trash"
+						styleClass="btCancelar"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":form:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener value="#{cliente}"
+							target="#{clientePesquisaBean.clienteSelecionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:dataTable id="clientesDesativadosTable"
+				value="#{clientePesquisaBean.clientesDesativados}" var="cliente"
+				style="margin-top: 20px;" emptyMessage="Nenhum cliente encontrado"
+				rows="8" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom" rowKey="#{cliente}"
+				styleClass="desativados" selectionMode="single">
+
+				<f:facet name="header">
+					<p:outputLabel value="Clientes desativados"
+						style="text-align: left; font-size: 16px; padding: 5px" />
+				</f:facet>
+
+				<p:column headerText="Cód." style="text-align: center; width: 50px"
+					sortBy="#{cliente.id}">
+					<h:outputText value="#{cliente.id}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{cliente.nome}"
+					filterBy="#{cliente.nome}">
+					<h:outputText value="#{cliente.nome}" />
+				</p:column>
+
+				<p:column headerText="CPF/CNPJ"
+					style="text-align: center; width: 140px"
+					sortBy="#{cliente.cpfCnpj}">
+					<h:outputText value="#{cliente.cpfCnpj}" />
+				</p:column>
+
+				<p:column headerText="Plano" style="text-align: center; width: 75px"
+					sortBy="#{clientePesquisaBean.contratoCliente(cliente)}">
+					<h:outputText
+						value="#{clientePesquisaBean.contratoCliente(cliente)}" />
+				</p:column>
+
+
+				<p:column headerText="Data Desativação"
+					style="text-align: center; width: 125px"
+					sortBy="#{cliente.dataDesativacao}"> 
+					<h:outputText value="#{cliente.dataDesativacao}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Status" sortBy="#{cliente.status}"
+					style="text-align: center; width: 100px">
+					<h:outputText value="#{cliente.status}" />
 				</p:column>
 
 				<p:column style="text-align: center; width: 200px"

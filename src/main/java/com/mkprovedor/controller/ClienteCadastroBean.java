@@ -116,6 +116,7 @@ public class ClienteCadastroBean implements Serializable {
 		if (this.cliente.getId() == null) {
 
 			this.cliente.setMunicipio(this.municipio);
+			this.cliente.setStatus("ATIVO");
 			clienteService.createNew(this.cliente);
 
 			salvarContrato();

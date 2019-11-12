@@ -30,6 +30,7 @@ public class ClientePesquisaBean implements Serializable {
 	private Contrato contrato;
 
 	private List<Cliente> clientesFiltrados;
+	private List<Cliente> clientesDesativados;
 
 	private Cliente clienteSelecionado;
 
@@ -53,6 +54,7 @@ public class ClientePesquisaBean implements Serializable {
 
 	public void pesquisar() {
 		clientesFiltrados = clienteService.findByCpfCnpj(cliente);
+		clientesDesativados = clienteService.findByDesativados();
 	}
 
 	public String contratoCliente(Cliente cliente) {
@@ -73,6 +75,32 @@ public class ClientePesquisaBean implements Serializable {
 			return String.valueOf(contrato.getQtdMeses());
 	}
 
+	public String status(Cliente cliente) {
+		String status = "";
+		String retorno = "";
+
+		contrato = contratoService.findByCliente(cliente);
+
+		if (contrato == null)
+			return "semPlano";
+
+		else {
+
+			if (cliente.getStatus() != null) {
+				status = cliente.getStatus();
+
+				if (status.equalsIgnoreCase("BLOQUEADO"))
+					retorno = "bloqueado";
+				else if (status.equalsIgnoreCase("DESATIVADO"))
+					retorno = "desativado";
+
+				return retorno;
+			}
+		}
+
+		return retorno;
+	}
+
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -83,6 +111,10 @@ public class ClientePesquisaBean implements Serializable {
 
 	public List<Cliente> getClientesFiltrados() {
 		return clientesFiltrados;
+	}
+
+	public List<Cliente> getClientesDesativados() {
+		return clientesDesativados;
 	}
 
 	public Cliente getClienteSelecionado() {

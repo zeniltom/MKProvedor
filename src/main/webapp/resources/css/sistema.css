@@ -67,11 +67,6 @@ h1 {
  	font-weight: bold;
 }
 
-.semPlano {
- 	background: #c4cfff;
-	font-weight: bold;
-}
-
 .statusCancelado {
 	background: #ffb0b0;
 	font-weight: bold;
@@ -304,9 +299,20 @@ ui-inputswitch-on ui-state-active {
 	color: white;
 	background: #0081c2;
 }
+
+.ativos .ui-widget-header {
+	color: white;
+	background: #0081c2;
+}
+
 .fechados .ui-widget-header {
 	color: white;
 	background: #033b62;
+}
+
+.desativados .ui-widget-header {
+	color: white;
+	background: #ff0000;
 }
 
 .boletos{
@@ -330,6 +336,11 @@ ui-inputswitch-on ui-state-active {
 	font-size: 18px !important;
 }
 
+.semPlano {
+ 	background: #e1e7ff;
+	font-weight: bold;
+}
+
 .atrasada {
 	padding: 3px;
 	font-weight: bold !important;
@@ -343,6 +354,18 @@ ui-inputswitch-on ui-state-active {
 	font-family: Arial;
 	font-weight: bold;
 	background: #ffc1c1;
+}
+
+.bloqueado {
+ 	font-family: Arial;
+	font-weight: bold;
+	background: #ffc6aa;
+}
+
+.desativado {
+ 	font-family: Arial;
+	font-weight: bold;
+	background: #ffb0b0;
 }
 
 .sdbtitle{

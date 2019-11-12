@@ -30,13 +30,16 @@ public class DashboardBean implements Serializable {
 	}
 
 	public void createDonutModelNovo() {
+		montarTitulos();
+		montarClientes();
+	}
+
+	public void montarTitulos() {
 		DonutChartOptions options = new DonutChartOptions();
-		DonutChartOptions options2 = new DonutChartOptions();
 
 		Legend legend = new Legend();
 		legend.setPosition("right");
 		options.setLegend(legend);
-		options2.setLegend(legend);
 
 		Title title = new Title();
 		title.setText("Controle de Títulos");
@@ -70,36 +73,49 @@ public class DashboardBean implements Serializable {
 		labels.add("Títulos vencidos");
 		data.setLabels(labels);
 		titulos.setData(data);
-		titulos.setOptions(options);
+		titulos.setOptions(options); 
+	}
 
-		clientes = new DonutChartModel();
-		ChartData data1 = new ChartData();
+	private void montarClientes() {
+		DonutChartOptions options = new DonutChartOptions();
 
-		DonutChartDataSet dataSet1 = new DonutChartDataSet();
-		List<Number> values1 = new ArrayList<>();
-		values1.add(963);
-		values1.add(937);
-		values1.add(50);
-		dataSet1.setData(values1);
+		Legend legend = new Legend();
+		legend.setPosition("right");
+		options.setLegend(legend);
 
-		dataSet1.setBackgroundColor(bgColors);
-
-		data1.addChartDataSet(dataSet1);
-		List<String> labels1 = new ArrayList<>();
-		labels1.add("Total de clientes");
-		labels1.add("Total livres");
-		labels1.add("Total bloqueados");
-		data1.setLabels(labels1);
-
-		clientes.setData(data1);
-
-		title = new Title();
+		Title title = new Title();
 		title.setText("Controle de Clientes");
 		title.setFontSize(25);
-		title.setPadding(20);
+		title.setFontColor("black");
+		title.setPadding(10);
 		title.setDisplay(true);
-		options2.setTitle(title);
-		clientes.setOptions(options2);
+		options.setTitle(title);
+
+		List<String> bgColors = new ArrayList<>();
+		bgColors.add("rgb(0, 43, 225)");
+		bgColors.add("rgb(81, 159, 214)");
+		bgColors.add("rgb(8, 178, 194)");
+
+		clientes = new DonutChartModel();
+		ChartData data = new ChartData();
+
+		DonutChartDataSet dataSet = new DonutChartDataSet();
+		List<Number> values = new ArrayList<>();
+		values.add(963);
+		values.add(937);
+		values.add(100);
+		dataSet.setData(values);
+
+		dataSet.setBackgroundColor(bgColors);
+
+		data.addChartDataSet(dataSet);
+		List<String> labels = new ArrayList<>();
+		labels.add("Total de clintes");
+		labels.add("Total livres");
+		labels.add("Total bloqueados");
+		data.setLabels(labels);
+		clientes.setData(data);
+		clientes.setOptions(options); 
 	}
 
 	public DonutChartModel getTitulos() {

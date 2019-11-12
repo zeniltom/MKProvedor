@@ -70,10 +70,19 @@ public class Clientes implements Serializable {
 		if (cliente.getCpfCnpj() != null && !cliente.getCpfCnpj().equals(""))
 			criteria.add(Restrictions.like("cpfCnpj", "%" + cliente.getCpfCnpj() + "%"));
 
- 		criteria.addOrder(Order.asc("nome"));
+		criteria.add(Restrictions.and(Restrictions.sqlRestriction("`status` NOT IN('DESATIVADO')")));
+
+		criteria.addOrder(Order.asc("nome"));
 		criteria.addOrder(Order.asc("cpfCnpj"));
 
 		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Cliente> findByDesativados() {
+		return entityManager
+				.createQuery("SELECT m FROM Cliente m WHERE status = 'DESATIVADO' ORDER BY m.nome, m.cpfCnpj")
+				.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
