@@ -50,4 +50,20 @@ public class ClienteService implements Serializable {
 	public List<Cliente> findByDesativados() {
 		return clientes.findByDesativados();
 	}
+
+	@Transactional
+	public int findByTotalClientes() {
+		return clientes.findByTotalClientes();
+	}
+
+	@Transactional
+	public int findByTotalClientesLivres() {
+		return clientes.findByTotalClientesLivres();
+	}
+
+	@Transactional
+	public int findByTotalClientesBloqueados() {
+		return clientes.findByTotalClientesBloqueados();
+	}
+
 }

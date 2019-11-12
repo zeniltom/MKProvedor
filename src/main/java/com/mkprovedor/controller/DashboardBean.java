@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.model.charts.ChartData;
@@ -15,11 +16,20 @@ import org.primefaces.model.charts.donut.DonutChartOptions;
 import org.primefaces.model.charts.optionconfig.legend.Legend;
 import org.primefaces.model.charts.optionconfig.title.Title;
 
+import com.mkprovedor.service.ClienteService;
+import com.mkprovedor.service.ParcelaService;
+
 @Named
 @ViewScoped
 public class DashboardBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private ClienteService clienteService;
+	
+	@Inject
+	private ParcelaService parcelaService;
 
 	private DonutChartModel titulos;
 	private DonutChartModel clientes;
@@ -35,6 +45,10 @@ public class DashboardBean implements Serializable {
 	}
 
 	public void montarTitulos() {
+		int parcelasTotal = parcelaService.findByTotalParcelas();
+		int parcelasAVencer = parcelaService.findByTotalParcelasAVencer();
+		int parcelasVencidas = parcelaService.findByTotalParcelasVencidas();
+
 		DonutChartOptions options = new DonutChartOptions();
 
 		Legend legend = new Legend();
@@ -56,27 +70,33 @@ public class DashboardBean implements Serializable {
 
 		titulos = new DonutChartModel();
 		ChartData data = new ChartData();
-
 		DonutChartDataSet dataSet = new DonutChartDataSet();
-		List<Number> values = new ArrayList<>();
-		values.add(8886);
-		values.add(8015);
-		values.add(871);
-		dataSet.setData(values);
 
+		List<Number> values = new ArrayList<>();
+
+		values.add(parcelasTotal);
+		values.add(parcelasAVencer);
+		values.add(parcelasVencidas);
+		dataSet.setData(values);
 		dataSet.setBackgroundColor(bgColors);
 
 		data.addChartDataSet(dataSet);
+
 		List<String> labels = new ArrayList<>();
 		labels.add("Total de títulos");
 		labels.add("Títulos à vencer");
 		labels.add("Títulos vencidos");
 		data.setLabels(labels);
+
 		titulos.setData(data);
-		titulos.setOptions(options); 
+		titulos.setOptions(options);
 	}
 
 	private void montarClientes() {
+		int clientesTotal = clienteService.findByTotalClientes();
+		int clientesLivres = clienteService.findByTotalClientesLivres();
+		int clientesBloqueados = clienteService.findByTotalClientesBloqueados();
+
 		DonutChartOptions options = new DonutChartOptions();
 
 		Legend legend = new Legend();
@@ -98,24 +118,25 @@ public class DashboardBean implements Serializable {
 
 		clientes = new DonutChartModel();
 		ChartData data = new ChartData();
-
 		DonutChartDataSet dataSet = new DonutChartDataSet();
+
 		List<Number> values = new ArrayList<>();
-		values.add(963);
-		values.add(937);
-		values.add(100);
+
+		values.add(clientesTotal);
+		values.add(clientesLivres);
+		values.add(clientesBloqueados);
 		dataSet.setData(values);
-
 		dataSet.setBackgroundColor(bgColors);
-
 		data.addChartDataSet(dataSet);
+
 		List<String> labels = new ArrayList<>();
 		labels.add("Total de clintes");
 		labels.add("Total livres");
 		labels.add("Total bloqueados");
 		data.setLabels(labels);
+
 		clientes.setData(data);
-		clientes.setOptions(options); 
+		clientes.setOptions(options);
 	}
 
 	public DonutChartModel getTitulos() {

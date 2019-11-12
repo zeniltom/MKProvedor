@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -90,6 +91,44 @@ public class Parcelas implements Serializable {
 				Restrictions.and(Restrictions.sqlRestriction("`dataPagamento` IS NULL AND `dataVencimento` <= NOW()")));
 
 		return criteria.list();
+	}
+
+	public int findByTotalParcelas() {
+		String total = "0";
+
+		Query query = entityManager.createNativeQuery("SELECT COUNT(*) FROM `parcela`");
+		Object valores = query.getSingleResult();
+
+		if (valores != null)
+			total = (String) valores.toString();
+
+		return Integer.parseInt(total);
+	}
+
+	public int findByTotalParcelasAVencer() {
+		String total = "0";
+
+		Query query = entityManager.createNativeQuery(
+				"SELECT COUNT(*) FROM `parcela` WHERE `dataPagamento` IS NULL AND `situacao` IS FALSE AND `dataVencimento` <= DATE_SUB(NOW() , INTERVAL 3 DAY)");
+		Object valores = query.getSingleResult();
+
+		if (valores != null)
+			total = (String) valores.toString();
+
+		return Integer.parseInt(total);
+	}
+
+	public int findByTotalParcelasVencidas() {
+		String total = "0";
+
+		Query query = entityManager.createNativeQuery(
+				"SELECT COUNT(*) FROM `parcela` WHERE `dataPagamento` IS NULL AND `situacao` IS FALSE AND `dataVencimento` <= NOW()");
+		Object valores = query.getSingleResult();
+
+		if (valores != null)
+			total = (String) valores.toString();
+
+		return Integer.parseInt(total);
 	}
 
 }

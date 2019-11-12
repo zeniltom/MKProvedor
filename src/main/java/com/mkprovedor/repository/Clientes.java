@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -88,5 +89,42 @@ public class Clientes implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Cliente> findAll() {
 		return entityManager.createQuery("SELECT m FROM Cliente m ORDER BY m.nome").getResultList();
+	}
+
+	public int findByTotalClientes() {
+		String total = "0";
+
+		Query query = entityManager.createNativeQuery("SELECT COUNT(*) FROM cliente");
+		Object valores = query.getSingleResult();
+
+		if (valores != null)
+			total = (String) valores.toString();
+
+		return Integer.parseInt(total);
+	}
+
+	public int findByTotalClientesLivres() {
+		String total = "0";
+
+		Query query = entityManager
+				.createNativeQuery("SELECT COUNT(*) FROM cliente WHERE `status` NOT IN ('DESATIVADO')");
+		Object valores = query.getSingleResult();
+
+		if (valores != null)
+			total = (String) valores.toString();
+
+		return Integer.parseInt(total);
+	}
+
+	public int findByTotalClientesBloqueados() {
+		String total = "0";
+
+		Query query = entityManager.createNativeQuery("SELECT COUNT(*) FROM cliente WHERE `status` = 'DESATIVADO'");
+		Object valores = query.getSingleResult();
+
+		if (valores != null)
+			total = (String) valores.toString();
+
+		return Integer.parseInt(total);
 	}
 }

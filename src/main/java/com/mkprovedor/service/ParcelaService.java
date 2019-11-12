@@ -27,8 +27,6 @@ public class ParcelaService implements Serializable {
 		parcelas.update(parcela);
 	}
 
-	
-
 	@Transactional
 	public Parcela findById(Long id) {
 		return parcelas.findById(id);
@@ -52,6 +50,21 @@ public class ParcelaService implements Serializable {
 	@Transactional
 	public List<Parcela> findByParcelaVencida(Mensalidade mensalidade) {
 		return parcelas.findByParcelaVencida(mensalidade);
+	}
+
+	@Transactional
+	public int findByTotalParcelas() {
+		return parcelas.findByTotalParcelas();
+	}
+
+	@Transactional
+	public int findByTotalParcelasAVencer() {
+		return parcelas.findByTotalParcelasAVencer();
+	}
+
+	@Transactional
+	public int findByTotalParcelasVencidas() {
+		return parcelas.findByTotalParcelasVencidas();
 	}
 
 }
