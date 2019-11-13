@@ -93,7 +93,7 @@ CREATE TABLE `cliente_backup` (
   `usuarioPPPOE` varchar(255) NOT NULL,
   `municipio_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=166 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=latin1;
 
 /*Data for the table `cliente_backup` */
 
@@ -257,6 +257,10 @@ insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descr
 insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (163,NULL,'','','841.772.540-70',NULL,'','\0','Adriana Ferreira','','123456','','mariamelo',2114);
 insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (164,NULL,'','','841.772.540-70',NULL,'','\0','Adriana Ferreira','','123456','','mariamelo',2114);
 insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (165,NULL,'','','841.772.540-70',NULL,'','\0','Adriana Ferreira','','123456','','mariamelo',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (166,NULL,'','','841.772.540-70',NULL,'','\0','Adriana Ferreira','','123456','','mariamelo',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (167,NULL,'','','841.772.540-70',NULL,'','\0','Adriana Ferreira','','123456','','mariamelo',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (168,NULL,'','','841.772.540-70',NULL,'','\0','Adriana Ferreira','','123456','','mariamelo',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (169,NULL,'','','841.772.540-70',NULL,'','\0','Adriana Ferreira','','123456','','mariamelo',2114);
 
 /*Table structure for table `contrato` */
 
@@ -5947,7 +5951,7 @@ CREATE TABLE `parcela` (
 
 /*Data for the table `parcela` */
 
-insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (1,NULL,'2019-07-10 00:00:00','1/2','\0',50,1);
+insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (1,NULL,'2019-07-12 00:00:00','1/2','\0',50,1);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (2,NULL,'2019-12-13 00:00:00','2/2','\0',50,1);
 
 /*Table structure for table `servico` */
@@ -6104,9 +6108,16 @@ DELIMITER $$
 /*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `parcela_calcular_juros` AFTER UPDATE ON `parcela` FOR EACH ROW BEGIN
 DECLARE clienteId INT;
 DECLARE diasAtraso INT;
+DECLARE juros DOUBLE;
+DECLARE multa DOUBLE;
+DECLARE jurosEMulta DOUBLE;
+	SELECT DATEDIFF(CURRENT_DATE(), `dataVencimento`) FROM `parcela` WHERE `mensalidade_id` = old.mensalidade_id LIMIT 1 
+	INTO diasAtraso;
+	set juros = (old.valor/100) * diasAtraso;
 	
+	set jurosEMulta = juros  ;
 	
-	
+	SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = juros;
 END */$$
 
 
