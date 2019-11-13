@@ -109,7 +109,7 @@ public class Parcelas implements Serializable {
 		String total = "0";
 
 		Query query = entityManager.createNativeQuery(
-				"SELECT COUNT(*) FROM `parcela` WHERE `dataPagamento` IS NULL AND `situacao` IS FALSE AND `dataVencimento` <= DATE_SUB(NOW() , INTERVAL 3 DAY)");
+				"SELECT COUNT(*) FROM `parcela` WHERE `dataPagamento` IS NULL AND `situacao` IS FALSE  AND DATEDIFF(CURRENT_DATE(), `dataVencimento`) >= 3");
 		Object valores = query.getSingleResult();
 
 		if (valores != null)
@@ -122,7 +122,7 @@ public class Parcelas implements Serializable {
 		String total = "0";
 
 		Query query = entityManager.createNativeQuery(
-				"SELECT COUNT(*) FROM `parcela` WHERE `dataPagamento` IS NULL AND `situacao` IS FALSE AND `dataVencimento` <= NOW()");
+				"SELECT COUNT(*) FROM `parcela` WHERE `dataPagamento` IS NULL AND `situacao` IS FALSE AND `dataVencimento` < CURRENT_DATE()");
 		Object valores = query.getSingleResult();
 
 		if (valores != null)
