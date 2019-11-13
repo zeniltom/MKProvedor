@@ -55,73 +55,70 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 
-			<h:panelGrid columns="1" style="width: 100%; margin-top: 10px;">
+			<p:panelGrid columns="3" id="panel" styleClass="sem-borda"
+				style="margin-top: 10px;">
 
-				<p:panelGrid columns="3" id="panel" styleClass="sem-borda">
+				<p:outputLabel value="Cliente" for="cliente" />
+				<p:inputText id="cliente"
+					value="#{chamadoCadastroBean.chamado.cliente.nome}" required="true"
+					requiredMessage="Cliente é obrigatório"
+					readonly="#{facesContext.currentPhaseId.name eq 'RENDER_RESPONSE'}"
+					size="48" />
 
-					<p:outputLabel value="Cliente" for="cliente" />
-					<p:inputText id="cliente"
-						value="#{chamadoCadastroBean.chamado.cliente.nome}"
-						required="true" requiredMessage="Cliente é obrigatório"
-						readonly="#{facesContext.currentPhaseId.name eq 'RENDER_RESPONSE'}"
-						size="48" />
+				<p:commandButton icon="fa fa-search" title="Pesquisa"
+					action="#{clienteSelecaoBean.abrirDialogo}" process="@this"
+					update="@none">
+					<p:ajax event="dialogReturn"
+						listener="#{chamadoCadastroBean.clienteSelecionado}"
+						process="@this" update="cliente" />
+					<p:resetInput target="cliente" />
+				</p:commandButton>
 
-					<p:commandButton icon="fa fa-search" title="Pesquisa"
-						action="#{clienteSelecaoBean.abrirDialogo}" process="@this"
-						update="@none">
-						<p:ajax event="dialogReturn"
-							listener="#{chamadoCadastroBean.clienteSelecionado}"
-							process="@this" update="cliente" />
-						<p:resetInput target="cliente" />
-					</p:commandButton>
+				<p:outputLabel value="Funcionário" for="funcionario" />
+				<p:inputText id="funcionario" required="true"
+					requiredMessage="Funcionário é obrigatório"
+					value="#{chamadoCadastroBean.chamado.empregado.nome}"
+					readonly="#{facesContext.currentPhaseId.name eq 'RENDER_RESPONSE'}"
+					size="48" />
 
-					<p:outputLabel value="Funcionário" for="funcionario" />
-					<p:inputText id="funcionario" required="true"
-						requiredMessage="Funcionário é obrigatório"
-						value="#{chamadoCadastroBean.chamado.empregado.nome}"
-						readonly="#{facesContext.currentPhaseId.name eq 'RENDER_RESPONSE'}"
-						size="48" />
+				<p:commandButton icon="fa fa-search" title="Pesquisa"
+					action="#{empregadoSelecaoBean.abrirDialogo}" process="@this"
+					update="@none">
+					<p:ajax event="dialogReturn"
+						listener="#{chamadoCadastroBean.empregadoSelecionado}"
+						process="@this" update="funcionario" />
+					<p:resetInput target="funcionario" />
+				</p:commandButton>
 
-					<p:commandButton icon="fa fa-search" title="Pesquisa"
-						action="#{empregadoSelecaoBean.abrirDialogo}" process="@this"
-						update="@none">
-						<p:ajax event="dialogReturn"
-							listener="#{chamadoCadastroBean.empregadoSelecionado}"
-							process="@this" update="funcionario" />
-						<p:resetInput target="funcionario" />
-					</p:commandButton>
+			</p:panelGrid>
 
-				</p:panelGrid>
+			<p:panelGrid columns="2" id="panel2" styleClass="sem-borda">
 
-				<p:panelGrid columns="2" id="panel2" styleClass="sem-borda">
+				<p:outputLabel value="Data da abertura" for="dataAbertura" />
+				<p:calendar id="dataAbertura" pattern="dd/MM/yyyy HH:mm"
+					maxlength="15" value="#{chamadoCadastroBean.chamado.dataChamado}"
+					showTodayButton="true" showOn="button" showButtonPanel="true" />
 
-					<p:outputLabel value="Data da abertura" for="dataAbertura" />
-					<p:calendar id="dataAbertura" pattern="dd/MM/yyyy HH:mm"
-						maxlength="15" value="#{chamadoCadastroBean.chamado.dataChamado}"
-						showTodayButton="true" showOn="button" showButtonPanel="true" />
+				<p:outputLabel value="Descrição" for="descricao" />
+				<p:inputTextarea id="descricao" rows="2" cols="50" maxlength="255"
+					autoResize="false" value="#{chamadoCadastroBean.chamado.descricao}" />
 
-					<p:outputLabel value="Descrição" for="descricao" />
-					<p:inputTextarea id="descricao" rows="2" cols="50" maxlength="255"
-						autoResize="false"
-						value="#{chamadoCadastroBean.chamado.descricao}" />
+				<p:outputLabel value="Situação" for="situacao" />
+				<p:inputSwitch styleClass="switch" id="situacao" offLabel="Fechado"
+					onLabel="Aberto" value="#{chamadoCadastroBean.chamado.situacao}">
+					<p:ajax update="frmCadastro" />
+				</p:inputSwitch>
 
-					<p:outputLabel value="Situação" for="situacao" />
-					<p:inputSwitch styleClass="switch" id="situacao" offLabel="Fechado"
-						onLabel="Aberto" value="#{chamadoCadastroBean.chamado.situacao}">
-						<p:ajax update="frmCadastro" />
-					</p:inputSwitch>
+				<p:outputLabel rendered="#{!chamadoCadastroBean.chamado.situacao}"
+					value="Data de encerramento" for="dataEncerramento" />
+				<p:calendar rendered="#{!chamadoCadastroBean.chamado.situacao}"
+					id="dataEncerramento" pattern="dd/MM/yyyy HH:mm" maxlength="15"
+					value="#{chamadoCadastroBean.chamado.dataEncerramento}"
+					showTodayButton="true" showOn="button" showButtonPanel="true"
+					required="true"
+					requiredMessage="Data de encerramento é obrigatória" />
 
-					<p:outputLabel rendered="#{!chamadoCadastroBean.chamado.situacao}"
-						value="Data de encerramento" for="dataEncerramento" />
-					<p:calendar rendered="#{!chamadoCadastroBean.chamado.situacao}"
-						id="dataEncerramento" pattern="dd/MM/yyyy HH:mm" maxlength="15"
-						value="#{chamadoCadastroBean.chamado.dataEncerramento}"
-						showTodayButton="true" showOn="button" showButtonPanel="true"
-						required="true"
-						requiredMessage="Data de encerramento é obrigatória" />
-
-				</p:panelGrid>
-			</h:panelGrid>
+			</p:panelGrid>
 
 			<p:confirmDialog header="Exclusão de Chamado"
 				id="confirmacaoExclusaoDialog"

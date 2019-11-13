@@ -44,30 +44,28 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 
-			<h:panelGrid columns="1" style="width: 100%; margin-top: 10px;">
+			<p:panelGrid columns="2" id="panel" styleClass="sem-borda"
+				style="margin-top: 10px;">
 
-				<p:panelGrid columns="2" id="panel" styleClass="sem-borda">
+				<p:outputLabel value="Descrição" for="descricao" />
+				<p:inputText id="descricao" maxlength="80" size="50"
+					value="#{servicoCadastroBean.servico.descricao}" />
 
-					<p:outputLabel value="Descrição" for="descricao" />
-					<p:inputText id="descricao" maxlength="80" size="50"
-						value="#{servicoCadastroBean.servico.descricao}" />
+				<p:outputLabel value="Tipo de plano" for="tipoPlano" />
+				<p:inputText id="tipoPlano" maxlength="80" size="50"
+					value="#{servicoCadastroBean.servico.tipoPlano}" />
 
-					<p:outputLabel value="Tipo de plano" for="tipoPlano" />
-					<p:inputText id="tipoPlano" maxlength="80" size="50"
-						value="#{servicoCadastroBean.servico.tipoPlano}" />
+				<p:outputLabel value="Tipo de serviço" for="tipoServico" />
+				<p:inputText id="tipoServico" maxlength="80" size="50"
+					value="#{servicoCadastroBean.servico.tipoServico}" />
 
-					<p:outputLabel value="Tipo de serviço" for="tipoServico" />
-					<p:inputText id="tipoServico" maxlength="80" size="50"
-						value="#{servicoCadastroBean.servico.tipoServico}" />
-
-					<p:outputLabel value="Valor R$" for="valorPlano" />
-					<p:inputText id="valorPlano" size="10" maxlength="10"
-						styleClass="moeda" 
-						value="#{servicoCadastroBean.servico.valorPlano}">
-						<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-					</p:inputText>
-				</p:panelGrid>
-			</h:panelGrid>
+				<p:outputLabel value="Valor R$" for="valorPlano" />
+				<p:inputText id="valorPlano" size="10" maxlength="10"
+					styleClass="moeda"
+					value="#{servicoCadastroBean.servico.valorPlano}">
+					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+				</p:inputText>
+			</p:panelGrid>
 
 			<p:confirmDialog header="Exclusão de Serviço"
 				id="confirmacaoExclusaoDialog"

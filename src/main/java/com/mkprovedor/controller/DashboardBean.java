@@ -59,7 +59,7 @@ public class DashboardBean implements Serializable {
 		title.setText("Controle de Títulos");
 		title.setFontSize(25);
 		title.setFontColor("black");
-		title.setPadding(10);
+	//	title.setPadding(10);
 		title.setDisplay(true);
 		options.setTitle(title);
 
@@ -83,9 +83,9 @@ public class DashboardBean implements Serializable {
 		data.addChartDataSet(dataSet);
 
 		List<String> labels = new ArrayList<>();
-		labels.add("Total de títulos");
-		labels.add("Títulos à vencer");
-		labels.add("Títulos vencidos");
+		labels.add("Total");
+		labels.add("À vencer");
+		labels.add("Vencidos");
 		data.setLabels(labels);
 
 		titulos.setData(data);
@@ -130,9 +130,9 @@ public class DashboardBean implements Serializable {
 		data.addChartDataSet(dataSet);
 
 		List<String> labels = new ArrayList<>();
-		labels.add("Total de clintes");
-		labels.add("Total livres");
-		labels.add("Total bloqueados");
+		labels.add("Total");
+		labels.add("Ativos");
+		labels.add("Bloqueados");
 		data.setLabels(labels);
 
 		clientes.setData(data);
