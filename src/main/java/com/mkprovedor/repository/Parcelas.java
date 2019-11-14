@@ -131,4 +131,15 @@ public class Parcelas implements Serializable {
 		return Integer.parseInt(total);
 	}
 
+	public double findByParcelaVencidaValor(Parcela parcela) {
+		String total = "0";
+
+		Query query = entityManager.createNativeQuery(" SELECT calcular_juros_e_multa(" + parcela.getId() + ")");
+		Object valores = query.getSingleResult();
+
+		if (valores != null)
+			total = (String) valores.toString();
+
+		return Double.parseDouble(total);
+	}
 }

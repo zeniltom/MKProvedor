@@ -67,4 +67,8 @@ public class ParcelaService implements Serializable {
 		return parcelas.findByTotalParcelasVencidas();
 	}
 
+	public double findByParcelaVencidaValor(Parcela parcela) {
+ 		return parcelas.findByParcelaVencidaValor(parcela);
+	}
+
 }

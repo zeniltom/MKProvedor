@@ -189,6 +189,9 @@
 				widgetVar="pagamento" resizable="false" draggable="false"
 				closable="false" width="440">
 
+				<p:ajax event="open" update="troco status atrasada"
+					listener="#{boletoPesquisaBean.calcularJurosEMulta()}" />
+
 				<p:panelGrid columns="2" id="painelInfoPag" style="width: 100%"
 					columnClasses="rotulo">
 
@@ -231,9 +234,9 @@
 						styleClass="moeda pagamento"
 						value="#{boletoPesquisaBean.valorPago}">
 						<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-						<p:ajax event="change" update="troco status btFinalizar"
+						<p:ajax event="change" update="troco status atrasada btFinalizar"
 							listener="#{boletoPesquisaBean.calcular}" />
-						<p:ajax event="blur" update="troco status btFinalizar"
+						<p:ajax event="blur" update="troco status atrasada btFinalizar"
 							listener="#{boletoPesquisaBean.calcular}" />
 					</p:inputText>
 
@@ -247,7 +250,12 @@
 						<p:outputPanel id="status">
 							<p:outputLabel style="font-weight: bold; color: red;"
 								rendered="#{!boletoPesquisaBean.retorno}"
-								value="Aviso: O 'Dinheiro Pago' é menor que o 'Valor do Plano'!" />
+								value="AVISO: O 'DINHEIRO PAGO' É MENOR QUE O 'VALOR DO PLANO'!" />
+						</p:outputPanel>
+						<p:outputPanel id="atrasada">
+							<p:outputLabel style="font-weight: bold; color: red;"
+								 
+								value="PARCELA VENCIDA #{boletoPesquisaBean.valorJurosEMulta}" />
 						</p:outputPanel>
 					</f:facet>
 				</p:panelGrid>

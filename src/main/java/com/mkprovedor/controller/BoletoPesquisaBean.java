@@ -42,10 +42,13 @@ public class BoletoPesquisaBean implements Serializable {
 	private double valorPago;
 	private double troco;
 	private boolean retorno;
+	private boolean vencida;
 	private boolean desativarBtPagar;
 
 	private List<Mensalidade> mensalidades;
 	private List<Parcela> parcelas;
+
+	private double valorJurosEMulta;
 
 	public BoletoPesquisaBean() {
 		if (this.parcelaSelecionada == null)
@@ -58,6 +61,7 @@ public class BoletoPesquisaBean implements Serializable {
 		this.troco = 0;
 		this.valorPago = 0;
 		this.retorno = true;
+		this.vencida = false;
 		parcelas = new ArrayList<>();
 	}
 
@@ -99,6 +103,12 @@ public class BoletoPesquisaBean implements Serializable {
 			retorno = false;
 
 		return retorno;
+	}
+
+	public double calcularJurosEMulta() {
+		valorJurosEMulta = parcelaService.findByParcelaVencidaValor(this.parcelaSelecionada);
+
+		return valorJurosEMulta;
 	}
 
 	public boolean validacao() {
@@ -151,6 +161,14 @@ public class BoletoPesquisaBean implements Serializable {
 		this.retorno = retorno;
 	}
 
+	public boolean isVencida() {
+		return vencida;
+	}
+
+	public void setVencida(boolean vencida) {
+		this.vencida = vencida;
+	}
+
 	public void setValorPago(double valorPago) {
 		this.valorPago = valorPago;
 	}
@@ -169,6 +187,10 @@ public class BoletoPesquisaBean implements Serializable {
 
 	public void setDesativarBtPagar(boolean desativarBtPagar) {
 		this.desativarBtPagar = desativarBtPagar;
+	}
+
+	public double getValorJurosEMulta() {
+		return valorJurosEMulta;
 	}
 
 	public List<Mensalidade> getMensalidades() {
