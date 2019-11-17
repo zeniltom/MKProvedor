@@ -31,169 +31,168 @@
 		<h:form id="frmPesquisa">
 			<h1 class="aw-page-title">Boletos</h1>
 
+			<style>
+.ui-growl {
+	top: 8%;
+}
+
+.ui-growl-title {
+	text-align: justify;
+}
+</style>
+
 			<p:autoUpdate />
-			<p:growl closable="true" />
+			<p:growl closable="true" sticky="true" />
 
 			<p:toolbar>
 				<p:toolbarGroup>
 					<p:commandButton value="Atualizar" icon="fa fa-refresh"
 						action="#{boletoPesquisaBean.pesquisar}" update="form" />
 				</p:toolbarGroup>
-
-				<p:toolbarGroup align="right">
-					<p:button value="Novo Boleto" icon="fa fa-plus"
-						outcome="/boleto/cadastro" />
-				</p:toolbarGroup>
 			</p:toolbar>
 		</h:form>
 
 		<h:form id="form">
 
-			<p:panelGrid columns="1" id="panel" styleClass="sem-borda">
+			<p:panelGrid columns="2" id="panel1" styleClass="sem-borda">
 
-				<p:panelGrid columns="2" id="panel2" styleClass="sem-borda">
+				<p:panel style="width: 100%; height: 380px;">
+					<p:dataTable id="mensalidadesTable" scrollable="true"
+						scrollHeight="500" value="#{boletoPesquisaBean.mensalidades}"
+						var="mensalidade" emptyMessage="Nenhuma mensalidade encontrada"
+						rows="10" paginator="true" paginatorAlwaysVisible="false"
+						paginatorPosition="bottom" rowKey="#{mensalidade}"
+						rowStyleClass="#{!boletoPesquisaBean.mensalidadeEmDia(mensalidade)? 'pagamentoAtrasado' : 'boletos'}"
+						selectionMode="single" styleClass="abertos">
 
-					<p:panel style="width: 100%; height: 380px;">
-						<p:dataTable id="mensalidadesTable" scrollable="true"
-							scrollHeight="500" value="#{boletoPesquisaBean.mensalidades}"
-							var="mensalidade" emptyMessage="Nenhuma mensalidade encontrada"
-							rows="10" paginator="true" paginatorAlwaysVisible="true"
-							paginatorPosition="bottom" rowKey="#{mensalidade}"
-							rowStyleClass="#{!boletoPesquisaBean.mensalidadeEmDia(mensalidade)? 'pagamentoAtrasado' : 'boletos'}"
-							selectionMode="single" styleClass="abertos">
+						<f:facet name="header">
+							<p:outputLabel
+								style="text-align: left; font-size: 16px; padding: 5px;"
+								value="Clientes - Mensalidades" />
+						</f:facet>
 
-							<f:facet name="header">
-								<p:outputLabel
-									style="text-align: left; font-size: 16px; padding: 5px;"
-									value="Clientes - Mensalidades" />
-							</f:facet>
+						<p:ajax event="rowSelect"
+							listener="#{boletoPesquisaBean.onRowMensalidadeSelect}"
+							update="form:parcelasTable form:informacao form:btPagar" />
 
-							<p:ajax event="rowSelect"
-								listener="#{boletoPesquisaBean.onRowMensalidadeSelect}"
-								update="form:parcelasTable form:informacao form:btPagar" />
+						<p:column headerText="Cód."
+							style="text-align: center; width: 30px"
+							sortBy="#{mensalidade.id}">
+							<h:outputText value="#{mensalidade.id}" />
+						</p:column>
 
-							<p:column headerText="Cód."
-								style="text-align: center; width: 30px"
-								sortBy="#{mensalidade.id}">
-								<h:outputText value="#{mensalidade.id}" />
-							</p:column>
+						<p:column headerText="Nome" sortBy="#{mensalidade.cliente.nome}">
+							<h:outputText id="nome" value="#{mensalidade.cliente.nome}" />
+						</p:column>
 
-							<p:column headerText="Nome" sortBy="#{mensalidade.cliente.nome}">
-								<h:outputText id="nome" value="#{mensalidade.cliente.nome}" />
+						<p:column headerText="CPF/CNPJ"
+							style="text-align: center; width: 110px"
+							sortBy="#{cliente.cpfCnpj}">
+							<h:outputText value="#{mensalidade.cliente.cpfCnpj}" />
+						</p:column>
 
-								<p:tooltip for="nome" rendered="true" position="top"
-									value="Existem parcelas atrasadas!" styleClass="atrasada" />
-							</p:column>
+						<p:column headerText="Parcelas" sortBy="#{mensalidade.qtdParcela}"
+							style="text-align: center; width: 48px">
+							<h:outputText value="#{mensalidade.qtdParcela}" />
+						</p:column>
 
-							<p:column headerText="CPF/CNPJ"
-								style="text-align: center; width: 110px"
-								sortBy="#{cliente.cpfCnpj}">
-								<h:outputText value="#{mensalidade.cliente.cpfCnpj}" />
-							</p:column>
+						<p:column headerText="Valor" sortBy="#{mensalidade.valor}"
+							style="text-align: center; width: 55px">
+							<h:outputText value="#{mensalidade.valor}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
 
-							<p:column headerText="Parcelas"
-								style="text-align: center; width: 48px">
-								<h:outputText value="#{mensalidade.qtdParcela}" />
-							</p:column>
+				<p:panel style="width: 100%; height: 380px;">
+					<p:dataTable id="parcelasTable" scrollable="true"
+						scrollHeight="500" value="#{boletoPesquisaBean.parcelas}"
+						var="parcela" emptyMessage="Nenhuma parcela encontrada" rows="10"
+						paginator="true" paginatorAlwaysVisible="false"
+						paginatorPosition="bottom" rowKey="#{parcela}"
+						rowStyleClass="#{!boletoPesquisaBean.parcelaEmDia(parcela)? 'pagamentoAtrasado' : 'boletos'}"
+						selectionMode="single" styleClass="fechados">
 
-							<p:column headerText="Valor"
-								style="text-align: center; width: 55px">
-								<h:outputText value="#{mensalidade.valor}">
-									<f:convertNumber type="currency" />
-								</h:outputText>
-							</p:column>
-						</p:dataTable>
-					</p:panel>
+						<p:ajax event="rowSelect"
+							listener="#{boletoPesquisaBean.onRowParcelaSelect}"
+							update="form:parcelasTable form:informacao form:btPagar" />
 
-					<p:panel style="width: 100%; height: 380px;">
-						<p:dataTable id="parcelasTable" scrollable="true"
-							scrollHeight="500" value="#{boletoPesquisaBean.parcelas}"
-							var="parcela" emptyMessage="Nenhuma parcela encontrada" rows="10"
-							paginator="true" paginatorAlwaysVisible="true"
-							paginatorPosition="bottom" rowKey="#{parcela}"
-							rowStyleClass="#{!boletoPesquisaBean.parcelaEmDia(parcela)? 'pagamentoAtrasado' : 'boletos'}"
-							selectionMode="single" styleClass="fechados">
+						<f:facet name="header">
+							<p:outputLabel
+								style="text-align: left; font-size: 16px; padding: 5px;"
+								value="Parcelas" />
+						</f:facet>
 
-							<p:ajax event="rowSelect"
-								listener="#{boletoPesquisaBean.onRowParcelaSelect}"
-								update="form:parcelasTable form:informacao form:btPagar" />
+						<p:column headerText="Cód."
+							style="text-align: center; width: 30px" sortBy="#{parcela.id}">
+							<h:outputText value="#{parcela.id}" />
+						</p:column>
 
-							<f:facet name="header">
-								<p:outputLabel
-									style="text-align: left; font-size: 16px; padding: 5px;"
-									value="Parcelas" />
-							</f:facet>
+						<p:column headerText="Parcela"
+							style="text-align: center; width: 36px">
+							<h:outputText value="#{parcela.parcela}" />
+						</p:column>
 
-							<p:column headerText="Cód."
-								style="text-align: center; width: 30px" sortBy="#{parcela.id}">
-								<h:outputText value="#{parcela.id}" />
-							</p:column>
+						<p:column headerText="Valor"
+							style="text-align: center; width: 60px">
+							<h:outputText value="#{parcela.valor}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
 
-							<p:column headerText="Parcela"
-								style="text-align: center; width: 36px">
-								<h:outputText value="#{parcela.parcela}" />
-							</p:column>
+						<p:column headerText="Data Vencimento"
+							style="text-align: center; width: 75px">
+							<h:outputText value="#{parcela.dataVencimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
 
-							<p:column headerText="Valor"
-								style="text-align: center; width: 60px">
-								<h:outputText value="#{parcela.valor}">
-									<f:convertNumber type="currency" />
-								</h:outputText>
-							</p:column>
+						<p:column headerText="Situação"
+							style="text-align: center; width: 50px">
 
-							<p:column headerText="Data Vencimento"
-								style="text-align: center; width: 75px">
-								<h:outputText value="#{parcela.dataVencimento}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</p:column>
+							<p:outputPanel rendered="#{parcela.situacao}">
+								<i class="fa fa-check" style="font-size: 24px; color: green"
+									title="Paga" />
+							</p:outputPanel>
 
-							<p:column headerText="Situação"
-								style="text-align: center; width: 50px">
+							<p:outputPanel rendered="#{!parcela.situacao}">
+								<i class="fa fa-close" style="font-size: 24px; color: red"
+									title="Pendente" />
+							</p:outputPanel>
+						</p:column>
 
-								<p:outputPanel rendered="#{parcela.situacao}">
-									<i class="fa fa-check" style="font-size: 24px; color: green"
-										title="Paga" />
-								</p:outputPanel>
-
-								<p:outputPanel rendered="#{!parcela.situacao}">
-									<i class="fa fa-close" style="font-size: 24px; color: red"
-										title="Pendente" />
-								</p:outputPanel>
-							</p:column>
-
-						</p:dataTable>
-					</p:panel>
-				</p:panelGrid>
-
-				<p:toolbar>
-					<p:toolbarGroup>
-						<p:outputLabel id="informacao"
-							value="Cliente: #{boletoPesquisaBean.cliente.nome} - Parcela: #{boletoPesquisaBean.parcelaSelecionada.parcela}"
-							style="padding: 10px; font-weight: bold; font-size: 18px;" />
-					</p:toolbarGroup>
-
-					<p:toolbarGroup align="right">
-						<p:commandButton value="PAGAR PARCELA" icon="fa fa-money"
-							id="btPagar" styleClass="btConfirmar"
-							disabled="#{boletoPesquisaBean.desativarBtPagar}"
-							style="padding: 5px 10px 5px 10px; margin-right: 10px; font-weight: bold"
-							oncomplete="PF('pagamento').show()" process="@this"
-							update="pagamentoDialog"
-							actionListener="#{boletoPesquisaBean.limpar}" />
-					</p:toolbarGroup>
-				</p:toolbar>
+					</p:dataTable>
+				</p:panel>
 			</p:panelGrid>
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:outputLabel id="informacao"
+						value="Cliente: #{boletoPesquisaBean.cliente.nome} | #{boletoPesquisaBean.parcelaSelecionada}"
+						style="padding: 10px; font-weight: bold; font-size: 18px;" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right" id="pagar">
+					<p:commandButton value="PAGAR PARCELA" icon="fa fa-money"
+						id="btPagar" styleClass="btConfirmar"
+						disabled="#{boletoPesquisaBean.desativarBtPagar}"
+						style="padding: 5px 10px 5px 10px; margin-right: 10px; font-weight: bold"
+						oncomplete="PF('pagamento').show()" process="@this"
+						update="pagamentoDialog"
+						actionListener="#{boletoPesquisaBean.limpar}" />
+				</p:toolbarGroup>
+			</p:toolbar>
 
 			<p:dialog header="Pagamento" id="pagamentoDialog" modal="true"
 				widgetVar="pagamento" resizable="false" draggable="false"
-				closable="false" width="440">
+				closable="false" responsive="true">
 
-				<p:ajax event="open" update="troco status atrasada"
+				<p:ajax event="open"
+					update="troco jurosMulta valorCobrado status atrasada"
 					listener="#{boletoPesquisaBean.calcularJurosEMulta()}" />
 
-				<p:panelGrid columns="2" id="painelInfoPag" style="width: 100%"
-					columnClasses="rotulo">
+				<p:panelGrid columns="2" id="painelInfoPag" columnClasses="rotulo">
 
 					<p:outputLabel value="Cliente" styleClass="infoPag" />
 					<p:outputLabel value="#{boletoPesquisaBean.cliente.nome}"
@@ -216,15 +215,25 @@
 						value="#{boletoPesquisaBean.parcelaSelecionada.situacao? 'PAGA' : 'PENDENTE'}"
 						styleClass="infoPag" />
 
-				</p:panelGrid>
-
-				<p:panelGrid columns="2" id="painelPag"
-					style="width: 100%; margin-top: 10px" columnClasses="rotulo">
-
-					<p:outputLabel value="Valor do plano" styleClass="pagamento" />
-					<p:outputLabel maxlength="10" styleClass="pagamento"
+					<p:outputLabel value="Valor do plano (=)" styleClass="pagamento" />
+					<p:outputLabel styleClass="pagamento"
 						value="#{boletoPesquisaBean.parcelaSelecionada.valor}"
 						disabled="true" style="pagamento">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>
+
+					<p:outputLabel value="Juros/Multa (+)" for="jurosMulta"
+						styleClass="pagamento" />
+					<p:outputLabel id="jurosMulta" styleClass="pagamento"
+						value="#{boletoPesquisaBean.valorJurosEMulta}" style="color: red">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>
+
+					<p:outputLabel value="Valor cobrado (=)" for="valorCobrado"
+						styleClass="pagamento" />
+					<p:outputLabel id="valorCobrado" maxlength="8"
+						styleClass="pagamento"
+						value="#{boletoPesquisaBean.valorJurosEMultaCobrado}"  style="color: #000066">
 						<f:convertNumber type="currency" />
 					</p:outputLabel>
 
@@ -234,9 +243,11 @@
 						styleClass="moeda pagamento"
 						value="#{boletoPesquisaBean.valorPago}">
 						<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-						<p:ajax event="change" update="troco status atrasada btFinalizar"
+						<p:ajax event="change"
+							update="troco jurosMulta status atrasada btFinalizar"
 							listener="#{boletoPesquisaBean.calcular}" />
-						<p:ajax event="blur" update="troco status atrasada btFinalizar"
+						<p:ajax event="blur"
+							update="troco jurosMulta status atrasada btFinalizar"
 							listener="#{boletoPesquisaBean.calcular}" />
 					</p:inputText>
 
@@ -247,24 +258,27 @@
 					</p:outputLabel>
 
 					<f:facet name="footer">
+
 						<p:outputPanel id="status">
 							<p:outputLabel style="font-weight: bold; color: red;"
-								rendered="#{!boletoPesquisaBean.retorno}"
-								value="AVISO: O 'DINHEIRO PAGO' É MENOR QUE O 'VALOR DO PLANO'!" />
+								rendered="#{!boletoPesquisaBean.valorPagoMaior}"
+								value="* O DINHEIRO PAGO É MENOR QUE O VALOR DO PLANO." />
 						</p:outputPanel>
+
 						<p:outputPanel id="atrasada">
-							<p:outputLabel style="font-weight: bold; color: red;"
-								 
-								value="PARCELA VENCIDA #{boletoPesquisaBean.valorJurosEMulta}" />
+							<p:outputLabel
+								rendered="#{boletoPesquisaBean.valorJurosEMulta > 0 }"
+								style="font-weight: bold; color: red;"
+								value="* BOLETO ATRASADO. HAVERÁ COBRANÇAS ADICIONAIS." />
 						</p:outputPanel>
 					</f:facet>
 				</p:panelGrid>
 
 				<div style="float: right; margin-top: 20px">
-					<p:button value="CANCELAR" icon="fa fa-times-circle"
-						styleClass="btCancelar"
-						onclick="PF('pagamento').hide(); return false;"
-						style="padding: 5px; margin-right: 10px; font-weight: bold" />
+					<p:commandButton value="CANCELAR" icon="fa fa-times-circle"
+						styleClass="btCancelar" oncomplete="PF('pagamento').hide();"
+						style="padding: 5px; margin-right: 10px; font-weight: bold"
+						update="parcelasTable" />
 
 					<p:commandButton id="btFinalizar" value="FINALIZAR"
 						icon="fa fa-money" disabled="#{!boletoPesquisaBean.validacao()}"

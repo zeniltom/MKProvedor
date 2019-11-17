@@ -27,7 +27,8 @@
 				</p:toolbarGroup>
 
 				<p:toolbarGroup style="margin-left: 10px">
-					<p:inputText id="descricao" size="60" placeholder="Ex.: Plano básico"
+					<p:inputText id="descricao" size="60"
+						placeholder="Ex.: Plano básico"
 						value="#{servicoPesquisaBean.servico.descricao}" />
 				</p:toolbarGroup>
 
@@ -56,14 +57,12 @@
 					<h:outputText value="#{servico.descricao}" />
 				</p:column>
 
-				<p:column headerText="Plano"
-					style="text-align: center"
+				<p:column headerText="Plano" style="text-align: center"
 					sortBy="#{servico.tipoPlano}">
 					<h:outputText value="#{servico.tipoPlano}" />
 				</p:column>
 
-				<p:column headerText="Serviço"
-					style="text-align: center;"
+				<p:column headerText="Serviço" style="text-align: center;"
 					sortBy="#{servico.tipoServico}">
 					<h:outputText value="#{servico.tipoServico}" />
 				</p:column>
@@ -71,7 +70,9 @@
 				<p:column headerText="Valor R$"
 					style="text-align: center; width: 130px"
 					sortBy="#{servico.valorPlano}">
-					<h:outputText value="R$ #{servico.valorPlano}" />
+					<h:outputText value="#{servico.valorPlano}">
+						<f:convertNumber type="currency" />
+					</h:outputText>
 				</p:column>
 
 				<p:column style="text-align: center; width: 200px"

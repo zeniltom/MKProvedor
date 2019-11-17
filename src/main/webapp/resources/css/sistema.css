@@ -350,7 +350,6 @@ ui-inputswitch-on ui-state-active {
 }
 
 .pagamentoAtrasado {
-	text-transform: uppercase !important;
 	font-family: Arial;
 	font-weight: bold;
 	background: #ffc1c1;

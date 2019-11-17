@@ -2,8 +2,11 @@
 package com.mkprovedor.model;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Currency;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,9 +48,11 @@ public class Historico implements Serializable {
 	@Override
 	public String toString() {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		NumberFormat moeda = NumberFormat.getCurrencyInstance();
+		moeda.setCurrency(Currency.getInstance(new Locale("pt", "BR")));
 
 		return "Pagamento Nº: " + id + " para a Parcela " + parcela.getParcela() + " realizado "
-				+ format.format(dataPagamento) + " no Valor de R$ " + valor + " para " + cliente;
+				+ format.format(dataPagamento) + " no Valor de R$ " + moeda.format(valor) + " para " + cliente;
 	}
 
 	public Long getId() {

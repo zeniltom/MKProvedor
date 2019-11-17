@@ -1,7 +1,11 @@
 package com.mkprovedor.model;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Currency;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,6 +49,16 @@ public class Parcela implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "mensalidade_id", nullable = false)
 	private Mensalidade mensalidade;
+
+	@Override
+	public String toString() {
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		NumberFormat moeda = NumberFormat.getCurrencyInstance();
+		moeda.setCurrency(Currency.getInstance(new Locale("pt", "BR")));
+
+		return "Parcela " + parcela + "Valor de R$ " + moeda.format(valor) + " Vencimento: [" + format.format(dataVencimento)
+				+ "]";
+	}
 
 	public Long getId() {
 		return id;

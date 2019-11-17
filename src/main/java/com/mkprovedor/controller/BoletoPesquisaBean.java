@@ -37,11 +37,12 @@ public class BoletoPesquisaBean implements Serializable {
 
 	private Cliente cliente;
 
+	private Mensalidade mensalidadeSelecionada;
 	private Parcela parcelaSelecionada;
 
 	private double valorPago;
 	private double troco;
-	private boolean retorno;
+	private boolean valorPagoMaior;
 	private boolean vencida;
 	private boolean desativarBtPagar;
 
@@ -49,6 +50,7 @@ public class BoletoPesquisaBean implements Serializable {
 	private List<Parcela> parcelas;
 
 	private double valorJurosEMulta;
+	private double valorJurosEMultaCobrado;
 
 	public BoletoPesquisaBean() {
 		if (this.parcelaSelecionada == null)
@@ -60,13 +62,18 @@ public class BoletoPesquisaBean implements Serializable {
 	public void limpar() {
 		this.troco = 0;
 		this.valorPago = 0;
-		this.retorno = true;
+		this.valorPagoMaior = true;
 		this.vencida = false;
+		this.valorJurosEMulta = 0;
+		this.valorJurosEMultaCobrado = 0;
 		parcelas = new ArrayList<>();
 	}
 
 	public void pesquisar() {
 		mensalidades = mensalidadeService.findAll();
+
+		parcelas = parcelaService.findByMensalidade(this.mensalidadeSelecionada);
+
 	}
 
 	public void pagarParcela() {
@@ -94,21 +101,43 @@ public class BoletoPesquisaBean implements Serializable {
 
 	public boolean calcular() {
 		this.troco = 0;
-		this.retorno = true;
+		this.valorPagoMaior = true;
 
-		if (this.valorPago >= this.parcelaSelecionada.getValor()) {
-			this.troco = this.valorPago - parcelaSelecionada.getValor();
-			retorno = true;
-		} else
-			retorno = false;
+		if (this.valorJurosEMulta > 0) {
 
-		return retorno;
+			double jurosEMultasCobrados = this.valorJurosEMulta + this.parcelaSelecionada.getValor();
+
+			if (this.valorPago >= jurosEMultasCobrados) {
+				this.troco = this.valorPago - jurosEMultasCobrados;
+				valorPagoMaior = true;
+			} else
+				valorPagoMaior = false;
+
+		} else {
+
+			valorPagoMaior = false;
+
+			if (this.valorPago >= this.parcelaSelecionada.getValor()) {
+				this.troco = this.valorPago - parcelaSelecionada.getValor();
+				valorPagoMaior = true;
+
+			} else
+				valorPagoMaior = false;
+		}
+
+		return valorPagoMaior;
 	}
 
-	public double calcularJurosEMulta() {
+	public void calcularJurosEMulta() {
 		valorJurosEMulta = parcelaService.findByParcelaVencidaValor(this.parcelaSelecionada);
+		calcularJurosEMultaCobrado();
+	}
 
-		return valorJurosEMulta;
+	public void calcularJurosEMultaCobrado() {
+		double valor = this.parcelaSelecionada.getValor();
+
+		if (valorJurosEMulta > 0)
+			valorJurosEMultaCobrado = valorJurosEMulta + valor;
 	}
 
 	public boolean validacao() {
@@ -128,7 +157,9 @@ public class BoletoPesquisaBean implements Serializable {
 
 	public void onRowMensalidadeSelect(SelectEvent event) {
 		Mensalidade mensalidade = (Mensalidade) event.getObject();
-		parcelas = parcelaService.findByMensalidade(mensalidade);
+
+		this.mensalidadeSelecionada = mensalidade != null ? mensalidade : null;
+
 		this.cliente = mensalidade != null ? mensalidade.getCliente() : null;
 
 		desativarBtPagar = true;
@@ -149,16 +180,24 @@ public class BoletoPesquisaBean implements Serializable {
 		return parcelaSelecionada;
 	}
 
+	public Mensalidade getMensalidadeSelecionada() {
+		return mensalidadeSelecionada;
+	}
+
+	public void setMensalidadeSelecionada(Mensalidade mensalidadeSelecionada) {
+		this.mensalidadeSelecionada = mensalidadeSelecionada;
+	}
+
 	public double getValorPago() {
 		return valorPago;
 	}
 
-	public boolean getRetorno() {
-		return retorno;
+	public boolean isValorPagoMaior() {
+		return valorPagoMaior;
 	}
 
-	public void setRetorno(boolean retorno) {
-		this.retorno = retorno;
+	public void setValorPagoMaior(boolean valorPagoMaior) {
+		this.valorPagoMaior = valorPagoMaior;
 	}
 
 	public boolean isVencida() {
@@ -191,6 +230,10 @@ public class BoletoPesquisaBean implements Serializable {
 
 	public double getValorJurosEMulta() {
 		return valorJurosEMulta;
+	}
+
+	public double getValorJurosEMultaCobrado() {
+		return valorJurosEMultaCobrado;
 	}
 
 	public List<Mensalidade> getMensalidades() {
