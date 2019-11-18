@@ -2,6 +2,9 @@
 package com.mkprovedor.model;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +43,10 @@ public class Servico implements Serializable {
 
 	@Override
 	public String toString() {
-		String servico = descricao + " [" + tipoPlano + "] - " + tipoServico + " | R$ " + valorPlano;
+		NumberFormat moeda = NumberFormat.getCurrencyInstance();
+		moeda.setCurrency(Currency.getInstance(new Locale("pt", "BR")));
+
+		String servico = descricao + " [" + tipoPlano + "] - " + tipoServico + " | R$ " + moeda.format(valorPlano);
 		return servico.toUpperCase();
 	}
 

@@ -34,8 +34,8 @@ public class EmpregadoSelecaoBean implements Serializable {
 	public void abrirDialogo() {
 		Map<String, Object> config = new HashMap<String, Object>();
 		config.put("modal", true);
-		config.put("width", 640);
-		config.put("height", 340);
+		config.put("width", 840);
+		config.put("height", 420);
 		config.put("draggable", false);
 		config.put("resizable", false);
 		config.put("contentWidth", "100%");

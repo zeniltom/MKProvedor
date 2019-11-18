@@ -51,7 +51,7 @@
 		<h:form id="form">
 			<p:dataTable id="clientesTable"
 				value="#{clientePesquisaBean.clientesFiltrados}" var="cliente"
-				style="margin-top: 5px;" emptyMessage="Nenhum cliente encontrado"
+				style="margin-top: 10px;" emptyMessage="Nenhum cliente encontrado"
 				rows="8" paginator="true" paginatorAlwaysVisible="false"
 				paginatorPosition="bottom" rowKey="#{cliente}" styleClass="ativos"
 				rowStyleClass="#{clientePesquisaBean.status(cliente)}"
@@ -95,7 +95,7 @@
 					<h:outputText value="#{cliente.status}" />
 				</p:column>
 
-				<p:column style="text-align: center; width: 200px"
+				<p:column style="text-align: center;"
 					headerText="Ações">
 					<p:button outcome="/cliente/cadastro" value="Editar"
 						icon="fa fa-pencil-square-o">
@@ -106,6 +106,13 @@
 						styleClass="btCancelar"
 						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
 						update=":form:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener value="#{cliente}"
+							target="#{clientePesquisaBean.clienteSelecionado}" />
+					</p:commandButton>
+
+					<p:commandButton value="Contrato" icon="fa fa-print"
+						styleClass="btCancelar"
+						action="#{clientePesquisaBean.imprimirContrato}" ajax="false">
 						<f:setPropertyActionListener value="#{cliente}"
 							target="#{clientePesquisaBean.clienteSelecionado}" />
 					</p:commandButton>
@@ -146,10 +153,9 @@
 						value="#{clientePesquisaBean.contratoCliente(cliente)}" />
 				</p:column>
 
-
 				<p:column headerText="Data Desativação"
 					style="text-align: center; width: 125px"
-					sortBy="#{cliente.dataDesativacao}"> 
+					sortBy="#{cliente.dataDesativacao}">
 					<h:outputText value="#{cliente.dataDesativacao}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
@@ -160,7 +166,7 @@
 					<h:outputText value="#{cliente.status}" />
 				</p:column>
 
-				<p:column style="text-align: center; width: 200px"
+				<p:column style="text-align: center;"
 					headerText="Ações">
 					<p:button outcome="/cliente/cadastro" value="Editar"
 						icon="fa fa-pencil-square-o">
@@ -171,6 +177,13 @@
 						styleClass="btCancelar"
 						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
 						update=":form:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener value="#{cliente}"
+							target="#{clientePesquisaBean.clienteSelecionado}" />
+					</p:commandButton>
+
+					<p:commandButton value="Contrato" icon="fa fa-print"
+						styleClass="btCancelar"
+						action="#{clientePesquisaBean.imprimirContrato}" ajax="false">
 						<f:setPropertyActionListener value="#{cliente}"
 							target="#{clientePesquisaBean.clienteSelecionado}" />
 					</p:commandButton>

@@ -88,11 +88,12 @@ public class BoletoPesquisaBean implements Serializable {
 			historico.setCliente(this.cliente);
 			historico.setParcela(this.parcelaSelecionada);
 			historico.setDataPagamento(this.parcelaSelecionada.getDataPagamento());
-			historico.setValor(this.parcelaSelecionada.getValor());
+			historico.setValor(this.valorPago);
 
 			historicoService.createNew(historico);
 
 			FacesUtil.addInfoMessage(historico.toString());
+			System.out.println(historico.toString());
 		} catch (Exception e) {
 			FacesUtil.addErrorMessage("Erro ao realizar o pagamento da Parcela!");
 			e.printStackTrace();
@@ -159,6 +160,7 @@ public class BoletoPesquisaBean implements Serializable {
 		Mensalidade mensalidade = (Mensalidade) event.getObject();
 
 		this.mensalidadeSelecionada = mensalidade != null ? mensalidade : null;
+		this.parcelaSelecionada = null;
 
 		this.cliente = mensalidade != null ? mensalidade.getCliente() : null;
 

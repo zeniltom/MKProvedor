@@ -1,17 +1,25 @@
 package com.mkprovedor.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletResponse;
 
 import com.mkprovedor.model.Cliente;
 import com.mkprovedor.model.Contrato;
 import com.mkprovedor.service.ClienteService;
 import com.mkprovedor.service.ContratoService;
+import com.mkprovedor.service.RelatorioService;
 import com.mkprovedor.util.jsf.FacesUtil;
+
+import net.sf.jasperreports.engine.JRException;
 
 @Named
 @ViewScoped
@@ -20,10 +28,23 @@ public class ClientePesquisaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
+	@PersistenceContext(unitName = "PedidoPU")
+	private EntityManager manager;
+
+	@Inject
+	private FacesContext facesContext;
+
+	@Inject
+	private HttpServletResponse response;
+
+	@Inject
 	private ClienteService clienteService;
 
 	@Inject
 	private ContratoService contratoService;
+
+	@Inject
+	private RelatorioService relatorioService;
 
 	private Cliente cliente;
 
@@ -50,6 +71,11 @@ public class ClientePesquisaBean implements Serializable {
 			FacesUtil.addErrorMessage(
 					"Não foi possível excluir " + clienteSelecionado.getNome() + ", consulte o suporte!");
 		}
+	}
+
+	public void imprimirContrato() throws IOException, JRException {
+		relatorioService.gerarContrato(this.facesContext, this.response, this.manager,
+				this.clienteSelecionado);
 	}
 
 	public void pesquisar() {

@@ -53,11 +53,14 @@ public class Parcela implements Serializable {
 	@Override
 	public String toString() {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		String status = "";
+		status = situacao && dataPagamento != null ? " [PAGA]" : " [PENDENTE]";
+
 		NumberFormat moeda = NumberFormat.getCurrencyInstance();
 		moeda.setCurrency(Currency.getInstance(new Locale("pt", "BR")));
 
-		return "Parcela " + parcela + "Valor de R$ " + moeda.format(valor) + " Vencimento: [" + format.format(dataVencimento)
-				+ "]";
+		return "Parcela " + parcela + " | Valor R$ " + moeda.format(valor) + " | Venc.: "
+				+ format.format(dataVencimento) + status;
 	}
 
 	public Long getId() {

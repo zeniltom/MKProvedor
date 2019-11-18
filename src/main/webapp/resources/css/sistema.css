@@ -315,11 +315,6 @@ ui-inputswitch-on ui-state-active {
 	background: #ff0000;
 }
 
-.boletos{
-	font-family: Arial;
-	font-weight: bold;
- }
- 
 .ui-widget-content .ui-datatable-empty-message {
 	font-family: Arial;
  	font-size: 14px;
@@ -341,6 +336,12 @@ ui-inputswitch-on ui-state-active {
 	font-weight: bold;
 }
 
+.boletos{
+	font-family: Arial;
+	font-weight: bold;
+	height: 40px;
+ }
+ 
 .atrasada {
 	padding: 3px;
 	font-weight: bold !important;

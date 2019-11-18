@@ -22,15 +22,13 @@ public class HistoricoService implements Serializable {
 		historicos.persist(historico);
 	}
 
-	
-
-	
-
-	
-
 	@Transactional
-	public List<Historico> findByHistoricoDia(Date date) {
-		return historicos.findByHistoricoDia(date);
+	public List<Historico> filter(Date dataFiltro) {
+		return historicos.filter(dataFiltro);
 	}
 
+	@Transactional
+	public List<Historico> findByHistoricoDia(Date dataHoje) {
+		return historicos.findByHistoricoDia(dataHoje);
+	}
 }

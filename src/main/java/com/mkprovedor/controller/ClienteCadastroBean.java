@@ -152,15 +152,11 @@ public class ClienteCadastroBean implements Serializable {
 		if (!edicao) {
 			try {
 
-				if (this.contrato.getId() != null) {
-
+				if (this.contrato.getId() != null)
 					parcelaService.deleteMensalidadeAndParcela(this.mensalidade);
-					System.out.println("MT#1 Deletado contrato, deletedo mensalidade e parcela");
-				}
 
 				this.contrato.setCliente(this.cliente);
 				contratoService.update(this.contrato);
-				System.out.println("MT#1 Contrato atualizado criado");
 
 				this.mensalidade = new Mensalidade();
 
@@ -169,7 +165,6 @@ public class ClienteCadastroBean implements Serializable {
 				this.mensalidade.setQtdParcela(this.contrato.getQtdMeses());
 				this.mensalidade.setValor(this.contrato.getServico().getValorPlano());
 				mensalidadeService.createNew(this.mensalidade);
-				System.out.println("MT#2 Mensalidade nova criada");
 
 				salvarParcelas();
 
@@ -177,8 +172,6 @@ public class ClienteCadastroBean implements Serializable {
 				e.printStackTrace();
 				FacesUtil.addErrorMessage("Erro ao salvar o contrato");
 			}
-		} else {
-			System.out.println("MT#1 Edição bloqueada");
 		}
 	}
 

@@ -35,7 +35,7 @@
 		<h:form id="form">
 			<p:dataTable id="chamadosTable" widgetVar="cta"
 				value="#{chamadoPesquisaBean.chamadosAbertos}" var="chamado"
-				style="margin-top:20px;" emptyMessage="Nenhum chamado registrado"
+				style="margin-top: 10px;" emptyMessage="Nenhum chamado registrado"
 				rows="8" paginator="true" paginatorAlwaysVisible="false"
 				paginatorPosition="bottom" rowKey="#{chamado}"
 				rowStyleClass="normal" selectionMode="single" styleClass="abertos">
@@ -99,8 +99,9 @@
 
 			<p:dataTable id="chamadosEncerradosTable"
 				value="#{chamadoPesquisaBean.chamadosFechados}" var="chamado"
-				style="margin-top:20px;" emptyMessage="Nenhum chamado encerrado registrado"
-				rows="8" paginator="true" paginatorAlwaysVisible="false"
+				style="margin-top:20px;"
+				emptyMessage="Nenhum chamado encerrado registrado" rows="8"
+				paginator="true" paginatorAlwaysVisible="false"
 				paginatorPosition="bottom" rowKey="#{chamado}"
 				selectionMode="single" styleClass="fechados" rowStyleClass="normal">
 
@@ -110,7 +111,7 @@
 				</f:facet>
 
 				<p:column headerText="Cód." style="text-align: center; width: 50px"
-					sortBy="#{chamado.id}">
+					sortBy="#{chamado.id}" filterBy="#{chamado.id}">
 					<h:outputText value="#{chamado.id}" />
 				</p:column>
 
@@ -127,7 +128,7 @@
 
 				<p:column headerText="Encerramento"
 					style="text-align: center; width: 125px"
-					sortBy="#{chamado.dataEncerramento}"> 
+					sortBy="#{chamado.dataEncerramento}">
 					<h:outputText value="#{chamado.dataEncerramento}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 					</h:outputText>

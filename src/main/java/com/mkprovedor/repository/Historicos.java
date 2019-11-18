@@ -43,12 +43,25 @@ public class Historicos implements Serializable {
 	}
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
-	public List<Historico> findByHistoricoDia(Date date) {
+	public List<Historico> filter(Date dataFiltro) {
 		Session session = entityManager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Historico.class);
 
-		if (date != null)
-			criteria.add(Restrictions.eq("dataPagamento", date));
+		if (dataFiltro != null && !dataFiltro.equals(""))
+			criteria.add(Restrictions.eq("dataPagamento", dataFiltro));
+
+		criteria.addOrder(Order.desc("dataPagamento"));
+
+		return criteria.list();
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<Historico> findByHistoricoDia(Date dataHoje) {
+		Session session = entityManager.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Historico.class);
+
+		if (dataHoje != null)
+			criteria.add(Restrictions.eq("dataPagamento", dataHoje));
 
 		criteria.addOrder(Order.desc("dataPagamento"));
 

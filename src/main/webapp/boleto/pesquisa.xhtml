@@ -28,6 +28,7 @@
 	</h:outputStylesheet>
 
 	<ui:define name="corpo">
+
 		<h:form id="frmPesquisa">
 			<h1 class="aw-page-title">Boletos</h1>
 
@@ -169,8 +170,8 @@
 			<p:toolbar>
 				<p:toolbarGroup>
 					<p:outputLabel id="informacao"
-						value="Cliente: #{boletoPesquisaBean.cliente.nome} | #{boletoPesquisaBean.parcelaSelecionada}"
-						style="padding: 10px; font-weight: bold; font-size: 18px;" />
+						value="#{boletoPesquisaBean.parcelaSelecionada.mensalidade.cliente} #{boletoPesquisaBean.parcelaSelecionada}"
+						style="padding: 10px; font-weight: bold; font-size: 16px;" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right" id="pagar">
@@ -233,7 +234,8 @@
 						styleClass="pagamento" />
 					<p:outputLabel id="valorCobrado" maxlength="8"
 						styleClass="pagamento"
-						value="#{boletoPesquisaBean.valorJurosEMultaCobrado}"  style="color: #000066">
+						value="#{boletoPesquisaBean.valorJurosEMultaCobrado}"
+						style="color: #000066">
 						<f:convertNumber type="currency" />
 					</p:outputLabel>
 
@@ -262,7 +264,7 @@
 						<p:outputPanel id="status">
 							<p:outputLabel style="font-weight: bold; color: red;"
 								rendered="#{!boletoPesquisaBean.valorPagoMaior}"
-								value="* O DINHEIRO PAGO É MENOR QUE O VALOR DO PLANO." />
+								value="* O DINHEIRO PAGO É MENOR QUE O VALOR COBRADO." />
 						</p:outputPanel>
 
 						<p:outputPanel id="atrasada">

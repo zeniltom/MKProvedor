@@ -1,20 +1,29 @@
 package com.mkprovedor.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.validation.constraints.NotNull;
+import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.event.SelectEvent;
 
+import com.mkprovedor.model.Cliente;
+import com.mkprovedor.model.Contrato;
 import com.mkprovedor.model.Historico;
+import com.mkprovedor.service.ContratoService;
 import com.mkprovedor.service.HistoricoService;
+import com.mkprovedor.service.RelatorioService;
+import com.mkprovedor.util.jsf.FacesUtil;
+
+import net.sf.jasperreports.engine.JRException;
 
 @Named
 @ViewScoped
@@ -26,70 +35,105 @@ public class RelatorioBean implements Serializable {
 	@PersistenceContext(unitName = "PedidoPU")
 	private EntityManager manager;
 
-	/*
-	 * @Inject private FacesContext facesContext;
-	 * 
-	 * @Inject private HttpServletResponse response;
-	 */
+	@Inject
+	private FacesContext facesContext;
+
+	@Inject
+	private HttpServletResponse response;
 
 	@Inject
 	private HistoricoService historicoService;
 
-	private Date dataInicio;
-	private Date dataFim;
+	@Inject
+	private ContratoService contratoService;
 
-	private Historico historico;
+	@Inject
+	private RelatorioService relatorioService;
+
+	private Date dataFiltro;
+
+	private Historico historicoSelecionado;
+
+	private Contrato contrato;
 
 	private List<Historico> historicos;
 
+	private boolean desativarBtImprimir;
+
+	public RelatorioBean() {
+		if (this.historicoSelecionado == null)
+			desativarBtImprimir = true;
+
+		limpar();
+	}
+
+	public void limpar() {
+
+	}
+
 	public void pesquisar() {
-		historicos = historicoService.findByHistoricoDia(new Date());
+		historicos = historicoService.filter(dataFiltro);
+	}
+
+	public double total() {
+		double total = 0;
+
+		for (Historico historico : historicos)
+			total += historico.getValor();
+
+		return total;
+	}
+
+	public String contratoCliente(Cliente cliente) {
+		contrato = contratoService.findByCliente(cliente);
+
+		if (contrato == null)
+			return "Sem plano";
+		else
+			return contrato.getServico().toString();
 	}
 
 	public void onRowHistoricoSelect(SelectEvent event) {
 		Historico historico = (Historico) event.getObject();
 		System.out.println(historico);
-		this.historico = historico;
+		this.historicoSelecionado = historico;
+
+		desativarBtImprimir = this.historicoSelecionado != null ? false : true;
 	}
 
-	public void emitir() {
-		/*
-		 * Map<String, Object> parametros = new HashMap<>();
-		 * parametros.put("data_inicio", this.dataInicio); parametros.put("data_fim",
-		 * this.dataFim); DateFormat format = new SimpleDateFormat("dd/MM/yyy");
-		 * 
-		 * ExecutorRelatorio executor = new
-		 * ExecutorRelatorio("/relatorios/relatorio_pedidos_emitidos.jasper",
-		 * this.response, parametros, "Pedidos emitidos " + format.format(new Date()) +
-		 * ".pdf");
-		 * 
-		 * Session session = manager.unwrap(Session.class); session.doWork(executor);
-		 * 
-		 * if (executor.isRelatorioGerado()) { facesContext.responseComplete(); } else {
-		 * FacesUtil.addErrorMessage("A execução do relatório não retornou dados."); }
-		 */
-		System.out.println("Relatório para o " + historico.getCliente() + " emitido com sucesso!");
+	public void emitir() throws IOException, JRException {
+		if (this.historicoSelecionado != null)
+			relatorioService.gerarRelatorioHistorico(this.facesContext, this.response, this.manager,
+					this.historicoSelecionado);
+		else
+			FacesUtil.addErrorMessage("ERRO!");
 	}
 
-	@NotNull
-	public Date getDataInicio() {
-		return dataInicio;
+	public Date getDataFiltro() {
+		return dataFiltro;
 	}
 
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
+	public void setDataFiltro(Date dataFiltro) {
+		this.dataFiltro = dataFiltro;
 	}
 
-	@NotNull
-	public Date getDataFim() {
-		return dataFim;
+	public Historico getHistoricoSelecionado() {
+		return historicoSelecionado;
 	}
 
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
+	public void setHistoricoSelecionado(Historico historicoSelecionado) {
+		this.historicoSelecionado = historicoSelecionado;
 	}
 
 	public List<Historico> getHistoricos() {
 		return historicos;
+	}
+
+	public boolean isDesativarBtImprimir() {
+		return desativarBtImprimir;
+	}
+
+	public void setDesativarBtImprimir(boolean desativarBtImprimir) {
+		this.desativarBtImprimir = desativarBtImprimir;
 	}
 }
