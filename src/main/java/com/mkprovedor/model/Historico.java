@@ -42,17 +42,22 @@ public class Historico implements Serializable {
 	private Cliente cliente;
 
 	@ManyToOne
+	@JoinColumn(name = "empregado_id", nullable = false)
+	private Empregado empregado;
+
+	@ManyToOne
 	@JoinColumn(name = "parcela_id", nullable = false)
 	private Parcela parcela;
 
 	@Override
 	public String toString() {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		NumberFormat moeda = NumberFormat.getCurrencyInstance();
 		moeda.setCurrency(Currency.getInstance(new Locale("pt", "BR")));
 
 		return "Pagamento Nº: " + id + " para a Parcela " + parcela.getParcela() + " realizado "
-				+ format.format(dataPagamento) + " no Valor de R$ " + moeda.format(valor) + " para " + cliente;
+				+ format.format(dataPagamento) + " no Valor de R$ " + moeda.format(valor) + " para " + cliente
+				+ " realizado por " + empregado;
 	}
 
 	public Long getId() {
@@ -85,6 +90,14 @@ public class Historico implements Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public Empregado getEmpregado() {
+		return empregado;
+	}
+
+	public void setEmpregado(Empregado empregado) {
+		this.empregado = empregado;
 	}
 
 	public Parcela getParcela() {
