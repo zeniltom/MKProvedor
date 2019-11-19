@@ -65,18 +65,24 @@
 					<h:outputText value="#{historico.cliente.nome}" />
 				</p:column>
 
+				<p:column headerText="Funcionário"
+					sortBy="#{historico.empregado.nome}"
+					filterBy="#{historico.empregado.nome}">
+					<h:outputText value="#{historico.empregado.nome}" />
+				</p:column>
+
 				<p:column headerText="Plano" style="text-align: center;">
 					<h:outputText
-						value="#{caixaBean.contratoCliente(historico.cliente)}" />
+						value="#{relatorioBean.contratoCliente(historico.cliente)}" />
 				</p:column>
 
 				<p:column headerText="Parcela"
-					style="text-align: center; width: 75px">
+					style="text-align: center; width: 60px">
 					<h:outputText value="#{historico.parcela.parcela}" />
 				</p:column>
 
 				<p:column headerText="Data do Pagamento"
-					style="text-align: center;  width: 160px">
+					style="text-align: center;  width: 140px">
 					<h:outputText value="#{historico.dataPagamento}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>

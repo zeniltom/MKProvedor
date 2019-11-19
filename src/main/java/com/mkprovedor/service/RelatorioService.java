@@ -1,6 +1,5 @@
 package com.mkprovedor.service;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -11,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
-import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,13 +31,9 @@ public class RelatorioService implements Serializable {
 	public void gerarContrato(FacesContext facesContext, HttpServletResponse response, EntityManager manager,
 			Cliente clienteSelecionado) throws IOException, JRException {
 
-		// CARREGA A LOGO DA PASTA IMAGENS E MANDA COMO PARÂMETRO
-		BufferedImage image = ImageIO.read(getClass().getResource("/relatorios/logo.png"));
-		
 		// PARÂMETROS PARA O RELATÓRIO
 		Map<String, Object> parametros = new HashMap<>();
 		parametros.put("cliente_id", clienteSelecionado.getId());
-		parametros.put("logo", image);
 
 		// NOME DO ARQUIVO PDF
 		String arquivo = "contrato " + clienteSelecionado.getNome() + ".pdf";
@@ -59,8 +53,6 @@ public class RelatorioService implements Serializable {
 	public void gerarRelatorioHistorico(FacesContext facesContext, HttpServletResponse response, EntityManager manager,
 			Historico historicoSelecionado) throws IOException, JRException {
 
-		// CARREGA A LOGO DA PASTA IMAGENS E MANDA COMO PARÂMETRO
-		BufferedImage image = ImageIO.read(getClass().getResource("/relatorios/logo.png"));
 		DateFormat format = new SimpleDateFormat("dd/MM/yyy");
 
 		// CARREGA O SUBRELATÓRIO DE RESPOSTAS E MANDA COMO PARÂMETRO
@@ -71,7 +63,6 @@ public class RelatorioService implements Serializable {
 		// PARÂMETROS PARA O RELATÓRIO
 		Map<String, Object> parametros = new HashMap<>();
 		parametros.put("cliente_id", historicoSelecionado.getCliente().getId());
-		parametros.put("logo", image);
 		parametros.put("subReport", subRelatorioDeRespostas);
 
 		// NOME DO ARQUIVO PDF

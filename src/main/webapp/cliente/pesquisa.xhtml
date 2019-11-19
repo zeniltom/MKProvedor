@@ -95,14 +95,13 @@
 					<h:outputText value="#{cliente.status}" />
 				</p:column>
 
-				<p:column style="text-align: center;"
-					headerText="Ações">
-					<p:button outcome="/cliente/cadastro" value="Editar"
+				<p:column style="text-align: center; width: 150px" headerText="Ações">
+					<p:button outcome="/cliente/cadastro" title="EDITAR"
 						icon="fa fa-pencil-square-o">
 						<f:param name="cliente" value="#{cliente.id}" />
 					</p:button>
 
-					<p:commandButton value="Excluir" icon="fa fa-trash"
+					<p:commandButton title="EXCLUIR" icon="fa fa-trash"
 						styleClass="btCancelar"
 						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
 						update=":form:confirmacaoExclusaoDialog">
@@ -110,8 +109,9 @@
 							target="#{clientePesquisaBean.clienteSelecionado}" />
 					</p:commandButton>
 
-					<p:commandButton value="Contrato" icon="fa fa-print"
-						styleClass="btCancelar"
+					<p:commandButton title="IMPRIMIR CONTRATO" icon="fa fa-print"
+						styleClass="btConfirmar"
+						disabled="#{clientePesquisaBean.contratoCliente(cliente) == 'Sem plano'}"
 						action="#{clientePesquisaBean.imprimirContrato}" ajax="false">
 						<f:setPropertyActionListener value="#{cliente}"
 							target="#{clientePesquisaBean.clienteSelecionado}" />
@@ -166,14 +166,13 @@
 					<h:outputText value="#{cliente.status}" />
 				</p:column>
 
-				<p:column style="text-align: center;"
-					headerText="Ações">
-					<p:button outcome="/cliente/cadastro" value="Editar"
+				<p:column style="text-align: center; width: 150px" headerText="Ações">
+					<p:button outcome="/cliente/cadastro" title="EDITAR"
 						icon="fa fa-pencil-square-o">
 						<f:param name="cliente" value="#{cliente.id}" />
 					</p:button>
 
-					<p:commandButton value="Excluir" icon="fa fa-trash"
+					<p:commandButton title="EXCLUIR" icon="fa fa-trash"
 						styleClass="btCancelar"
 						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
 						update=":form:confirmacaoExclusaoDialog">
@@ -181,8 +180,9 @@
 							target="#{clientePesquisaBean.clienteSelecionado}" />
 					</p:commandButton>
 
-					<p:commandButton value="Contrato" icon="fa fa-print"
-						styleClass="btCancelar"
+					<p:commandButton title="IMPRIMIR CONTRATO" icon="fa fa-print"
+						styleClass="btConfirmar"
+						disabled="#{clientePesquisaBean.contratoCliente(cliente) == 'Sem plano'}"
 						action="#{clientePesquisaBean.imprimirContrato}" ajax="false">
 						<f:setPropertyActionListener value="#{cliente}"
 							target="#{clientePesquisaBean.clienteSelecionado}" />

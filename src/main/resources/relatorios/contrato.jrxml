@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="8e861d97-217f-4ba5-87ef-e2d4be88e00d">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="527" leftMargin="34" rightMargin="34" topMargin="28" bottomMargin="42" isSummaryNewPage="true" whenResourceMissingType="Empty" uuid="8e861d97-217f-4ba5-87ef-e2d4be88e00d">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="393"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="601"/>
@@ -18,44 +18,237 @@
 	</parameter>
 	<parameter name="cliente_id" class="java.lang.Long"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT c.`nome` FROM contrato ct 
+		<![CDATA[SELECT c.`nome` AS NOME, c.`cpfCnpj` AS CPFCNPJ, coalesce(c.`enredeco`, '') AS ENDERECO, coalesce(c.`bairro` , '') as BAIRRO, 
+coalesce(m.`nome`, '') AS MUN_NOME, coalesce(m.`uf`, '') AS UF, DATE_FORMAT(ct.`dataContrato`, "%W, %d de %M de %Y." ) AS DATA_CONTRATO
+FROM contrato ct 
+ 
 INNER JOIN cliente c ON c.`id` = ct.`cliente_id`
-WHERE c.`id` =  $P{cliente_id} ]]>
+INNER JOIN municipio m ON m.`id`  = c.`municipio_id`
+
+WHERE c.`id` = $P{cliente_id}]]>
 	</queryString>
 	<field name="NOME" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
 	</field>
+	<field name="CPFCNPJ" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CPFCNPJ"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="ENDERECO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ENDERECO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="BAIRRO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BAIRRO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="MUN_NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MUN_NOME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="municipio"/>
+	</field>
+	<field name="UF" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UF"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="municipio"/>
+	</field>
+	<field name="DATA_CONTRATO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_CONTRATO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contrato"/>
+	</field>
 	<title>
-		<band height="100" splitType="Stretch">
+		<band height="149" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement x="180" y="40" width="200" height="20" uuid="8624c486-20f5-4ed0-b80f-16a7a1f063b6"/>
+				<reportElement x="0" y="0" width="530" height="20" uuid="8624c486-20f5-4ed0-b80f-16a7a1f063b6"/>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="12" isBold="true"/>
+					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[CONTRATO]]></text>
+				<text><![CDATA[Contrato de Prestação de Serviços de Conexão à Internet]]></text>
 			</staticText>
-			<image>
-				<reportElement x="7" y="6" width="29" height="30" uuid="e1318686-a116-4a96-924e-694fc3346d67"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
-			</image>
+			<line>
+				<reportElement x="0" y="40" width="530" height="1" uuid="932015cc-d61e-4f0c-9ec6-3bcd84e7167d">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="31" y="50" width="486" height="20" uuid="db721820-009e-4868-b1e1-e2ce5849ed4e"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TERMO DE USO 79I/2017]]></text>
+			</staticText>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="71" width="530" height="78" isPrintWhenDetailOverflows="true" uuid="3ecaa491-86e9-464a-b8ed-a3a4c7691f46"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>NEOTECH PROVEDOR INTERNET LTDA</style>, inscrita no C.N.P.J. sob nº <style isBold='true'>12.032.130/0001-95</style>, com sede a <style isBold='true'>WILSON PEREIRA, 11 - CARDEAL BRANDÃO VILELA - PAULO AFONSO - BA</style>, doravante designada simplesmente CONTRATADA e <style isBold='true'>"+ $F{NOME}.toUpperCase() + "</style>, residente à <style isBold='true'>" + $F{ENDERECO}.toUpperCase() + " - " + $F{BAIRRO}.toUpperCase() + " - " + $F{MUN_NOME}.toUpperCase() + " - " + $F{UF}.toUpperCase()+ "</style>, CPF <style isBold='true'>" +$F{CPFCNPJ} + "</style>, doravante denominado simplesmente CONTRATANTE, celebram o presente contrato de prestação de serviços que se regerá pelas seguintes cláusulas e condições:"]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<detail>
-		<band height="500" splitType="Stretch">
+		<band height="579">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<textField>
-				<reportElement x="277" y="69" width="100" height="30" uuid="3ecaa491-86e9-464a-b8ed-a3a4c7691f46"/>
-				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="177" y="69" width="100" height="30" uuid="19712eb5-9c17-4fd0-a5b6-ec68347dfbf2"/>
-				<text><![CDATA[nome]]></text>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="530" height="579" isPrintWhenDetailOverflows="true" uuid="440a8eef-1dcd-4ecb-9d5b-633adb45aee9"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[<style isBold='true'>1 . OBJETO</style>
+
+O objeto do presente contrato é a prestação, pela CONTRATADA ao CONTRATANTE, os serviços de conexão à rede mundial de computadores (INTERNET), através de rede Wireless.
+
+<style isBold='true'>2. DISPONIBILIDADE DO SERVIÇO</style>
+
+2.1 - O serviço estará disponível 24 (vinte e quatro) horas por dia, 7 (sete) dias por semana, ressalvada a ocorrência de interrupções devido a:
+
+a) falta de fornecimento de energia elétrica para a CONTRATADA;
+
+b) falha dos serviços de responsabilidade da operadora de serviços telefônicos;
+
+c) ocorrências de falhas no sistema de transmissão no acesso à Internet;
+
+d) manutenção técnica dos equipamentos e/ ou operacionais que exijam o desligamento temporário do sistema de transmissão de dados;
+
+e) ação de terceiros que impeça a prestação dos serviços e
+
+f) casos fortuitos ou força maior.
+
+g) a interrupção na prestação dos serviços, pelos motivos relacionados acima, que ultrapassarem tempo superior a 72 (setenta e duas) horas consecutivas, será descontado proporcionalmente os valores referentes a esse período de paralisação.
+
+<style isBold='true'>3 – LOGIN E SENHA DO CONTRATANTE</style>
+
+3.1 - Ao contratar os serviços da CONTRATADA o CONTRATANTE receberá um login e uma senha privativa que constituem sua identificação para uso do serviço.
+
+3.2 - O CONTRATANTE terá apenas um login e uma senha privativa, que são pessoais e intransferíveis.
+
+3.3 - O CONTRATANTE assume integral responsabilidade por quaisquer prejuízos que cause a terceiros ou venha sofrer pela utilização indevida de seu código ou de sua senha privativa.
+
+3.4 - Não serão permitidas conexões simultâneas utilizando o mesmo login de CONTRATANTE e a mesma senha privativa de acesso aos serviços.
+
+<style isBold='true'>4 - TAXA DE INSTALAÇÃO E PRAZO DE VIGÊNCIA</style>
+A instalação do serviço denominado internet tem um custo de inscrição declarado depois de feita viabilidade para levar o acesso à Internet até o computador do CONTRATANTE.
+
+4.1 Não há prazo mínimo de vigência do presente CONTRATO.]]></text>
 			</staticText>
 		</band>
+		<band height="750">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="-10" width="530" height="760" uuid="65c33b30-64f4-481b-a2ff-1749a9931ba5"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[4.2 O cliente poderá bloquear a assinatura por até 30 dias. Caso ultrapasse esse limite para desbloqueá-lo, o cliente pagará uma taxa de adesão acordada com a CONTRATADA.
+
+<style isBold='true'>5 - PAGAMENTO E REAJUSTE</style>
+
+5.1 - O pagamento pela utilização do serviço será realizado mensalmente à vencer, o dia do vencimento será o que consta no objeto de cobrança, incluindo tributos e demais encargos conforme a legislação em vigor.
+
+5.2 - O não pagamento no vencimento sujeitará o usuário, a exclusivo critério da CONTRATADA, independentemente de notificação judicial ou extrajudicial, na suspensão da prestação dos serviços.
+* A suspensão dos serviços por falta de pagamento, não implica no cancelamento ou suspensão do respectivo contrato.
+
+5.3 - O preço contratado será reajustado anualmente, ou em prazo inferior que vier a ser admitido pela legislação aplicável, pela variação do I.G.P.-M, ou por outro índice que venha a substituí-lo.
+
+5.4 - Estes valores também poderão ser revistos, a qualquer tempo, para o resgate do inicial equilíbrio econômico financeiro necessário à prestação dos Serviços ou em caso de modificações do regime tributário vigente.
+
+5.5 - O atraso no pagamento da mensalidade nos prazos e pelos valores ajustados, será cobrado juros de mora de 1% (um por cento) ao mês, correção monetária pela variação do I.G.P.-M e multa de 2% (dois por cento) sobre os valores devidos e não pagos.
+
+5.6 - O não pagamento de qualquer parcela devida pela contratante dará a CONTRATADA o direito de interromper a prestação do serviço de acesso do usuário, até a efetivação do pagamento, independente de aviso prévio.
+
+<style isBold='true'>6. FORMA DE UTILIZAÇÃO DOS SERVIÇOS</style>
+
+6.1 - Ao contratar os serviços o CONTRATANTE se obriga a respeitar a legislação em vigor de utilização da rede Internet, devendo abster- se de:
+
+a) acessar senhas, modificar dados privativos, arquivos ou assumir identidade de terceiros;
+
+b) desrespeitar leis de direito autoral e de propriedade intelectual;
+
+c) transmitir ou armazenar qualquer tipo de material cujo conteúdo infrinja a Lei em vigor, relacionado com drogas, crianças e adolescentes em cena de sexo explícito ou pornografia;
+
+d) divulgar informações falsas ou incompletas de caráter sigiloso;
+
+e) prejudicar usuários da INTERNET, através do uso de programas, acessando computadores, alterando arquivos, programas e dados existentes na rede;
+
+f) estimular a prática de condutas ilícitas ou contrárias à moral e aos bons costumes, bem como, atos discriminatórios de cunho sexual, racial, religioso ou qualquer outra condição.
+
+g) divulgar ou anunciar produtos e serviços através de correio eletrônico, salvo nos acasos de expressa do destinatário a CONTRATADA.
+
+6.2 - A CONTRATADA poderá, sem qualquer aviso prévio, suspender ou impedir a divulgação de material, quando for considerado ilegal, impróprio ou determinado por autoridade Federal, Estadual ou Municipal, comunicando o fato imediatamente ao CONTRATANTE.
+
+6.3 - Cabe exclusivamente ao usuário a aquisição dos equipamentos, e manutenção¹, terminais e suas interfaces com as redes de telecomunicação, necessários à utilização dos serviços.
+
+6.4 - Quaisquer alterações nas condições da prestação dos serviços serão previamente comunicadas ao CONTRATANTE, sempre que for possível.
+
+<style isBold='true'>7. RISCOS NA UTILIZAÇÃO DA INTERNET</style>]]></text>
+			</staticText>
+		</band>
+		<band height="513">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="530" height="390" uuid="45e1444f-53f0-4416-8e08-47a169cf3fd0"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[7.1 - A CONTRATADA não se responsabilizará por qualquer dano ou prejuízo direto ou indireto que o CONTRATANTE venha a sofrer, ou que cause a terceiros, como conseqüência da utilização da INTERNET. Perda total ou parcial de informações, arquivos ou de programas contaminados por vírus, clonagem ou cópia do número de cartão de crédito, contas bancárias e suas respectivas senhas, fraude na compra de produtos e serviços pela Internet, como não entrega ou não prestação de serviços contratados.
+
+7.2 - É de exclusiva responsabilidade do CONTRATANTE prevenir-se dos riscos mencionados e de outros advindos da INTERNET.
+
+<style isBold='true'>8. PRAZO E DA EXTINÇÃO DO PRESENTE CONTRATO</style>
+
+8.1 - O presente contrato é celebrado por prazo indeterminado, podendo quaisquer das partes promover a sua extinção mediante aviso prévio com antecedência mínima de 30 (trinta) dias durante os quais as partes se comprometem a cumprir integralmente as obrigações contratuais.
+
+8.2 - O presente contrato poderá ser rescindido, de forma imediata e sem qualquer aviso prévio, sempre que uma das partes violar quaisquer dispositivos constantes neste instrumento ou contrária à legislação vigente.
+
+<style isBold='true'>9. NORMAS APLICÁVEIS, FORO E DISPOSIÇÕES GERAIS.</style>
+
+9.1 - O presente Contrato será regido pelas leis brasileiras,
+
+9.2 - O CONTRATANTE reconhece e declara que leu e que está ciente e de pleno acordo com todos os termos e condições deste contrato.
+
+9.3 - Para dirimir toda e qualquer demandam envolvendo o presente contrato e seu objeto, fica eleito o foro da Comarca de PAULO AFONSO, com expressa renúncia de qualquer outro, por mais especial que seja.
+
+Por estarem assim justos e contratados, firmam o presente instrumento, em duas vias de igual teor.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="490" width="75" height="20" uuid="2e8f0fcb-11af-4588-a527-3c2ec7382d24">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Contratada]]></text>
+			</staticText>
+			<line>
+				<reportElement x="20" y="480" width="220" height="1" uuid="a7290181-51b7-4888-8e7a-b41ad0347633">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="270" y="480" width="220" height="1" uuid="88be2a32-3002-4e3c-9586-73c60e6b1bd5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="343" y="490" width="75" height="20" uuid="9274c173-d0dd-4ac3-add8-60f79138c0fb">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Contratante]]></text>
+			</staticText>
+			<textField pattern="dd, MMMM, yyyy">
+				<reportElement x="165" y="420" width="363" height="30" uuid="cf879b0b-f4c5-422a-9a28-33ec90f1f2ab"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PAULO AFONSO, " + $F{DATA_CONTRATO}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
-	<pageFooter>
-		<band height="20" splitType="Stretch"/>
-	</pageFooter>
 </jasperReport>

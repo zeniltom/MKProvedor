@@ -3,6 +3,7 @@ package com.mkprovedor.controller;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -183,7 +184,7 @@ public class ClienteCadastroBean implements Serializable {
 			parcela.setMensalidade(this.mensalidade);
 			parcela.setValor(this.mensalidade.getValor());
 
-			java.util.Calendar data = java.util.Calendar.getInstance();
+			Calendar data = java.util.Calendar.getInstance();
 			data.setTime(this.mensalidade.getDataPrimeiraParcela());
 			data.add(java.util.Calendar.MONTH, i);
 
@@ -193,7 +194,6 @@ public class ClienteCadastroBean implements Serializable {
 			parcelaService.createNew(parcela);
 			i++;
 		}
-		System.out.println("MT#1 Parcelas QTD=" + this.mensalidade.getQtdParcela() + " sucedidas");
 	}
 
 	public void permitirAlteracaoFinanceiro(boolean permitir) {

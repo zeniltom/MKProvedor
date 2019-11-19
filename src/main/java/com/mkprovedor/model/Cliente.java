@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -28,11 +27,11 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull(message = "é obrigatório")
+	@NotBlank(message = "é obrigatório")
 	@Column(nullable = false)
 	private String nome;
 
-	@NotNull(message = "é obrigatório")
+	@NotBlank(message = "é obrigatório")
 	@Length(max = 30, message = "não pode ultrapassar de 30 caracteres")
 	private String cpfCnpj;
 
@@ -48,10 +47,12 @@ public class Cliente implements Serializable {
 	@Column(nullable = false)
 	private String senha;
 
+	@NotBlank(message = "é obrigatório")
 	private String enredeco;
 
 	private String complemento;
 
+	@NotBlank(message = "é obrigatório")
 	private String bairro;
 
 	private String numero;
