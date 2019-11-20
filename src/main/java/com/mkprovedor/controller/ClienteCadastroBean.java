@@ -8,8 +8,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.panelgrid.PanelGrid;
@@ -26,15 +30,31 @@ import com.mkprovedor.service.ContratoService;
 import com.mkprovedor.service.MensalidadeService;
 import com.mkprovedor.service.MunicipioService;
 import com.mkprovedor.service.ParcelaService;
+import com.mkprovedor.service.RelatorioService;
 import com.mkprovedor.service.ServicoService;
 import com.mkprovedor.util.Util;
 import com.mkprovedor.util.jsf.FacesUtil;
+
+import net.sf.jasperreports.engine.JRException;
 
 @Named
 @ViewScoped
 public class ClienteCadastroBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@Inject
+	@PersistenceContext(unitName = "PedidoPU")
+	private EntityManager manager;
+
+	@Inject
+	private FacesContext facesContext;
+
+	@Inject
+	private HttpServletResponse response;
+
+	@Inject
+	private RelatorioService relatorioService;
 
 	@Inject
 	private ClienteService clienteService;
@@ -227,6 +247,10 @@ public class ClienteCadastroBean implements Serializable {
 	public void carregarMunicipios() {
 		if (this.municipio.getUf() != null)
 			municipios = municipioService.findByUF(ENUf.valueOf(this.municipio.getUf()));
+	}
+
+	public void imprimirContrato() throws IOException, JRException {
+		relatorioService.gerarContrato(this.facesContext, this.response, this.manager, this.cliente);
 	}
 
 	public ENUf[] getUfs() {

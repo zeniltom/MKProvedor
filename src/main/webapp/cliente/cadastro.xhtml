@@ -39,6 +39,11 @@
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right">
+					<p:commandButton value="Imprimir Contrato" icon="fa fa-print"
+						styleClass="btConfirmar"
+						disabled="#{clienteCadastroBean.contrato.id == NULL}"
+						action="#{clienteCadastroBean.imprimirContrato}" ajax="false" />
+
 					<p:button value="Listar Clientes" outcome="/cliente/pesquisa"
 						icon="fa fa-search" />
 				</p:toolbarGroup>

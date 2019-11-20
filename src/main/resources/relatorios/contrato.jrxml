@@ -19,7 +19,7 @@
 	<parameter name="cliente_id" class="java.lang.Long"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT c.`nome` AS NOME, c.`cpfCnpj` AS CPFCNPJ, coalesce(c.`enredeco`, '') AS ENDERECO, coalesce(c.`bairro` , '') as BAIRRO, 
-coalesce(m.`nome`, '') AS MUN_NOME, coalesce(m.`uf`, '') AS UF, DATE_FORMAT(ct.`dataContrato`, "%W, %d de %M de %Y." ) AS DATA_CONTRATO
+coalesce(m.`nome`, '') AS MUN_NOME, coalesce(m.`uf`, '') AS UF, ct.`dataContrato` as DATA_CONTRATO
 FROM contrato ct 
  
 INNER JOIN cliente c ON c.`id` = ct.`cliente_id`
@@ -51,7 +51,7 @@ WHERE c.`id` = $P{cliente_id}]]>
 		<property name="com.jaspersoft.studio.field.label" value="UF"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="municipio"/>
 	</field>
-	<field name="DATA_CONTRATO" class="java.lang.String">
+	<field name="DATA_CONTRATO" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.label" value="DATA_CONTRATO"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="contrato"/>
 	</field>
@@ -88,7 +88,7 @@ WHERE c.`id` = $P{cliente_id}]]>
 		</band>
 	</title>
 	<detail>
-		<band height="579">
+		<band height="613">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="530" height="579" isPrintWhenDetailOverflows="true" uuid="440a8eef-1dcd-4ecb-9d5b-633adb45aee9"/>
@@ -136,7 +136,7 @@ A instalação do serviço denominado internet tem um custo de inscrição decla
 		</band>
 		<band height="750">
 			<staticText>
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="-10" width="530" height="760" uuid="65c33b30-64f4-481b-a2ff-1749a9931ba5"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="530" height="750" uuid="65c33b30-64f4-481b-a2ff-1749a9931ba5"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="SansSerif" size="10"/>
 					<paragraph lineSpacing="Single"/>
@@ -185,7 +185,7 @@ g) divulgar ou anunciar produtos e serviços através de correio eletrônico, sa
 <style isBold='true'>7. RISCOS NA UTILIZAÇÃO DA INTERNET</style>]]></text>
 			</staticText>
 		</band>
-		<band height="513">
+		<band height="772">
 			<staticText>
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="530" height="390" uuid="45e1444f-53f0-4416-8e08-47a169cf3fd0"/>
 				<textElement textAlignment="Justified" markup="styled">
@@ -242,12 +242,10 @@ Por estarem assim justos e contratados, firmam o presente instrumento, em duas v
 				</textElement>
 				<text><![CDATA[Contratante]]></text>
 			</staticText>
-			<textField pattern="dd, MMMM, yyyy">
-				<reportElement x="165" y="420" width="363" height="30" uuid="cf879b0b-f4c5-422a-9a28-33ec90f1f2ab"/>
-				<textElement textAlignment="Right">
-					<font fontName="SansSerif"/>
-				</textElement>
-				<textFieldExpression><![CDATA["PAULO AFONSO, " + $F{DATA_CONTRATO}]]></textFieldExpression>
+			<textField>
+				<reportElement x="165" y="421" width="362" height="30" uuid="3de64edc-563e-4729-954d-3b4ba9fba988"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["PAULO AFONSO, " + new SimpleDateFormat("EEEE, dd 'de' MMMM 'de' yyyy").format($F{DATA_CONTRATO}) + "."]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

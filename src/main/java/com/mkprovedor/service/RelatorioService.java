@@ -36,7 +36,7 @@ public class RelatorioService implements Serializable {
 		parametros.put("cliente_id", clienteSelecionado.getId());
 
 		// NOME DO ARQUIVO PDF
-		String arquivo = "contrato " + clienteSelecionado.getNome() + ".pdf";
+		String arquivo = "contrato_cliente_" + clienteSelecionado.getCpfCnpj() + ".pdf";
 
 		ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/contrato.jasper", response, parametros,
 				arquivo);
@@ -53,7 +53,7 @@ public class RelatorioService implements Serializable {
 	public void gerarRelatorioHistorico(FacesContext facesContext, HttpServletResponse response, EntityManager manager,
 			Historico historicoSelecionado) throws IOException, JRException {
 
-		DateFormat format = new SimpleDateFormat("dd/MM/yyy");
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
 		// CARREGA O SUBRELATÓRIO DE RESPOSTAS E MANDA COMO PARÂMETRO
 		File respostas = new File(
