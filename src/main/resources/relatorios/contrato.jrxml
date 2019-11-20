@@ -7,7 +7,7 @@
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="573"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="413"/>
 	<property name="net.sf.jasperreports.print.create.bookmarks" value="true"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="mkprovedor.xml"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="mkprovedor_conexao.xml"/>
 	<parameter name="logo" class="Object" isForPrompting="false">
 		<parameterDescription><![CDATA[The letterhead image]]></parameterDescription>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>

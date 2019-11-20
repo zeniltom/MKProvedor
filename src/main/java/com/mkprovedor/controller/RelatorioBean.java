@@ -2,6 +2,7 @@ package com.mkprovedor.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -58,17 +59,12 @@ public class RelatorioBean implements Serializable {
 
 	private List<Historico> historicos;
 
-	private boolean desativarBtImprimir;
-
 	public RelatorioBean() {
-		if (this.historicoSelecionado == null)
-			desativarBtImprimir = true;
-
 		limpar();
 	}
 
 	public void limpar() {
-
+		this.historicos = new ArrayList<>();
 	}
 
 	public void pesquisar() {
@@ -97,16 +93,19 @@ public class RelatorioBean implements Serializable {
 		Historico historico = (Historico) event.getObject();
 		System.out.println(historico);
 		this.historicoSelecionado = historico;
-
-		desativarBtImprimir = this.historicoSelecionado != null ? false : true;
 	}
 
 	public void emitir() throws IOException, JRException {
-		if (this.historicoSelecionado != null)
-			relatorioService.gerarRelatorioHistorico(this.facesContext, this.response, this.manager,
-					this.historicoSelecionado);
-		else
-			FacesUtil.addErrorMessage("ERRO!");
+		if (this.historicos.size() > 0) {
+
+			if (this.dataFiltro != null)
+				relatorioService.gerarRelatorioHistorico(this.facesContext, this.response, this.manager,
+						this.dataFiltro);
+			else
+				FacesUtil.addErrorMessage("Preencha a Data de Pagamento antes de gerar o relatório!");
+
+		} else
+			FacesUtil.addErrorMessage("Não histórico disponível para gerar o relatório!");
 	}
 
 	public Date getDataFiltro() {
@@ -129,11 +128,4 @@ public class RelatorioBean implements Serializable {
 		return historicos;
 	}
 
-	public boolean isDesativarBtImprimir() {
-		return desativarBtImprimir;
-	}
-
-	public void setDesativarBtImprimir(boolean desativarBtImprimir) {
-		this.desativarBtImprimir = desativarBtImprimir;
-	}
 }

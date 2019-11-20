@@ -21,18 +21,9 @@
 
 			<p:toolbar>
 				<p:toolbarGroup>
-					<p:outputLabel value="Filtro"
-						style="padding: 5px; font-weight: bold; font-size: 16px;" />
-				</p:toolbarGroup>
-
-				<p:toolbarGroup>
-					<p:calendar pattern="dd/MM/yyyy" maxlength="15"
-						placeholder="Data de Pagamento" showTodayButton="true"
-						showOn="button" showButtonPanel="true"
-						value="#{relatorioBean.dataFiltro}">
-						<p:ajax event="dateSelect" listener="#{relatorioBean.pesquisar}"
-							update="form:historicosTable" />
-					</p:calendar>
+					<p:commandButton value="Gerar" icon="fa fa-print" id="btImprimir"
+						styleClass="btConfirmar" ajax="false"
+						actionListener="#{relatorioBean.emitir}" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right">
@@ -48,26 +39,37 @@
 				style="margin-top: 10px" var="historico"
 				emptyMessage="Não há histórico" rows="8" paginator="true"
 				paginatorAlwaysVisible="false" paginatorPosition="bottom"
-				rowKey="#{historico}" rowStyleClass="boletos" selectionMode="single"
-				styleClass="abertos">
+				rowKey="#{historico}" rowStyleClass="boletos" styleClass="abertos">
 
-				<p:ajax event="rowSelect"
-					listener="#{relatorioBean.onRowHistoricoSelect}"
-					update="form:btImprimir" />
+				<f:facet name="header">
+					<p:toolbar>
+						<p:toolbarGroup>
+							<p:outputLabel value="Filtrar por "
+								style="padding: 5px; font-weight: bold; font-size: 16px;" />
+						</p:toolbarGroup>
+
+						<p:toolbarGroup>
+							<p:calendar pattern="dd/MM/yyyy" maxlength="15"
+								placeholder="Data de Pagamento" showTodayButton="true"
+								showOn="button" showButtonPanel="true"
+								value="#{relatorioBean.dataFiltro}">
+								<p:ajax event="dateSelect" listener="#{relatorioBean.pesquisar}"
+									update="form:historicosTable" />
+							</p:calendar>
+						</p:toolbarGroup>
+					</p:toolbar>
+				</f:facet>
 
 				<p:column headerText="Cód." style="text-align: center; width: 30px"
 					sortBy="#{historico.id}">
 					<h:outputText value="#{historico.id}" />
 				</p:column>
 
-				<p:column headerText="Cliente" sortBy="#{historico.cliente.nome}"
-					filterBy="#{historico.cliente.nome}">
+				<p:column headerText="Cliente">
 					<h:outputText value="#{historico.cliente.nome}" />
 				</p:column>
 
-				<p:column headerText="Funcionário"
-					sortBy="#{historico.empregado.nome}"
-					filterBy="#{historico.empregado.nome}">
+				<p:column headerText="Funcionário">
 					<h:outputText value="#{historico.empregado.nome}" />
 				</p:column>
 
@@ -88,8 +90,7 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Valor" style="text-align: center; width: 80px"
-					sortBy="#{historico.valor}" filterBy="#{historico.valor}">
+				<p:column headerText="Valor" style="text-align: center; width: 80px">
 					<h:outputText value="#{historico.valor}">
 						<f:convertNumber type="currency" />
 					</h:outputText>
@@ -99,11 +100,7 @@
 			<div style="width: 80%; position: absolute; bottom: 30px;">
 				<p:toolbar>
 					<p:toolbarGroup>
-						<p:commandButton value="IMPRIMIR" icon="fa fa-print"
-							id="btImprimir" styleClass="btConfirmar"
-							disabled="#{relatorioBean.desativarBtImprimir}"
-							style="padding: 5px 10px 10px 10px; font-weight: bold"
-							process="@this" actionListener="#{relatorioBean.emitir}" />
+
 					</p:toolbarGroup>
 
 					<p:toolbarGroup align="right">

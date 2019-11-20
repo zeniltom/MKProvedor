@@ -1,6 +1,5 @@
 package com.mkprovedor.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -16,13 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
 
 import com.mkprovedor.model.Cliente;
-import com.mkprovedor.model.Historico;
 import com.mkprovedor.util.jsf.FacesUtil;
 import com.mkprovedor.util.report.ExecutorRelatorio;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
 
 public class RelatorioService implements Serializable {
 
@@ -51,19 +47,13 @@ public class RelatorioService implements Serializable {
 	}
 
 	public void gerarRelatorioHistorico(FacesContext facesContext, HttpServletResponse response, EntityManager manager,
-			Historico historicoSelecionado) throws IOException, JRException {
+			Date dataFiltro) throws IOException, JRException {
 
 		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-		// CARREGA O SUBRELATÓRIO DE RESPOSTAS E MANDA COMO PARÂMETRO
-		File respostas = new File(
-				getClass().getClassLoader().getResource("/relatorios/sub_relatorio.jasper").getFile());
-		JasperReport subRelatorioDeRespostas = (JasperReport) JRLoader.loadObject(respostas);
-
 		// PARÂMETROS PARA O RELATÓRIO
 		Map<String, Object> parametros = new HashMap<>();
-		parametros.put("cliente_id", historicoSelecionado.getCliente().getId());
-		parametros.put("subReport", subRelatorioDeRespostas);
+		parametros.put("DATA_PAGAMENTO_PARAM", dataFiltro);
 
 		// NOME DO ARQUIVO PDF
 		String arquivo = "historico_de_" + "_" + format.format(new Date()) + ".pdf";

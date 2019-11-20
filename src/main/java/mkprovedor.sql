@@ -94,7 +94,7 @@ CREATE TABLE `cliente_backup` (
   `usuarioPPPOE` varchar(255) NOT NULL,
   `municipio_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=215 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=latin1;
 
 /*Data for the table `cliente_backup` */
 
@@ -294,6 +294,15 @@ insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descr
 insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (212,'BTN','','','841.772.540-70',NULL,'RUA OLAVO BILAC','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
 insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (213,'BTN 2','','','841.772.540-70',NULL,'RUA OLAVO BILAC','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
 insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (214,NULL,'','','282.675.280-40',NULL,'','\0','Afrânio Calisto','','123456','','afranio',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (215,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (216,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (217,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (218,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (219,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (220,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (221,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (222,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (223,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
 
 /*Table structure for table `contrato` */
 
@@ -5991,8 +6000,8 @@ CREATE TABLE `parcela` (
 
 /*Data for the table `parcela` */
 
-insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (1,'2019-11-19 00:00:00','2019-09-03 00:00:00','1/2','',50,1);
-insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (2,NULL,'2019-12-13 00:00:00','2/2','\0',50,1);
+insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (1,'2019-11-19 00:00:00','2019-09-13 00:00:00','1/2','',50,1);
+insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (2,NULL,'2019-10-13 00:00:00','2/2','\0',50,1);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (3,NULL,'2019-10-14 00:00:00','1/2','\0',80,2);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (4,NULL,'2019-11-14 00:00:00','2/2','\0',80,2);
 
@@ -6143,7 +6152,7 @@ DELIMITER $$
 /*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `parcela_status_cliente` AFTER UPDATE ON `parcela` FOR EACH ROW BEGIN
 DECLARE clienteId INT;
 DECLARE diasAtraso INT;
-	SELECT DATEDIFF(CURRENT_DATE(), `dataVencimento`) FROM `parcela` WHERE `mensalidade_id` = old.mensalidade_id LIMIT 1 
+	SELECT DATEDIFF(CURRENT_DATE(), `dataVencimento`) FROM `parcela` WHERE `mensalidade_id` = old.mensalidade_id AND `situacao` = FALSE LIMIT 1 
 	INTO diasAtraso;
 	
 	-- ATUALIZAR TABELA CLIENTE COM STATUS BLOQUEADO
