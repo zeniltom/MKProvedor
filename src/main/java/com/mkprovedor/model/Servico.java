@@ -46,7 +46,7 @@ public class Servico implements Serializable {
 		NumberFormat moeda = NumberFormat.getCurrencyInstance();
 		moeda.setCurrency(Currency.getInstance(new Locale("pt", "BR")));
 
-		String servico = descricao + " [" + tipoPlano + "] - " + tipoServico + " | R$ " + moeda.format(valorPlano);
+		String servico = descricao + " [" + tipoPlano + "] - " + tipoServico + " | " + moeda.format(valorPlano);
 		return servico.toUpperCase();
 	}
 

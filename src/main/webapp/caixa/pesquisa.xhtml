@@ -39,13 +39,17 @@
 				<p:ajax event="rowSelect"
 					listener="#{caixaBean.onRowHistoricoSelect}" update="form:total" />
 
-				<p:column headerText="Cód." style="text-align: center; width: 30px"
+				<p:column headerText="Cód." style="text-align: center; width: 10%"
 					sortBy="#{historico.id}">
 					<h:outputText value="#{historico.id}" />
 				</p:column>
 
 				<p:column headerText="Cliente" sortBy="#{historico.cliente.nome}">
 					<h:outputText value="#{historico.cliente.nome}" />
+				</p:column>
+				
+				<p:column headerText="Funcionário">
+					<h:outputText value="#{historico.empregado.nome}" />
 				</p:column>
 
 				<p:column headerText="Plano" style="text-align: center;">
@@ -54,12 +58,12 @@
 				</p:column>
 
 				<p:column headerText="Parcelas"
-					style="text-align: center; width: 75px">
+					style="text-align: center; width: 65px">
 					<h:outputText value="#{historico.parcela.parcela}" />
 				</p:column>
 
 				<p:column headerText="Data do Pagamento"
-					style="text-align: center;  width: 160px">
+					style="text-align: center;  width: 135px">
 					<h:outputText value="#{historico.dataPagamento}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
@@ -72,7 +76,7 @@
 				</p:column>
 			</p:dataTable>
 
-			<div style="width: 80%; position: absolute; bottom: 30px;">
+			<div style="width: 82%; position: absolute; bottom: 30px;">
 				<p:toolbar>
 					<p:toolbarGroup>
 						<p:outputLabel value="TOTAL: "

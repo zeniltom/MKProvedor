@@ -39,7 +39,7 @@
 				style="margin-top: 10px" var="historico"
 				emptyMessage="Não há histórico" rows="8" paginator="true"
 				paginatorAlwaysVisible="false" paginatorPosition="bottom"
-				rowKey="#{historico}" rowStyleClass="boletos" styleClass="abertos">
+				rowKey="#{historico}" rowStyleClass="boletos">
 
 				<f:facet name="header">
 					<p:toolbar>
@@ -50,9 +50,16 @@
 
 						<p:toolbarGroup>
 							<p:calendar pattern="dd/MM/yyyy" maxlength="15"
-								placeholder="Data de Pagamento" showTodayButton="true"
+								placeholder="Data de Início" showTodayButton="true"
 								showOn="button" showButtonPanel="true"
-								value="#{relatorioBean.dataFiltro}">
+								value="#{relatorioBean.dataInicio}">
+								<p:ajax event="dateSelect" listener="#{relatorioBean.pesquisar}"
+									update="form:historicosTable" />
+							</p:calendar>
+
+							<p:calendar pattern="dd/MM/yyyy" maxlength="15"
+								placeholder="Data de Fim" showTodayButton="true" showOn="button"
+								showButtonPanel="true" value="#{relatorioBean.dataFim}">
 								<p:ajax event="dateSelect" listener="#{relatorioBean.pesquisar}"
 									update="form:historicosTable" />
 							</p:calendar>
@@ -84,7 +91,7 @@
 				</p:column>
 
 				<p:column headerText="Data do Pagamento"
-					style="text-align: center;  width: 140px">
+					style="text-align: center;  width: 135px">
 					<h:outputText value="#{historico.dataPagamento}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
@@ -95,23 +102,21 @@
 						<f:convertNumber type="currency" />
 					</h:outputText>
 				</p:column>
+
 			</p:dataTable>
 
-			<div style="width: 80%; position: absolute; bottom: 30px;">
+			<div style="width: 82%; position: absolute; bottom: 30px;">
 				<p:toolbar>
 					<p:toolbarGroup>
-
+						<p:outputLabel value="TOTAL: "
+							style="padding: 10px; font-weight: bold; font-size: 16px;" />
 					</p:toolbarGroup>
 
 					<p:toolbarGroup align="right">
-						<h:panelGrid columns="2">
-							<p:outputLabel value="TOTAL: "
-								style="padding: 10px; font-weight: bold; font-size: 16px;" />
-							<p:outputLabel id="total" value="#{relatorioBean.total()}"
-								style="padding: 10px; font-weight: bold; font-size: 16px;">
-								<f:convertNumber type="currency" />
-							</p:outputLabel>
-						</h:panelGrid>
+						<p:outputLabel id="total" value="#{relatorioBean.total()}"
+							style="padding: 10px; font-weight: bold; font-size: 16px;">
+							<f:convertNumber type="currency" />
+						</p:outputLabel>
 					</p:toolbarGroup>
 				</p:toolbar>
 			</div>

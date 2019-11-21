@@ -51,7 +51,8 @@ public class RelatorioBean implements Serializable {
 	@Inject
 	private RelatorioService relatorioService;
 
-	private Date dataFiltro;
+	private Date dataInicio;
+	private Date dataFim;
 
 	private Historico historicoSelecionado;
 
@@ -68,7 +69,7 @@ public class RelatorioBean implements Serializable {
 	}
 
 	public void pesquisar() {
-		historicos = historicoService.filter(dataFiltro);
+		historicos = historicoService.filter(dataInicio, dataFim);
 	}
 
 	public double total() {
@@ -98,22 +99,30 @@ public class RelatorioBean implements Serializable {
 	public void emitir() throws IOException, JRException {
 		if (this.historicos.size() > 0) {
 
-			if (this.dataFiltro != null)
+			if (this.dataInicio != null && this.dataFim != null)
 				relatorioService.gerarRelatorioHistorico(this.facesContext, this.response, this.manager,
-						this.dataFiltro);
+						this.dataInicio, this.dataFim);
 			else
-				FacesUtil.addErrorMessage("Preencha a Data de Pagamento antes de gerar o relatório!");
+				FacesUtil.addAlertaMessage("Preencha a data de início e fim antes de gerar o relatório!");
 
 		} else
-			FacesUtil.addErrorMessage("Não histórico disponível para gerar o relatório!");
+			FacesUtil.addAlertaMessage("Não histórico disponível para gerar o relatório!");
 	}
 
-	public Date getDataFiltro() {
-		return dataFiltro;
+	public Date getDataInicio() {
+		return dataInicio;
 	}
 
-	public void setDataFiltro(Date dataFiltro) {
-		this.dataFiltro = dataFiltro;
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
 	}
 
 	public Historico getHistoricoSelecionado() {

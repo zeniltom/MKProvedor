@@ -47,16 +47,17 @@ public class RelatorioService implements Serializable {
 	}
 
 	public void gerarRelatorioHistorico(FacesContext facesContext, HttpServletResponse response, EntityManager manager,
-			Date dataFiltro) throws IOException, JRException {
+			Date dataInicio, Date dataFim) throws IOException, JRException {
 
 		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
 		// PARÂMETROS PARA O RELATÓRIO
 		Map<String, Object> parametros = new HashMap<>();
-		parametros.put("DATA_PAGAMENTO_PARAM", dataFiltro);
+		parametros.put("DATA_INICIO", dataInicio);
+		parametros.put("DATA_FIM", dataFim);
 
 		// NOME DO ARQUIVO PDF
-		String arquivo = "historico_de_" + "_" + format.format(new Date()) + ".pdf";
+		String arquivo = "historico_de_" + format.format(new Date()) + ".pdf";
 
 		ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/historico_gerado.jasper", response, parametros,
 				arquivo);

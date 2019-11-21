@@ -23,8 +23,8 @@ public class HistoricoService implements Serializable {
 	}
 
 	@Transactional
-	public List<Historico> filter(Date dataFiltro) {
-		return historicos.filter(dataFiltro);
+	public List<Historico> filter(Date dataInicio, Date dataFim) {
+		return historicos.filter(dataInicio, dataFim);
 	}
 
 	@Transactional

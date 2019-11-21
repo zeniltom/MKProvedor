@@ -59,8 +59,8 @@ public class Parcela implements Serializable {
 		NumberFormat moeda = NumberFormat.getCurrencyInstance();
 		moeda.setCurrency(Currency.getInstance(new Locale("pt", "BR")));
 
-		return "Parcela " + parcela + " | Valor R$ " + moeda.format(valor) + " | Venc.: "
-				+ format.format(dataVencimento) + status;
+		return "Parcela " + parcela + " | Valor " + moeda.format(valor) + " | Venc.: " + format.format(dataVencimento)
+				+ status;
 	}
 
 	public Long getId() {

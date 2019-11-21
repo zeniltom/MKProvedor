@@ -56,7 +56,7 @@ public class Historico implements Serializable {
 		moeda.setCurrency(Currency.getInstance(new Locale("pt", "BR")));
 
 		return "Pagamento Nº: " + id + " para a Parcela " + parcela.getParcela() + " realizado "
-				+ format.format(dataPagamento) + " no Valor de R$ " + moeda.format(valor) + " para " + cliente
+				+ format.format(dataPagamento) + " no Valor de " + moeda.format(valor) + " para " + cliente
 				+ " realizado por " + empregado;
 	}
 

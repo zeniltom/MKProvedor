@@ -94,7 +94,7 @@ CREATE TABLE `cliente_backup` (
   `usuarioPPPOE` varchar(255) NOT NULL,
   `municipio_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=261 DEFAULT CHARSET=latin1;
 
 /*Data for the table `cliente_backup` */
 
@@ -303,6 +303,37 @@ insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descr
 insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (221,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
 insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (222,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
 insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (223,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (224,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (225,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (232,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (233,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (234,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (235,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (236,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (237,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (238,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (239,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (240,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (241,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (242,'Alves de Souza','','','282.675.280-40',NULL,'Rua do Ouvidor','\0','Afrânio Calisto','','123456','','afranio',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (243,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (244,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (245,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (246,'Alves de Souza','','','282.675.280-40',NULL,'Rua do Ouvidor','\0','Afrânio Calisto','','123456','','afranio',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (247,'Alves de Souza','','','282.675.280-40',NULL,'Rua do Ouvidor','\0','Afrânio Calisto','','123456','','afranio',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (248,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (249,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (250,'Alves de Souza','','','282.675.280-40',NULL,'Rua do Ouvidor','\0','Afrânio Calisto','','123456','','afranio',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (251,'Alves de Souza','','','282.675.280-40',NULL,'Rua do Ouvidor','\0','Afrânio Calisto','','123456','','afranio',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (252,'Alves de Souza','','','282.675.280-40',NULL,'Rua do Ouvidor','\0','Afrânio Calisto','','123456','','afranio',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (253,'Alves de Souza','','','282.675.280-40',NULL,'Rua do Ouvidor','\0','Afrânio Calisto','','123456','','afranio',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (254,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (255,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (256,'Alves de Souza','','','282.675.280-40',NULL,'Rua do Ouvidor','\0','Afrânio Calisto','','123456','','afranio',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (257,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (258,'Alves de Souza','','','282.675.280-40',NULL,'Rua do Ouvidor','\0','Afrânio Calisto','','123456','','afranio',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (259,'Alves de Souza','','','282.675.280-40',NULL,'Rua do Ouvidor','\0','Afrânio Calisto','','123456','','afranio',2114);
+insert  into `cliente_backup`(`id`,`bairro`,`cep`,`complemento`,`cpfCnpj`,`descricao`,`enredeco`,`juridica`,`nome`,`numero`,`senha`,`telefone`,`usuarioPPPOE`,`municipio_id`) values (260,'BTN 2','','','841.772.540-70',NULL,'Rua Olavo Bilac','\0','Adriana Ferreira','','123456','','adrianaferreira',2114);
 
 /*Table structure for table `contrato` */
 
@@ -432,11 +463,9 @@ CREATE TABLE `historico` (
   CONSTRAINT `FKan21jxla9jlp8838x9x9c1n76` FOREIGN KEY (`parcela_id`) REFERENCES `parcela` (`id`),
   CONSTRAINT `FKb5i9g68ej2qw5572bgwsdukm6` FOREIGN KEY (`empregado_id`) REFERENCES `empregado` (`id`),
   CONSTRAINT `FKht0a4wmayrghk1afytfvyttb9` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `historico` */
-
-insert  into `historico`(`id`,`dataPagamento`,`valor`,`cliente_id`,`empregado_id`,`parcela_id`) values (1,'2019-11-19',90,1,1,1);
 
 /*Table structure for table `mensalidade` */
 
@@ -5996,11 +6025,11 @@ CREATE TABLE `parcela` (
   PRIMARY KEY (`id`),
   KEY `FKfsbv6hqxyqq4rlkd6vnifpn3j` (`mensalidade_id`),
   CONSTRAINT `FKfsbv6hqxyqq4rlkd6vnifpn3j` FOREIGN KEY (`mensalidade_id`) REFERENCES `mensalidade` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 /*Data for the table `parcela` */
 
-insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (1,'2019-11-19 00:00:00','2019-09-13 00:00:00','1/2','',50,1);
+insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (1,NULL,'2019-09-21 00:00:00','1/2','\0',50,1);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (2,NULL,'2019-10-13 00:00:00','2/2','\0',50,1);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (3,NULL,'2019-10-14 00:00:00','1/2','\0',80,2);
 insert  into `parcela`(`id`,`dataPagamento`,`dataVencimento`,`parcela`,`situacao`,`valor`,`mensalidade_id`) values (4,NULL,'2019-11-14 00:00:00','2/2','\0',80,2);
@@ -6102,51 +6131,6 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `parcela_gerar_novas` */$$
-
-/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `parcela_gerar_novas` AFTER UPDATE ON `parcela` FOR EACH ROW BEGIN
-DECLARE contador INT;
-DECLARE vParcela FLOAT;
-DECLARE qtdParcelaNova INT;
-DECLARE dataParcelaInicial DATE;
-DECLARE clienteId INT;
-DECLARE parcelaEaUltima boolean;
-declare ultimoReg long ;
-DECLARE novaData DATE;
-	set parcelaEaUltima =false;
-	select `situacao` from `parcela` where `mensalidade_id` = old.mensalidade_id ORDER BY id DESC LIMIT 1 into parcelaEaUltima;
-	SELECT `dataVencimento` FROM parcela WHERE `mensalidade_id` = old.mensalidade_id ORDER BY `dataVencimento` DESC LIMIT 1 INTO dataParcelaInicial;
-	SELECT `dataVencimento` FROM parcela WHERE `mensalidade_id` = old.mensalidade_id ORDER BY `dataVencimento` DESC LIMIT 1 INTO novaData;
-			   
-	SELECT `qtdParcela` FROM mensalidade WHERE `id` = old.mensalidade_id into qtdParcelaNova;
-			   
-	SELECT `cliente_id` FROM mensalidade WHERE `id` = old.mensalidade_id into clienteId;
-	select `valor` from `mensalidade` WHERE `id` = old.mensalidade_id into vParcela;
-		
-	if (parcelaEaUltima is true) then 
-		SET novaData = ADDDATE(novaData, INTERVAL 30 DAY);
-		INSERT INTO `mensalidade` values (NULL, novaData, null, qtdParcelaNova, vParcela, clienteId);
-			
-		select max(id) from `mensalidade` into ultimoReg;
-			
-		set contador = 1;
-		while(contador <= qtdParcelaNova) do	
-				
-			set dataParcelaInicial = adddate(dataParcelaInicial, INTERVAL 30 day);
-			INSERT INTO `parcela_backup` values (null, null, dataParcelaInicial, CONCAT(contador, '/', qtdParcelaNova), b'0', vParcela, ultimoReg);
-			set contador = contador + 1;
-					
-		END while;
-	end if;	
-END */$$
-
-
-DELIMITER ;
-
-/* Trigger structure for table `parcela` */
-
-DELIMITER $$
-
 /*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `parcela_status_cliente` */$$
 
 /*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `parcela_status_cliente` AFTER UPDATE ON `parcela` FOR EACH ROW BEGIN
@@ -6231,7 +6215,30 @@ DECLARE resultante DOUBLE;
 		set resultante = 0;
 	eND IF;
     
-    RETURN coalesce(resultante, 0);
+    RETURN round(resultante, 3);
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `criar_novas_parcelas` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `criar_novas_parcelas` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `criar_novas_parcelas`(dataParcelaInicial DATE, qtdParcelaNova INT, vParcela FLOAT, novaMensalidade int)
+BEGIN
+	
+DECLARE contador INT;
+	SET contador = 1;
+	
+	WHILE(contador <= qtdParcelaNova) DO	
+				
+		SET dataParcelaInicial = ADDDATE(dataParcelaInicial, INTERVAL 30 DAY);
+		INSERT INTO `parcela` VALUES (NULL, NULL, dataParcelaInicial, CONCAT(contador, '/', qtdParcelaNova), b'0', vParcela, novaMensalidade);
+		SET contador = contador + 1;
+					
+ 	END WHILE;
+	
 END */$$
 DELIMITER ;
 
