@@ -134,7 +134,7 @@ public class Parcelas implements Serializable {
 	public double findByParcelaVencidaValor(Parcela parcela) {
 		String total = "0";
 
-		Query query = entityManager.createNativeQuery(" SELECT calcular_juros_e_multa(" + parcela.getId() + ")");
+		Query query = entityManager.createNativeQuery("SELECT calcular_juros_e_multa(" + parcela.getId() + ")");
 		Object valores = query.getSingleResult();
 
 		if (valores != null)

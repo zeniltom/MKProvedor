@@ -70,6 +70,6 @@ public class Chamados implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public List<Chamado> findAll() {
-		return entityManager.createQuery("SELECT m FROM Chamado m ORDER BY m.nome").getResultList();
+		return entityManager.createQuery("SELECT m FROM Chamado m ORDER BY m.id").getResultList();
 	}
 }

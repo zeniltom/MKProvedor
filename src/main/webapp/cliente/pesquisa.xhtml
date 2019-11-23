@@ -33,11 +33,13 @@
 					</p:selectBooleanCheckbox>
 
 					<p:inputMask rendered="#{!clientePesquisaBean.juridico}" id="cpf"
-						maxlength="14" mask="999.999.999-99"
+						maxlength="14" mask="999.999.999-99" required="true"
+						requiredMessage="Digite o CPF para pesquisar"
 						value="#{clientePesquisaBean.cliente.cpfCnpj}" placeholder="CPF" />
 
 					<p:inputMask rendered="#{clientePesquisaBean.juridico}" id="cnpj"
 						maxlength="16" mask="99.99.999/9999-99"
+						requiredMessage="Digite o CNPJ para pesquisar" required="true"
 						value="#{clientePesquisaBean.cliente.cpfCnpj}" placeholder="CNPJ" />
 				</p:toolbarGroup>
 
@@ -95,7 +97,8 @@
 					<h:outputText value="#{cliente.status}" />
 				</p:column>
 
-				<p:column style="text-align: center; width: 150px" headerText="Ações">
+				<p:column style="text-align: center; width: 150px"
+					headerText="Ações">
 					<p:button outcome="/cliente/cadastro" title="EDITAR"
 						icon="fa fa-pencil-square-o">
 						<f:param name="cliente" value="#{cliente.id}" />
@@ -166,7 +169,8 @@
 					<h:outputText value="#{cliente.status}" />
 				</p:column>
 
-				<p:column style="text-align: center; width: 150px" headerText="Ações">
+				<p:column style="text-align: center; width: 150px"
+					headerText="Ações">
 					<p:button outcome="/cliente/cadastro" title="EDITAR"
 						icon="fa fa-pencil-square-o">
 						<f:param name="cliente" value="#{cliente.id}" />

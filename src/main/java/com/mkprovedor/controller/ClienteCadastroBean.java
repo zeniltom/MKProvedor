@@ -3,7 +3,6 @@ package com.mkprovedor.controller;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +22,6 @@ import com.mkprovedor.model.Contrato;
 import com.mkprovedor.model.ENUf;
 import com.mkprovedor.model.Mensalidade;
 import com.mkprovedor.model.Municipio;
-import com.mkprovedor.model.Parcela;
 import com.mkprovedor.model.Servico;
 import com.mkprovedor.service.ClienteService;
 import com.mkprovedor.service.ContratoService;
@@ -197,23 +195,25 @@ public class ClienteCadastroBean implements Serializable {
 	}
 
 	public void salvarParcelas() {
-		int i = 0;
-
-		while (i < this.mensalidade.getQtdParcela()) {
-			Parcela parcela = new Parcela();
-			parcela.setMensalidade(this.mensalidade);
-			parcela.setValor(this.mensalidade.getValor());
-
-			Calendar data = java.util.Calendar.getInstance();
-			data.setTime(this.mensalidade.getDataPrimeiraParcela());
-			data.add(java.util.Calendar.MONTH, i);
-
-			parcela.setParcela(i + 1 + "/" + this.mensalidade.getQtdParcela());
-			parcela.setDataVencimento(data.getTime());
-
-			parcelaService.createNew(parcela);
-			i++;
-		}
+		/*
+		 * int i = 0;
+		 * 
+		 * 
+		 * while (i < this.mensalidade.getQtdParcela()) { Parcela parcela = new
+		 * Parcela(); parcela.setMensalidade(this.mensalidade);
+		 * parcela.setValor(this.mensalidade.getValor());
+		 * 
+		 * Calendar data = java.util.Calendar.getInstance();
+		 * data.setTime(this.mensalidade.getDataPrimeiraParcela());
+		 * data.add(java.util.Calendar.MONTH, i);
+		 * 
+		 * parcela.setParcela(i + 1 + "/" + this.mensalidade.getQtdParcela());
+		 * parcela.setDataVencimento(data.getTime());
+		 * 
+		 * parcelaService.createNew(parcela); i++; }
+		 */
+		
+		System.out.println("TRIGGER parcela_gerar_novas executado");
 	}
 
 	public void permitirAlteracaoFinanceiro(boolean permitir) {
