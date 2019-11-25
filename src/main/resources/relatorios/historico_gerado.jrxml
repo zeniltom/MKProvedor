@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2019-11-25T20:29:10 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="historico_gerado" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="8e861d97-217f-4ba5-87ef-e2d4be88e00d">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="392"/>
@@ -7,7 +8,7 @@
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="573"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="413"/>
 	<property name="net.sf.jasperreports.print.create.bookmarks" value="true"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="mkprovedor_conexao.xml"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MKPROVEDOR.xml"/>
 	<parameter name="DATA_INICIO" class="java.util.Date"/>
 	<parameter name="DATA_FIM" class="java.util.Date"/>
 	<queryString language="SQL">
@@ -19,12 +20,13 @@ p.`parcela` as PARCELA, h.`dataPagamento` AS DATA_PAGAMENTO, h.`valor` as VALOR
 FROM `historico` h 
 
 INNER JOIN `cliente` c on c.`id` = h.`cliente_id` 
-INNER JOIN `contrato` ct on ct.`id` = c.`id` 
+INNER JOIN `contrato` ct on ct.`cliente_id` = c.`id` 
 INNER JOIN `servico` s on s.`id` = ct.`servico_id` 
 INNER JOIN `empregado` e on e.`id` = h.`empregado_id` 
 INNER JOIN `parcela` p on p.`id` = h.`parcela_id` 
 
-WHERE h.`dataPagamento` BETWEEN  $P{DATA_INICIO}  AND $P{DATA_FIM} ]]>
+WHERE h.`dataPagamento` BETWEEN  $P{DATA_INICIO}  AND $P{DATA_FIM}
+ORDER BY DATA_PAGAMENTO, VALOR]]>
 	</queryString>
 	<field name="COD" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.label" value="COD"/>
