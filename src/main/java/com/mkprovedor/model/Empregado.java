@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -29,10 +28,11 @@ public class Empregado implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull(message = "é obrigatório")
+	@NotBlank(message = "é obrigatório")
 	@Column(nullable = false)
 	private String nome;
 
+	@NotBlank(message = "é obrigatório")
 	@Length(max = 20, message = "não pode ultrapassar de 20 caracteres")
 	private String cpf;
 
@@ -53,12 +53,19 @@ public class Empregado implements Serializable {
 	private double salario;
 
 	private String endereco;
+
 	private String complemento;
+	
 	private String bairro;
+
 	private Short numero;
+
 	private String cargo;
+
 	private String cep;
+
 	private String cidade;
+
 	private String estado;
 
 	private boolean admin;

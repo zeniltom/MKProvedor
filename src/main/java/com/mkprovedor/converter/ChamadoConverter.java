@@ -21,9 +21,8 @@ public class ChamadoConverter implements Converter {
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Chamado retorno = null;
 
-		if (StringUtils.isNotEmpty(value)) {
+		if (StringUtils.isNotEmpty(value))
 			retorno = this.chamados.findById(new Long(value));
-		}
 
 		return retorno;
 	}
@@ -34,6 +33,7 @@ public class ChamadoConverter implements Converter {
 			Chamado chamado = (Chamado) value;
 			return chamado.getId() == null ? null : chamado.getId().toString();
 		}
+
 		return "";
 	}
 

@@ -21,9 +21,8 @@ public class MensalidadeConverter implements Converter {
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Cliente retorno = null;
 
-		if (StringUtils.isNotEmpty(value)) {
+		if (StringUtils.isNotEmpty(value))
 			retorno = this.clientes.findById(new Long(value));
-		}
 
 		return retorno;
 	}
@@ -34,6 +33,7 @@ public class MensalidadeConverter implements Converter {
 			Cliente cliente = (Cliente) value;
 			return cliente.getId() == null ? null : cliente.getId().toString();
 		}
+		
 		return "";
 	}
 

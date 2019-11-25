@@ -21,9 +21,8 @@ public class ServicoConverter implements Converter {
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Servico retorno = null;
 
-		if (StringUtils.isNotEmpty(value)) {
+		if (StringUtils.isNotEmpty(value))
 			retorno = this.servicos.findById(new Long(value));
-		}
 
 		return retorno;
 	}
@@ -34,6 +33,7 @@ public class ServicoConverter implements Converter {
 			Servico servico = (Servico) value;
 			return servico.getId() == null ? null : servico.getId().toString();
 		}
+
 		return "";
 	}
 

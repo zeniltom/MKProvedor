@@ -21,9 +21,8 @@ public class EmpregadoConverter implements Converter {
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Empregado retorno = null;
 
-		if (StringUtils.isNotEmpty(value)) {
+		if (StringUtils.isNotEmpty(value))
 			retorno = this.empregados.findById(new Long(value));
-		}
 
 		return retorno;
 	}
@@ -34,6 +33,7 @@ public class EmpregadoConverter implements Converter {
 			Empregado empregado = (Empregado) value;
 			return empregado.getId() == null ? null : empregado.getId().toString();
 		}
+
 		return "";
 	}
 

@@ -60,12 +60,15 @@
 					<h:outputText value="#{empregado.cargo}" />
 				</p:column>
 
-				<p:column headerText="Salário" style="text-align: center;"
+				<p:column headerText="Salário"
+					style="text-align: center; width: 90px"
 					sortBy="#{empregado.salario}">
-					<h:outputText value="#{empregado.salario}" />
+					<h:outputText value="#{empregado.salario}">
+						<f:convertNumber type="currency" />
+					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Permissão" style="text-align: center">
+				<p:column headerText="Permissão" style="text-align: center; width: 150px">
 					<h:outputText
 						value="#{empregadoPesquisaBean.listarPermissoes(empregado)}" />
 				</p:column>

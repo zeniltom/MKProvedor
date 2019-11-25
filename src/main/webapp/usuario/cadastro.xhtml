@@ -49,18 +49,18 @@
 			<h:panelGrid columns="1" style="width: 100%; margin-top: 10px;">
 
 				<p:fieldset legend="Dados Pessoais">
-					<p:panelGrid columns="6" id="painel1" styleClass="sem-borda">
+					<p:panelGrid columns="7" id="painel1" styleClass="sem-borda">
 
 						<p:outputLabel value="Nome" for="nome" />
-						<p:inputText id="nome" maxlength="80" size="40"
+						<p:inputText id="nome" maxlength="80" size="50"
 							value="#{empregadoCadastroBean.empregado.nome}" />
 
 						<p:outputLabel value="CPF" for="cpf" />
-						<p:inputMask id="cpf" maxlength="20" mask="999.999.999-99"
-							value="#{empregadoCadastroBean.empregado.cpf}" />
+						<p:inputMask id="cpf" maxlength="14" mask="999.999.999-99"
+							size="14" value="#{empregadoCadastroBean.empregado.cpf}" />
 
 						<p:outputLabel value="Telefone" for="telefone" />
-						<p:inputMask id="telefone" mask="(99) 99999-9999" maxlength="20"
+						<p:inputMask id="telefone" mask="(99) 99999-9999" maxlength="15"
 							value="#{empregadoCadastroBean.empregado.telefone}" />
 					</p:panelGrid>
 				</p:fieldset>
@@ -80,7 +80,7 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Município" for="municipio" />
-						<p:inputText id="municipio" maxlength="80" size="50"
+						<p:inputText id="municipio" maxlength="80"
 							value="#{empregadoCadastroBean.empregado.cidade}" />
 
 						<p:outputLabel value="CEP" for="cep" />
@@ -91,8 +91,12 @@
 						<p:inputText id="endereco" maxlength="80" size="50"
 							value="#{empregadoCadastroBean.empregado.endereco}" />
 
+						<p:outputLabel value="Bairro" for="bairro" />
+						<p:inputText id="bairro" maxlength="80" size="20"
+							value="#{empregadoCadastroBean.empregado.bairro}" />
+
 						<p:outputLabel value="Complemento" for="complemento" />
-						<p:inputText id="complemento" maxlength="80" size="30"
+						<p:inputText id="complemento" maxlength="80" size="20"
 							value="#{empregadoCadastroBean.empregado.complemento}" />
 
 						<p:outputLabel value="Número" for="numero" />
@@ -103,7 +107,7 @@
 
 				</p:fieldset>
 
-				<p:fieldset legend="Conexão">
+				<p:fieldset legend="Acesso">
 
 					<p:panelGrid columns="8" id="painel3" styleClass="sem-borda"
 						style="margin-top: 5px">
@@ -132,6 +136,11 @@
 						<p:outputLabel value="Confirmar senha" for="senha2" />
 						<p:password id="senha2" maxlength="80"
 							value="#{empregadoCadastroBean.empregado.senha}" />
+
+						<p:selectBooleanCheckbox
+							value="#{empregadoCadastroBean.empregado.admin}"
+							itemLabel="Administrador?">
+						</p:selectBooleanCheckbox>
 					</p:panelGrid>
 
 				</p:fieldset>

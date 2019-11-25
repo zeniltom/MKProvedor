@@ -21,9 +21,8 @@ public class MunicipioConverter implements Converter {
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Municipio retorno = null;
 
-		if (StringUtils.isNotEmpty(value)) {
+		if (StringUtils.isNotEmpty(value))
 			retorno = this.municipios.findById(new Long(value));
-		}
 
 		return retorno;
 	}
@@ -34,6 +33,7 @@ public class MunicipioConverter implements Converter {
 			Municipio municipio = (Municipio) value;
 			return municipio.getId() == null ? null : municipio.getId().toString();
 		}
+
 		return "";
 	}
 
