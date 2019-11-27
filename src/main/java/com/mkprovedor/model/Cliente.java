@@ -67,7 +67,7 @@ public class Cliente implements Serializable {
 	private boolean juridica;
 
 	@ManyToOne
-	@JoinColumn(name = "municipio_id", nullable = false)
+	@JoinColumn(name = "municipio_id")
 	private Municipio municipio;
 
 	@Override

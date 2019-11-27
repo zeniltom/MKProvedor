@@ -53,7 +53,7 @@ public class Historicos implements Serializable {
 		if (dataFim != null)
 			criteria.add(Restrictions.le("dataPagamento", dataFim));
 
-		criteria.addOrder(Order.desc("dataPagamento"));
+		criteria.addOrder(Order.asc("dataPagamento"));
 		criteria.addOrder(Order.asc("valor"));
 
 		return criteria.list();
@@ -67,7 +67,7 @@ public class Historicos implements Serializable {
 		if (dataHoje != null)
 			criteria.add(Restrictions.eq("dataPagamento", dataHoje));
 
-		criteria.addOrder(Order.desc("dataPagamento"));
+		criteria.addOrder(Order.asc("dataPagamento"));
 		criteria.addOrder(Order.asc("valor"));
 
 		return criteria.list();

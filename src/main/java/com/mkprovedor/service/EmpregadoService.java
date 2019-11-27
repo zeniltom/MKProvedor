@@ -32,21 +32,16 @@ public class EmpregadoService implements Serializable {
 	}
 
 	@Transactional
-	public List<Empregado> findAll() {
-		return empregadoes.findAll();
-	}
-
-	@Transactional
-	public Empregado findByEmail(Empregado empregado) {
-		return empregadoes.findByEmail(empregado.getEmail());
-	}
-
-	@Transactional
 	public List<Empregado> filter(Empregado empregado) {
 		return empregadoes.filter(empregado);
 	}
 
 	public List<Empregado> findByNome(String nome) {
 		return empregadoes.findByNome(nome);
+	}
+
+	@Transactional
+	public List<Empregado> findAll() {
+		return empregadoes.findAll();
 	}
 }

@@ -20,7 +20,7 @@
 				'Edição de Cliente' : 'Novo Cliente'}</h1>
 
 			<p:autoUpdate />
-			<p:messages closable="true" />
+			<p:growl closable="true" />
 
 			<p:toolbar>
 				<p:toolbarGroup>
@@ -95,7 +95,7 @@
 								itemValue="#{uf}" itemLabel="#{uf}" />
 
 							<p:ajax listener="#{clienteCadastroBean.carregarMunicipios}"
-								update="municipio" event="change" />
+								update="municipio" event="change" ignoreAutoUpdate="true" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Município" for="municipio" />
@@ -111,7 +111,9 @@
 						<p:outputLabel value="CEP" for="cep" />
 						<p:inputMask id="cep" maxlength="9" mask="99999-999" size="10"
 							value="#{clienteCadastroBean.cliente.cep}" />
+					</p:panelGrid>
 
+					<p:panelGrid columns="8" id="painel3" styleClass="sem-borda">
 						<p:outputLabel value="Endereço" for="endereco" />
 						<p:inputText id="endereco" maxlength="80" size="50"
 							value="#{clienteCadastroBean.cliente.enredeco}" />
@@ -121,11 +123,11 @@
 							value="#{clienteCadastroBean.cliente.bairro}" />
 
 						<p:outputLabel value="Complemento" for="complemento" />
-						<p:inputText id="complemento" maxlength="80" size="20"
+						<p:inputText id="complemento" maxlength="80" size="10"
 							value="#{clienteCadastroBean.cliente.complemento}" />
 
 						<p:outputLabel value="Número" for="numero" />
-						<p:inputText id="numero" maxlength="80" size="10"
+						<p:inputText id="numero" maxlength="80" size="5"
 							value="#{clienteCadastroBean.cliente.numero}" />
 
 					</p:panelGrid>
@@ -134,7 +136,7 @@
 
 				<p:fieldset legend="Conexão">
 
-					<p:panelGrid columns="6" id="painel3" styleClass="sem-borda"
+					<p:panelGrid columns="6" id="painel4" styleClass="sem-borda"
 						style="margin-top: 5px">
 
 						<p:outputLabel value="Usuário PPOE" for="usuarioPPOE" />
@@ -162,7 +164,8 @@
 									itemLabel="Bloquear" style="padding: 5px">
 									<p:ajax
 										update="tab frmCadastro:confirmacaoEdicaoFinanceiroDialog"
-										oncomplete="PF('confirmacaoEdicaoFinanceiro').show()" />
+										oncomplete="PF('confirmacaoEdicaoFinanceiro').show()"
+										ignoreAutoUpdate="true" />
 								</p:selectBooleanCheckbox>
 							</p:toolbarGroup>
 						</p:toolbar>
@@ -247,14 +250,14 @@
 						styleClass="btCancelar"
 						actionListener="#{clienteCadastroBean.permitirAlteracaoFinanceiro(true)}"
 						oncomplete="PF('confirmacaoEdicaoFinanceiro').hide(); return false;"
-						process="@this" update="tab"
+						process="@this" update="tab" ignoreAutoUpdate="true"
 						style="padding: 5px; font-weight: bold" />
 
 					<p:commandButton value="Liberar financeiro"
 						icon="fa fa-check-square" styleClass="btConfirmar"
 						oncomplete="PF('confirmacaoEdicaoFinanceiro').hide();"
 						actionListener="#{clienteCadastroBean.permitirAlteracaoFinanceiro(false)}"
-						process="@this" update="tab"
+						process="@this" update="tab" ignoreAutoUpdate="true"
 						style="padding: 5px; font-weight: bold" />
 				</div>
 			</p:confirmDialog>

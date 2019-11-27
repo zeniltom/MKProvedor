@@ -26,4 +26,8 @@ public class GrupoService implements Serializable {
 		return grupos.findByNome(grupoSelecionado);
 	}
 
+	@Transactional
+	public List<Grupo> findAll() {
+		return grupos.findAll();
+	}
 }

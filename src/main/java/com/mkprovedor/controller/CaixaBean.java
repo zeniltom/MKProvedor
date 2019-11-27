@@ -32,6 +32,8 @@ public class CaixaBean implements Serializable {
 
 	private List<Historico> historicos;
 
+	private Historico historico;
+
 	public CaixaBean() {
 		limpar();
 	}
@@ -58,6 +60,25 @@ public class CaixaBean implements Serializable {
 		return total;
 	}
 
+	public double jurosEMulta() {
+		double jurosEMulta = 0;
+
+		if (historico != null && historico.getCliente() != null)
+			jurosEMulta = this.historico.getValor() - this.historico.getParcela().getValor();
+
+		return jurosEMulta;
+	}
+
+	public String planoCliente() {
+		if (historico != null && historico.getCliente() != null)
+			contrato = contratoService.findByCliente(historico.getCliente());
+
+		if (contrato == null)
+			return "Sem plano";
+		else
+			return contrato.getServico().toString();
+	}
+
 	public String contratoCliente(Cliente cliente) {
 		contrato = contratoService.findByCliente(cliente);
 
@@ -68,8 +89,16 @@ public class CaixaBean implements Serializable {
 	}
 
 	public void onRowHistoricoSelect(SelectEvent event) {
-		Historico historico = (Historico) event.getObject();
+		historico = (Historico) event.getObject();
 		System.out.println(historico);
+	}
+
+	public Historico getHistorico() {
+		return historico;
+	}
+
+	public void setHistorico(Historico historico) {
+		this.historico = historico;
 	}
 
 	public List<Historico> getHistoricos() {

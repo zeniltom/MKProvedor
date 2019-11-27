@@ -70,7 +70,7 @@ public class RelatorioBean implements Serializable {
 
 	public void pesquisar() {
 		historicos = historicoService.filter(dataInicio, dataFim);
-	}
+ 	}
 
 	public double total() {
 		double total = 0;

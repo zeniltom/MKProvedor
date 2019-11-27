@@ -16,9 +16,9 @@
 	<ui:define name="corpo">
 		<h:form id="frmPesquisa">
 			<h1 class="aw-page-title">Lista de Usuários</h1>
-
+ 
 			<p:autoUpdate />
-			<p:messages closable="true" />
+			<p:growl closable="true" />
 
 			<p:toolbar>
 				<p:toolbarGroup>
@@ -27,7 +27,9 @@
 				</p:toolbarGroup>
 
 				<p:toolbarGroup style="margin-left: 10px">
-					<p:inputText id="nome" size="60" placeholder="Ex.: Gilberto"
+					<p:inputText id="nome" size="60" required="true"
+						requiredMessage="Nome é obrigatório para pesquisa"
+						placeholder="Ex.: Gilberto"
 						value="#{empregadoPesquisaBean.empregado.nome}" />
 				</p:toolbarGroup>
 
@@ -68,7 +70,8 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Permissão" style="text-align: center; width: 150px">
+				<p:column headerText="Permissão"
+					style="text-align: center; width: 150px">
 					<h:outputText
 						value="#{empregadoPesquisaBean.listarPermissoes(empregado)}" />
 				</p:column>

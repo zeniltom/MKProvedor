@@ -109,7 +109,7 @@ public class Parcelas implements Serializable {
 		String total = "0";
 
 		Query query = entityManager.createNativeQuery(
-				"SELECT COUNT(*) FROM `parcela` WHERE `dataPagamento` IS NULL AND `situacao` IS FALSE  AND DATEDIFF(CURRENT_DATE(), `dataVencimento`) >= 3");
+				"SELECT COUNT(*) FROM `parcela` WHERE `dataPagamento` IS NULL AND `situacao` IS FALSE  AND `dataVencimento` > CURRENT_DATE()");
 		Object valores = query.getSingleResult();
 
 		if (valores != null)

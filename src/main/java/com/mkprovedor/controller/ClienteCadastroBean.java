@@ -239,7 +239,7 @@ public class ClienteCadastroBean implements Serializable {
 	public void carregarMunicipio() {
 		municipios.clear();
 		if (this.cliente.getId() != null) {
-			this.municipio = this.cliente.getMunicipio();
+			this.municipio = this.cliente.getMunicipio() != null ? this.cliente.getMunicipio() : new Municipio();
 			municipios.add(this.municipio);
 		}
 	}

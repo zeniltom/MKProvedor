@@ -12,31 +12,58 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.mkprovedor.model.Empregado;
 import com.mkprovedor.model.Grupo;
+import com.mkprovedor.model.Usuario;
 import com.mkprovedor.repository.Empregados;
+import com.mkprovedor.repository.Usuarios;
 import com.mkprovedor.util.cdi.CDIServiceLocator;
 
 public class AppUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-		Empregados empregadoes = CDIServiceLocator.getBean(Empregados.class);
-		Empregado empregado = empregadoes.findByLogin(login);
+		Usuarios usuarios = CDIServiceLocator.getBean(Usuarios.class);
+		Empregados empregados = CDIServiceLocator.getBean(Empregados.class);
+		Usuario usuario = usuarios.findByLogin(login);
 
-		EmpregadoSistema user = null;
+		UsuarioSistema user = null;
 
-		if (empregado != null) {
-			user = new EmpregadoSistema(empregado, getGrupos(empregado));
+		if (usuario != null) {
+			Empregado empregado = empregados.findByUsuario(usuario).get(0);
+
+			user = new UsuarioSistema(usuario, empregado, getGrupos(usuario));
 		}
 
 		return user;
 	}
 
-	private Collection<? extends GrantedAuthority> getGrupos(Empregado empregado) {
+	private Collection<? extends GrantedAuthority> getGrupos(Usuario usuario) {
 		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-		for (Grupo grupo : empregado.getGrupos())
+		for (Grupo grupo : usuario.getGrupos())
 			authorities.add(new SimpleGrantedAuthority(grupo.getNome().toUpperCase()));
 
 		return authorities;
 	}
+
+	/*
+	 * @Override public UserDetails loadUserByUsername(String login) throws
+	 * UsernameNotFoundException { Empregados empregadoes =
+	 * CDIServiceLocator.getBean(Empregados.class); Empregado empregado =
+	 * empregadoes.findByLogin(login);
+	 * 
+	 * EmpregadoSistema user = null;
+	 * 
+	 * if (empregado != null) { user = new EmpregadoSistema(empregado,
+	 * getGrupos(empregado)); }
+	 * 
+	 * return user; }
+	 * 
+	 * private Collection<? extends GrantedAuthority> getGrupos(Empregado empregado)
+	 * { List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+	 * 
+	 * for (Grupo grupo : empregado.getGrupos()) authorities.add(new
+	 * SimpleGrantedAuthority(grupo.getNome().toUpperCase()));
+	 * 
+	 * return authorities; }
+	 */
 }

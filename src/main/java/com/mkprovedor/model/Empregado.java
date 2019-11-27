@@ -1,18 +1,14 @@
 package com.mkprovedor.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
@@ -36,18 +32,6 @@ public class Empregado implements Serializable {
 	@Length(max = 20, message = "não pode ultrapassar de 20 caracteres")
 	private String cpf;
 
-	@NotBlank(message = "é obrigatório")
-	@Column(nullable = false)
-	private String login;
-
-	@NotBlank(message = "é obrigatório")
-	@Column(nullable = false)
-	private String senha;
-
-	@NotBlank(message = "é obrigatório")
-	@Column(nullable = false)
-	private String email;
-
 	private String telefone;
 
 	private double salario;
@@ -55,7 +39,7 @@ public class Empregado implements Serializable {
 	private String endereco;
 
 	private String complemento;
-	
+
 	private String bairro;
 
 	private Short numero;
@@ -64,15 +48,15 @@ public class Empregado implements Serializable {
 
 	private String cep;
 
-	private String cidade;
-
-	private String estado;
-
 	private boolean admin;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "empregado_grupo", joinColumns = @JoinColumn(name = "empregado_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
-	private List<Grupo> grupos = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
+
+	@ManyToOne
+	@JoinColumn(name = "municipio_id")
+	private Municipio municipio;
 
 	@Override
 	public String toString() {
@@ -101,30 +85,6 @@ public class Empregado implements Serializable {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getTelefone() {
@@ -199,28 +159,20 @@ public class Empregado implements Serializable {
 		this.cep = cep;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public Municipio getMunicipio() {
+		return municipio;
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
 	}
 
-	public String getEstado() {
-		return estado;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public List<Grupo> getGrupos() {
-		return grupos;
-	}
-
-	public void setGrupos(List<Grupo> grupos) {
-		this.grupos = grupos;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

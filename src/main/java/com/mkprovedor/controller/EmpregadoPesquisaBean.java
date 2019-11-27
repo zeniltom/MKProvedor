@@ -9,7 +9,6 @@ import javax.inject.Named;
 
 import com.mkprovedor.model.Empregado;
 import com.mkprovedor.model.Grupo;
-import com.mkprovedor.repository.EmpregadoGrupos;
 import com.mkprovedor.service.EmpregadoService;
 import com.mkprovedor.util.jsf.FacesUtil;
 
@@ -20,10 +19,7 @@ public class EmpregadoPesquisaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private EmpregadoService cadastroEmpregadoService;
-
-	@Inject
-	EmpregadoGrupos empregadoGrupos;
+	private EmpregadoService empregadoService;
 
 	private Empregado empregado;
 
@@ -36,12 +32,12 @@ public class EmpregadoPesquisaBean implements Serializable {
 	}
 
 	public void pesquisar() {
-		empregadoesFiltrados = cadastroEmpregadoService.filter(empregado);
+		empregadoesFiltrados = empregadoService.filter(empregado);
 	}
 
 	public void excluir() {
 		try {
-			cadastroEmpregadoService.delete(empregadoSelecionado);
+			empregadoService.delete(empregadoSelecionado);
 			FacesUtil.addInfoMessage("Empregado " + empregadoSelecionado.getNome() + " excluído com sucesso!");
 
 		} catch (Exception e) {
@@ -53,7 +49,7 @@ public class EmpregadoPesquisaBean implements Serializable {
 	public String listarPermissoes(Empregado empregado) {
 		StringBuilder builder = new StringBuilder();
 
-		for (Grupo g : empregado.getGrupos())
+		for (Grupo g : empregado.getUsuario().getGrupos())
 			builder.append(g.getNome() + ", ");
 
 		return !builder.toString().equals("") ? builder.substring(0, builder.toString().length() - 2) : "";

@@ -24,6 +24,14 @@
 	<h:outputStylesheet
 		name="webjars/font-awesome/4.4.0/css/font-awesome.css" />
 
+	<style>
+		.ui-growl {
+			position: absolute;
+			top: 10%;
+			z-index: 9999;
+		}
+	</style>
+
 </h:head>
 
 <h:body>
@@ -54,7 +62,7 @@
 			 line-height: 30px; text-decoration:none; "
 			outcome="/usuario/pesquisa">
 
-			<h:outputLabel value="#{seguranca.nomeEmpregado}"
+			<h:outputLabel value="#{seguranca.nomeUsuario}"
 				style="text-transform: uppercase" />
 
 			<h:graphicImage

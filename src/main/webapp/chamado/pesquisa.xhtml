@@ -21,13 +21,13 @@
 
 			<p:toolbar>
 				<p:toolbarGroup>
-					<p:commandButton value="Listar chamados" icon="fa fa-list"
-						action="#{chamadoPesquisaBean.listar}" update="form" />
+					<p:button value="Abrir novo chamado" icon="fa fa-bullhorn"
+						outcome="/chamado/cadastro" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right">
-					<p:button value="Abrir novo chamado" icon="fa fa-bullhorn"
-						outcome="/chamado/cadastro" />
+					<p:commandButton value="Listar chamados" icon="fa fa-list"
+						action="#{chamadoPesquisaBean.listar}" update="form" />
 				</p:toolbarGroup>
 			</p:toolbar>
 		</h:form>

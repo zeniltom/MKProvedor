@@ -16,7 +16,7 @@ import com.mkprovedor.model.Cliente;
 import com.mkprovedor.model.Historico;
 import com.mkprovedor.model.Mensalidade;
 import com.mkprovedor.model.Parcela;
-import com.mkprovedor.security.EmpregadoSistema;
+import com.mkprovedor.security.UsuarioSistema;
 import com.mkprovedor.service.HistoricoService;
 import com.mkprovedor.service.MensalidadeService;
 import com.mkprovedor.service.ParcelaService;
@@ -28,7 +28,7 @@ public class BoletoPesquisaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private EmpregadoSistema empregadoSistema;
+	private UsuarioSistema usuarioSistema;
 
 	@Inject
 	private HistoricoService historicoService;
@@ -60,7 +60,7 @@ public class BoletoPesquisaBean implements Serializable {
 		if (this.parcelaSelecionada == null)
 			desativarBtPagar = true;
 
-		empregadoSistema = (EmpregadoSistema) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		usuarioSistema = (UsuarioSistema) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		limpar();
 	}
@@ -92,7 +92,7 @@ public class BoletoPesquisaBean implements Serializable {
 
 			Historico historico = new Historico();
 			historico.setCliente(this.cliente);
-			historico.setEmpregado(this.empregadoSistema.getEmpregado());
+			historico.setEmpregado(this.usuarioSistema.getEmpregado());
 			historico.setParcela(this.parcelaSelecionada);
 			historico.setDataPagamento(this.parcelaSelecionada.getDataPagamento());
 			historico.setValor(this.valorPago);

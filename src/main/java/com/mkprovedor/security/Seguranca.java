@@ -1,7 +1,5 @@
 package com.mkprovedor.security;
 
-import java.io.IOException;
-
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.context.ExternalContext;
@@ -11,8 +9,6 @@ import javax.inject.Named;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import com.mkprovedor.util.Util;
-
 @Named
 @RequestScoped
 public class Seguranca {
@@ -20,46 +16,33 @@ public class Seguranca {
 	@Inject
 	private ExternalContext externalContext;
 
-	public String getNomeEmpregado() {
+	public String getNomeUsuario() {
 		String nome = null;
 
-		EmpregadoSistema empregadoLogado = getEmpregadoLogado();
+		UsuarioSistema usuarioLogado = getUsuarioLogado();
 
-		if (empregadoLogado != null)
-			nome = empregadoLogado.getEmpregado().getNome();
+		if (usuarioLogado != null)
+			nome = usuarioLogado.getUsuario().getNome();
 
 		return nome;
 	}
 
 	@Produces
-	@EmpregadoLogado
-	public EmpregadoSistema getEmpregadoLogado() {
-		EmpregadoSistema empregado = null;
+	@UsuarioLogado
+	public UsuarioSistema getUsuarioLogado() {
+		UsuarioSistema usuario = null;
 
 		UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) FacesContext
 				.getCurrentInstance().getExternalContext().getUserPrincipal();
 
 		if (auth != null && auth.getPrincipal() != null)
-			empregado = (EmpregadoSistema) auth.getPrincipal();
+			usuario = (UsuarioSistema) auth.getPrincipal();
 
-		return empregado;
-	}
-
-	public void editarEmpregado() throws IOException {
-		if (getEmpregadoLogado() != null)
-			Util.redirecionarObjeto(
-					"/empregado/Empregado.xhtml?empregado=" + getEmpregadoLogado().getEmpregado().getId().toString());
+		return usuario;
 	}
 
 	// INÍCIO PERMISSÃO PARA COMPONENTES MENUITEM DO MENUBAR
-
 	public boolean isComponenteEmpregadoPermitido() {
 		return externalContext.isUserInRole("GERENTE");
 	}
-
-	// FIM PERMISSÃO PARA COMPONENTES MENUITEM DO MENUBAR
-
-	// INÍCIO PERMISSÃO PARA COMPONENTES COMMANDBUTTON DO MENUBAR
-
-	// FIM PERMISSÃO PARA COMPONENTES COMMANDBUTTON DO MENUBAR
 }

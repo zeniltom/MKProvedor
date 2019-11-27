@@ -200,6 +200,11 @@ h1 {
 	height: 30px
 }
 
+/* PANELGRID */
+.ui-panelgrid.panelgrid-noborder .ui-grid-responsive {
+	border: none;
+}
+
 .ajax-status {
 	position: fixed;
 	top: 55px;
@@ -359,7 +364,7 @@ ui-inputswitch-on ui-state-active {
 .bloqueado {
  	font-family: Arial;
 	font-weight: bold;
-	background: #ffc6aa;
+	background: #ffdbca;
 }
 
 .desativado {

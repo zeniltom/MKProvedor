@@ -17,7 +17,7 @@
 			<h1 class="aw-page-title">Relatório</h1>
 
 			<p:autoUpdate />
-			<p:messages closable="true" />
+			<p:growl closable="true" />
 
 			<p:toolbar>
 				<p:toolbarGroup>
@@ -54,14 +54,14 @@
 								showOn="button" showButtonPanel="true"
 								value="#{relatorioBean.dataInicio}">
 								<p:ajax event="dateSelect" listener="#{relatorioBean.pesquisar}"
-									update="form:historicosTable" />
+									update="form:historicosTable form:total" />
 							</p:calendar>
 
 							<p:calendar pattern="dd/MM/yyyy" maxlength="15"
 								placeholder="Data de Fim" showTodayButton="true" showOn="button"
 								showButtonPanel="true" value="#{relatorioBean.dataFim}">
 								<p:ajax event="dateSelect" listener="#{relatorioBean.pesquisar}"
-									update="form:historicosTable" />
+									update="form:historicosTable form:total" />
 							</p:calendar>
 						</p:toolbarGroup>
 					</p:toolbar>

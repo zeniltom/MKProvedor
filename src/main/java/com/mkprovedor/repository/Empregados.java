@@ -12,6 +12,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.mkprovedor.model.Empregado;
+import com.mkprovedor.model.Usuario;
 
 public class Empregados implements Serializable {
 
@@ -49,33 +50,6 @@ public class Empregados implements Serializable {
 		return criteria.list();
 	}
 
-	@SuppressWarnings("deprecation")
-	public Empregado findByLogin(String login) {
-		Session session = entityManager.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(Empregado.class);
-
-		if (login != null && !login.equals(""))
-			criteria.add(Restrictions.like("login", login));
-
-		return (Empregado) criteria.uniqueResult();
-	}
-
-	@SuppressWarnings("deprecation")
-	public Empregado findByEmail(String email) {
-		Session session = entityManager.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(Empregado.class);
-
-		if (email != null && !email.equals(""))
-			criteria.add(Restrictions.like("email", email));
-
-		return (Empregado) criteria.uniqueResult();
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Empregado> findAll() {
-		return entityManager.createQuery("Select m from Empregado m order by m.nome").getResultList();
-	}
-
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public List<Empregado> findByNome(String nome) {
 		Session session = entityManager.unwrap(Session.class);
@@ -88,4 +62,23 @@ public class Empregados implements Serializable {
 
 		return criteria.list();
 	}
+
+	@SuppressWarnings({ "unchecked" })
+	public List<Empregado> findByUsuario(Usuario usuario) {
+		Long idLogado = null;
+		if (usuario != null)
+			idLogado = usuario.getId();
+		else
+			idLogado = (long) 0;
+
+		return entityManager
+				.createQuery("SELECT m FROM Empregado m WHERE m.usuario.id = " + idLogado + " ORDER by m.usuario.nome")
+				.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Empregado> findAll() {
+		return entityManager.createQuery("Select m from Empregado m order by m.nome").getResultList();
+	}
+
 }

@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.ConstraintViolationException;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,16 +18,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.mkprovedor.model.ENUf;
 import com.mkprovedor.model.Empregado;
-import com.mkprovedor.model.EmpregadoGrupo;
 import com.mkprovedor.model.Grupo;
 import com.mkprovedor.model.Municipio;
-import com.mkprovedor.repository.EmpregadoGrupos;
-import com.mkprovedor.repository.Grupos;
-import com.mkprovedor.security.EmpregadoSistema;
-import com.mkprovedor.service.EmpregadoGrupoService;
+import com.mkprovedor.model.Usuario;
+import com.mkprovedor.model.UsuarioGrupo;
+import com.mkprovedor.security.UsuarioSistema;
 import com.mkprovedor.service.EmpregadoService;
 import com.mkprovedor.service.GrupoService;
-import com.mkprovedor.service.NegocioException;
+import com.mkprovedor.service.MunicipioService;
+import com.mkprovedor.service.UsuarioGrupoService;
+import com.mkprovedor.service.UsuarioService;
 import com.mkprovedor.util.Util;
 import com.mkprovedor.util.jsf.FacesUtil;
 
@@ -36,27 +37,31 @@ public class EmpregadoCadastroBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private EmpregadoSistema empregadoSistema;
+	private UsuarioSistema usuarioSistema;
 
 	@Inject
-	private Grupos grupos;
+	private EmpregadoService empregadoService;
 
 	@Inject
-	private EmpregadoGrupos empregadoGrupos;
+	private UsuarioService usuarioService;
 
 	@Inject
-	private EmpregadoService cadastroEmpregadoService;
+	private GrupoService grupoService;
 
 	@Inject
-	private GrupoService cadastroGrupoService;
+	private MunicipioService municipioService;
 
 	@Inject
-	private EmpregadoGrupoService cadastroEmpregadoGrupoService;
+	private UsuarioGrupoService usuarioGrupoService;
 
 	private Empregado empregado;
-	private EmpregadoGrupo empregadoGrupo;
+
+	@Inject
+	private UsuarioGrupo usuarioGrupo;
 
 	private Grupo grupoSelecionado;
+
+	private Municipio municipio;
 
 	private List<Grupo> listaGrupos = new ArrayList<>();
 	private List<Grupo> gruposEmpregado = new ArrayList<>();
@@ -70,31 +75,26 @@ public class EmpregadoCadastroBean implements Serializable {
 		if (this.empregado == null)
 			limpar();
 		else
-			empregadoSistema = (EmpregadoSistema) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			usuarioSistema = (UsuarioSistema) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		if (FacesUtil.isNotPostback())
+		if (FacesUtil.isNotPostback()) {
+			this.carregarMunicipio();
+
 			carregarPermissoes();
-	}
-
-	public void carregarPermissoes() {
-
-		if (empregado.getId() != null) {
-
-			List<EmpregadoGrupo> permissoes = empregadoGrupos.findByEmpregado(empregado);
-
-			for (EmpregadoGrupo permissao : permissoes)
-				gruposEmpregado.add(permissao.getGrupo());
-
-			listaGrupos = grupos.findAll();
-			listaGrupos.removeAll(gruposEmpregado);
-
-		} else
-			listaGrupos = grupos.findAll();
+		}
 	}
 
 	private void limpar() {
 		empregado = new Empregado();
-		empregadoGrupo = new EmpregadoGrupo();
+		Usuario usuario = new Usuario();
+
+		empregado.setMunicipio(new Municipio());
+
+		empregado.setUsuario(usuario);
+		usuarioGrupo = new UsuarioGrupo();
+
+		municipio = new Municipio();
+		municipios = new ArrayList<>();
 	}
 
 	public void listar() throws IOException {
@@ -103,21 +103,20 @@ public class EmpregadoCadastroBean implements Serializable {
 
 	private void limparPermissoes() {
 		gruposEmpregado.clear();
-		empregadoGrupo = new EmpregadoGrupo();
+		usuarioGrupo = new UsuarioGrupo();
 		carregarPermissoes();
 	}
 
 	public void adicionarPermissao() {
 
-		if (this.empregado.getId() != null && empregadoGrupo.getGrupo() != null) {
+		if (this.empregado.getId() != null && usuarioGrupo.getGrupo() != null) {
 
-			empregadoGrupo.setEmpregado(empregado);
-			cadastroEmpregadoGrupoService.createNew(empregadoGrupo);
+			usuarioGrupo.setUsuario(empregado.getUsuario());
+			usuarioGrupoService.createNew(usuarioGrupo);
 
-			FacesUtil
-					.addInfoMessage("Permissão de " + empregadoGrupo.getGrupo().getNome() + " adicionada com sucesso!");
+			FacesUtil.addInfoMessage("Permissão de " + usuarioGrupo.getGrupo().getNome() + " adicionada com sucesso!");
 		} else
-			throw new NegocioException("Salve o formulário de Empregado antes de adicionar uma permissão!");
+			FacesUtil.addErrorMessage("Salve o formulário de Usuário antes de adicionar uma permissão!");
 
 		limparPermissoes();
 	}
@@ -125,9 +124,9 @@ public class EmpregadoCadastroBean implements Serializable {
 	public void excluirPermissao() {
 
 		try {
-			empregadoGrupo.setEmpregado(empregado);
-			empregadoGrupo.setGrupo(cadastroGrupoService.findByNome(grupoSelecionado).get(0));
-			cadastroEmpregadoGrupoService.delete(empregadoGrupo);
+			usuarioGrupo.setUsuario(empregado.getUsuario());
+			usuarioGrupo.setGrupo(grupoService.findByNome(grupoSelecionado).get(0));
+			usuarioGrupoService.delete(usuarioGrupo);
 
 			FacesUtil.addInfoMessage("Permissão de " + grupoSelecionado.getNome() + " removida com sucesso!");
 
@@ -141,15 +140,32 @@ public class EmpregadoCadastroBean implements Serializable {
 
 	public void salvar() throws IOException {
 
-		if (this.empregado.getId() == null) {
-			cadastroEmpregadoService.createNew(this.empregado);
-			FacesUtil.addInfoMessage("Empregado salvo com sucesso!");
-			listar();
+		try {
+			if (this.empregado.getId() == null) {
 
-		} else {
-			cadastroEmpregadoService.update(this.empregado);
-			FacesUtil.addInfoMessage("Empregado atualizado com sucesso!");
-			listar();
+				this.empregado.setMunicipio(this.municipio);
+
+				empregado.getUsuario().setNome(empregado.getNome());
+
+				usuarioService.createNew(empregado.getUsuario());
+
+				empregadoService.createNew(this.empregado);
+				FacesUtil.addInfoMessage("Empregado salvo com sucesso!");
+				listar();
+
+			} else {
+
+				this.empregado.setMunicipio(this.municipio);
+
+				usuarioService.update(empregado.getUsuario());
+
+				empregadoService.update(this.empregado);
+				FacesUtil.addInfoMessage("Empregado atualizado com sucesso!");
+				listar();
+			}
+		} catch (ConstraintViolationException e) {
+			e.printStackTrace();
+			FacesUtil.addErrorMessage("Este login já existe no sistema!");
 		}
 
 		atualizarSessaoEmpregado();
@@ -159,12 +175,43 @@ public class EmpregadoCadastroBean implements Serializable {
 
 	public void excluir() {
 		try {
-			cadastroEmpregadoService.delete(this.empregado);
+			empregadoService.delete(this.empregado);
 			FacesUtil.addInfoMessage("Empregado " + this.empregado.getNome() + " excluído com sucesso!");
 
 		} catch (Exception e) {
 			FacesUtil.addErrorMessage("Não foi possível excluir " + this.empregado.getNome() + ", consulte o suporte!");
 		}
+	}
+
+	public void carregarPermissoes() {
+
+		if (empregado.getId() != null) {
+
+			List<UsuarioGrupo> permissoes = usuarioGrupoService.findByEmpregado(empregado.getUsuario());
+
+			for (UsuarioGrupo permissao : permissoes)
+				gruposEmpregado.add(permissao.getGrupo());
+
+			listaGrupos = grupoService.findAll();
+			listaGrupos.removeAll(gruposEmpregado);
+
+		} else
+			listaGrupos = grupoService.findAll();
+	}
+
+	public void carregarMunicipio() {
+		municipios.clear();
+		if (this.empregado.getId() != null) {
+			this.municipio = this.empregado.getMunicipio();
+			municipios.add(this.municipio);
+		}
+	}
+
+	public void carregarMunicipios() {
+		if (this.municipio.getUf() != null)
+			municipios = municipioService.findByUF(ENUf.valueOf(this.municipio.getUf()));
+		else
+			municipios = new ArrayList<>();
 	}
 
 	private void atualizarSessaoEmpregado() {
@@ -176,11 +223,11 @@ public class EmpregadoCadastroBean implements Serializable {
 		// Atribui o novo valor 'Empregado' para a sessão
 		ve.setValue(context.getELContext(), this.empregado);
 
-		empregadoSistema.setEmpregado(this.empregado);
+		usuarioSistema.setEmpregado(this.empregado);
 
 		// Recupera a sessao do usuário logado do Spring Security e depois atualiza
-		Authentication authentication = new UsernamePasswordAuthenticationToken(empregadoSistema,
-				empregadoSistema.getPassword(), empregadoSistema.getAuthorities());
+		Authentication authentication = new UsernamePasswordAuthenticationToken(usuarioSistema,
+				usuarioSistema.getPassword(), usuarioSistema.getAuthorities());
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
@@ -197,12 +244,12 @@ public class EmpregadoCadastroBean implements Serializable {
 		this.empregado = Empregado;
 	}
 
-	public EmpregadoGrupo getEmpregadoGrupo() {
-		return empregadoGrupo;
+	public UsuarioGrupo getUsuarioGrupo() {
+		return usuarioGrupo;
 	}
 
-	public void setEmpregadoGrupo(EmpregadoGrupo empregadoGrupo) {
-		this.empregadoGrupo = empregadoGrupo;
+	public void setUsuarioGrupo(UsuarioGrupo usuarioGrupo) {
+		this.usuarioGrupo = usuarioGrupo;
 	}
 
 	public Grupo getGrupoSelecionado() {
@@ -211,6 +258,14 @@ public class EmpregadoCadastroBean implements Serializable {
 
 	public void setGrupoSelecionado(Grupo grupoSelecionado) {
 		this.grupoSelecionado = grupoSelecionado;
+	}
+
+	public Municipio getMunicipio() {
+		return municipio;
+	}
+
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
 	}
 
 	public List<Grupo> getListaGrupos() {
