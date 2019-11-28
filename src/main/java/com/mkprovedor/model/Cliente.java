@@ -37,8 +37,6 @@ public class Cliente implements Serializable {
 
 	private String telefone;
 
-	private String descricao;
-
 	@NotBlank(message = "é obrigatório")
 	@Column(nullable = false)
 	private String usuarioPPPOE;
@@ -105,14 +103,6 @@ public class Cliente implements Serializable {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 
 	public String getUsuarioPPPOE() {

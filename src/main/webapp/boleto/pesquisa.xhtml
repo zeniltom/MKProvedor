@@ -254,7 +254,12 @@
 					<p:calendar id="dataPagamento" pattern="dd/MM/yyyy HH:mm"
 						maxlength="15" styleClass="pagamento" size="15"
 						value="#{boletoPesquisaBean.parcelaSelecionada.dataPagamento}"
-						showTodayButton="true" showOn="button" showButtonPanel="true" />
+						showTodayButton="true" showOn="button" showButtonPanel="true">
+						<p:ajax event="blur"
+							update="troco jurosMulta status atrasada btFinalizar" />
+						<p:ajax event="dateSelect"
+							update="troco jurosMulta status atrasada btFinalizar" />
+					</p:calendar>
 
 					<f:facet name="footer">
 

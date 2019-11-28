@@ -86,7 +86,6 @@ public class BoletoPesquisaBean implements Serializable {
 		try {
 
 			this.parcelaSelecionada.setSituacao(true);
-			this.parcelaSelecionada.setDataPagamento(new Date());
 
 			parcelaService.update(this.parcelaSelecionada);
 
@@ -149,7 +148,8 @@ public class BoletoPesquisaBean implements Serializable {
 	}
 
 	public boolean validacao() {
-		return (this.valorPago == 0 || this.valorPago < this.parcelaSelecionada.getValor()) ? false : true;
+		return (this.valorPago == 0 || this.valorPago < this.parcelaSelecionada.getValor()
+				|| this.parcelaSelecionada.getDataPagamento() == null) ? false : true;
 	}
 
 	public boolean mensalidadeEmDia(Mensalidade mensalidade) {

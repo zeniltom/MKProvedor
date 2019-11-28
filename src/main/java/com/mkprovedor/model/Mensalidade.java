@@ -36,8 +36,6 @@ public class Mensalidade implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date dataPrimeiraParcela;
 
-	private String descricao;
-
 	@ManyToOne
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
@@ -72,14 +70,6 @@ public class Mensalidade implements Serializable {
 
 	public void setDataPrimeiraParcela(Date dataPrimeiraParcela) {
 		this.dataPrimeiraParcela = dataPrimeiraParcela;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 
 	public Cliente getCliente() {

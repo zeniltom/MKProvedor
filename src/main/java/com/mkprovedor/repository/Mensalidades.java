@@ -42,9 +42,6 @@ public class Mensalidades implements Serializable {
 		Session session = entityManager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Mensalidade.class);
 
-		if (mensalidade.getDescricao() != null && !mensalidade.getDescricao().equals(""))
-			criteria.add(Restrictions.ilike("descricao", "%" + mensalidade.getDescricao() + "%"));
-
 		criteria.addOrder(Order.asc("descricao"));
 
 		return criteria.list();
@@ -66,6 +63,7 @@ public class Mensalidades implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public List<Mensalidade> findAll() {
-		return entityManager.createQuery("SELECT m FROM Mensalidade m ORDER BY m.cliente.nome, m.valor").getResultList();
+		return entityManager.createQuery("SELECT m FROM Mensalidade m ORDER BY m.cliente.nome, m.valor")
+				.getResultList();
 	}
 }
