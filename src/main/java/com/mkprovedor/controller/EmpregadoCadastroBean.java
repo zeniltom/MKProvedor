@@ -28,6 +28,7 @@ import com.mkprovedor.service.GrupoService;
 import com.mkprovedor.service.MunicipioService;
 import com.mkprovedor.service.UsuarioGrupoService;
 import com.mkprovedor.service.UsuarioService;
+import com.mkprovedor.util.CriptografiaMD5;
 import com.mkprovedor.util.Util;
 import com.mkprovedor.util.jsf.FacesUtil;
 
@@ -145,9 +146,13 @@ public class EmpregadoCadastroBean implements Serializable {
 
 				this.empregado.setMunicipio(this.municipio);
 
-				empregado.getUsuario().setNome(empregado.getNome());
+				this.empregado.getUsuario().setNome(this.empregado.getNome());
 
-				usuarioService.createNew(empregado.getUsuario());
+				String senhaCriptografada = this.empregado.getUsuario().getSenha();
+
+				this.empregado.getUsuario().setSenha(CriptografiaMD5.senhaMD5(senhaCriptografada));
+
+				usuarioService.createNew(this.empregado.getUsuario());
 
 				empregadoService.createNew(this.empregado);
 				FacesUtil.addInfoMessage("Empregado salvo com sucesso!");
@@ -157,7 +162,11 @@ public class EmpregadoCadastroBean implements Serializable {
 
 				this.empregado.setMunicipio(this.municipio);
 
-				usuarioService.update(empregado.getUsuario());
+				String senhaCriptografada = this.empregado.getUsuario().getSenha();
+
+				this.empregado.getUsuario().setSenha(CriptografiaMD5.senhaMD5(senhaCriptografada));
+
+				usuarioService.update(this.empregado.getUsuario());
 
 				empregadoService.update(this.empregado);
 				FacesUtil.addInfoMessage("Empregado atualizado com sucesso!");
