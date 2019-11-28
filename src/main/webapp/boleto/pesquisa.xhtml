@@ -30,7 +30,7 @@
 	<ui:define name="corpo">
 
 		<h:form id="frmPesquisa">
-			<h1 class="aw-page-title">Boletos</h1>		
+			<h1 class="aw-page-title">Boletos</h1>
 
 			<p:autoUpdate />
 			<p:growl closable="true" sticky="true" />
@@ -248,6 +248,13 @@
 						value="#{boletoPesquisaBean.troco}">
 						<f:convertNumber type="currency" />
 					</p:outputLabel>
+
+					<p:outputLabel value="Data de pagamento" for="dataPagamento"
+						styleClass="pagamento" />
+					<p:calendar id="dataPagamento" pattern="dd/MM/yyyy HH:mm"
+						maxlength="15" styleClass="pagamento" size="15"
+						value="#{boletoPesquisaBean.parcelaSelecionada.dataPagamento}"
+						showTodayButton="true" showOn="button" showButtonPanel="true" />
 
 					<f:facet name="footer">
 

@@ -39,7 +39,7 @@
 				style="margin-top: 10px" var="historico"
 				emptyMessage="Não há histórico" rows="8" paginator="true"
 				paginatorAlwaysVisible="false" paginatorPosition="bottom"
-				rowKey="#{historico}" rowStyleClass="boletos">
+				rowKey="#{historico}" rowStyleClass="boletos" selectionMode="single">
 
 				<f:facet name="header">
 					<p:toolbar>
@@ -66,6 +66,13 @@
 						</p:toolbarGroup>
 					</p:toolbar>
 				</f:facet>
+
+				<p:ajax event="rowSelect"
+					listener="#{relatorioBean.onRowHistoricoSelect}"
+					update="form:total" />
+
+				<p:ajax event="rowDblselect" oncomplete="PF('pagamento').show()"
+					update="form:pagamentoDialog" />
 
 				<p:column headerText="Cód." style="text-align: center; width: 30px"
 					sortBy="#{historico.id}">
@@ -102,7 +109,6 @@
 						<f:convertNumber type="currency" />
 					</h:outputText>
 				</p:column>
-
 			</p:dataTable>
 
 			<div style="width: 82%; position: absolute; bottom: 30px;">
@@ -121,6 +127,79 @@
 				</p:toolbar>
 			</div>
 
+			<p:dialog header="Informações deste pagamento" id="pagamentoDialog"
+				modal="true" widgetVar="pagamento" resizable="false"
+				draggable="false" closable="false" responsive="true">
+
+				<p:panelGrid columns="2" id="painelInfoPag" columnClasses="rotulo"
+					styleClass="sem-borda">
+
+					<p:outputLabel value="Número" styleClass="infoPag" />
+					<p:outputLabel value="#{relatorioBean.historico.id}"
+						styleClass="infoPag" />
+
+					<p:outputLabel value="Cliente" styleClass="infoPag" />
+					<p:outputLabel value="#{relatorioBean.historico.cliente.nome}"
+						styleClass="infoPag" />
+
+					<p:outputLabel value="Empregado" styleClass="infoPag" />
+					<p:outputLabel value="#{relatorioBean.historico.empregado.nome}"
+						styleClass="infoPag" />
+
+					<p:outputLabel value="Plano" styleClass="infoPag" />
+					<p:outputLabel value="#{relatorioBean.planoCliente()}"
+						styleClass="infoPag" />
+
+					<p:outputLabel value="Parcela" styleClass="infoPag" />
+					<p:outputLabel value="#{relatorioBean.historico.parcela.parcela}"
+						styleClass="infoPag" />
+
+					<p:outputLabel value="Situação" styleClass="infoPag" />
+					<p:outputLabel
+						value="#{relatorioBean.historico.parcela.situacao? 'PAGA' : 'PENDENTE'}"
+						styleClass="infoPag" />
+
+					<p:outputLabel value="Data de vencimento" styleClass="infoPag" />
+					<p:outputLabel
+						value="#{relatorioBean.historico.parcela.dataVencimento}"
+						styleClass="infoPag">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:outputLabel>
+
+					<p:outputLabel value="Data de pagamento" styleClass="infoPag" />
+					<p:outputLabel value="#{relatorioBean.historico.parcela.dataPagamento}"
+						styleClass="infoPag">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:outputLabel>
+
+					<p:outputLabel value="Valor do plano (=)" styleClass="pagamento" />
+					<p:outputLabel styleClass="pagamento"
+						value="#{relatorioBean.historico.parcela.valor}" disabled="true"
+						style="pagamento">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>
+
+					<p:outputLabel value="Juros/Multa (+)" styleClass="pagamento" />
+					<p:outputLabel styleClass="pagamento"
+						value="#{relatorioBean.jurosEMulta()}" style="color: red">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>
+
+					<p:outputLabel value="Valor recebido (=)" styleClass="pagamento" />
+					<p:outputLabel styleClass="pagamento"
+						value="#{relatorioBean.historico.valor}" disabled="true"
+						style="color: #000066">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>
+
+				</p:panelGrid>
+
+				<div style="float: right; margin-top: 20px">
+					<p:commandButton value="FECHAR" icon="fa fa-times-circle"
+						styleClass="btCancelar" oncomplete="PF('pagamento').hide();"
+						style="padding: 5px; margin-right: 10px; font-weight: bold" />
+				</div>
+			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

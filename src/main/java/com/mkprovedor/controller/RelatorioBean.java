@@ -60,6 +60,8 @@ public class RelatorioBean implements Serializable {
 
 	private List<Historico> historicos;
 
+	private Historico historico;
+
 	public RelatorioBean() {
 		limpar();
 	}
@@ -70,7 +72,7 @@ public class RelatorioBean implements Serializable {
 
 	public void pesquisar() {
 		historicos = historicoService.filter(dataInicio, dataFim);
- 	}
+	}
 
 	public double total() {
 		double total = 0;
@@ -79,6 +81,25 @@ public class RelatorioBean implements Serializable {
 			total += historico.getValor();
 
 		return total;
+	}
+
+	public double jurosEMulta() {
+		double jurosEMulta = 0;
+
+		if (historico != null && historico.getCliente() != null)
+			jurosEMulta = this.historico.getValor() - this.historico.getParcela().getValor();
+
+		return jurosEMulta;
+	}
+
+	public String planoCliente() {
+		if (historico != null && historico.getCliente() != null)
+			contrato = contratoService.findByCliente(historico.getCliente());
+
+		if (contrato == null)
+			return "Sem plano";
+		else
+			return contrato.getServico().toString();
 	}
 
 	public String contratoCliente(Cliente cliente) {
@@ -91,7 +112,7 @@ public class RelatorioBean implements Serializable {
 	}
 
 	public void onRowHistoricoSelect(SelectEvent event) {
-		Historico historico = (Historico) event.getObject();
+		historico = (Historico) event.getObject();
 		System.out.println(historico);
 		this.historicoSelecionado = historico;
 	}
@@ -123,6 +144,14 @@ public class RelatorioBean implements Serializable {
 
 	public void setDataFim(Date dataFim) {
 		this.dataFim = dataFim;
+	}
+
+	public Historico getHistorico() {
+		return historico;
+	}
+
+	public void setHistorico(Historico historico) {
+		this.historico = historico;
 	}
 
 	public Historico getHistoricoSelecionado() {

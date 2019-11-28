@@ -51,7 +51,7 @@ public class Historico implements Serializable {
 
 	@Override
 	public String toString() {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		NumberFormat moeda = NumberFormat.getCurrencyInstance();
 		moeda.setCurrency(Currency.getInstance(new Locale("pt", "BR")));
 

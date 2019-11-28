@@ -103,59 +103,59 @@
 					styleClass="sem-borda">
 
 					<p:outputLabel value="Número" styleClass="infoPag" />
-					<p:outputLabel value="#{caixaBean.historico.id}"
+					<p:outputLabel value="#{relatorioBean.historico.id}"
 						styleClass="infoPag" />
 
 					<p:outputLabel value="Cliente" styleClass="infoPag" />
-					<p:outputLabel value="#{caixaBean.historico.cliente.nome}"
+					<p:outputLabel value="#{relatorioBean.historico.cliente.nome}"
 						styleClass="infoPag" />
 
 					<p:outputLabel value="Empregado" styleClass="infoPag" />
-					<p:outputLabel value="#{caixaBean.historico.empregado.nome}"
+					<p:outputLabel value="#{relatorioBean.historico.empregado.nome}"
 						styleClass="infoPag" />
 
 					<p:outputLabel value="Plano" styleClass="infoPag" />
-					<p:outputLabel value="#{caixaBean.planoCliente()}"
+					<p:outputLabel value="#{relatorioBean.planoCliente()}"
 						styleClass="infoPag" />
 
 					<p:outputLabel value="Parcela" styleClass="infoPag" />
-					<p:outputLabel value="#{caixaBean.historico.parcela.parcela}"
+					<p:outputLabel value="#{relatorioBean.historico.parcela.parcela}"
 						styleClass="infoPag" />
 
 					<p:outputLabel value="Situação" styleClass="infoPag" />
 					<p:outputLabel
-						value="#{caixaBean.historico.parcela.situacao? 'PAGA' : 'PENDENTE'}"
+						value="#{relatorioBean.historico.parcela.situacao? 'PAGA' : 'PENDENTE'}"
 						styleClass="infoPag" />
 
 					<p:outputLabel value="Data de vencimento" styleClass="infoPag" />
 					<p:outputLabel
-						value="#{caixaBean.historico.parcela.dataVencimento}"
+						value="#{relatorioBean.historico.parcela.dataVencimento}"
 						styleClass="infoPag">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</p:outputLabel>
 
 					<p:outputLabel value="Data de pagamento" styleClass="infoPag" />
-					<p:outputLabel value="#{caixaBean.historico.parcela.dataPagamento}"
+					<p:outputLabel value="#{relatorioBean.historico.parcela.dataPagamento}"
 						styleClass="infoPag">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</p:outputLabel>
 
 					<p:outputLabel value="Valor do plano (=)" styleClass="pagamento" />
 					<p:outputLabel styleClass="pagamento"
-						value="#{caixaBean.historico.parcela.valor}" disabled="true"
+						value="#{relatorioBean.historico.parcela.valor}" disabled="true"
 						style="pagamento">
 						<f:convertNumber type="currency" />
 					</p:outputLabel>
 
 					<p:outputLabel value="Juros/Multa (+)" styleClass="pagamento" />
 					<p:outputLabel styleClass="pagamento"
-						value="#{caixaBean.jurosEMulta()}" style="color: red">
+						value="#{relatorioBean.jurosEMulta()}" style="color: red">
 						<f:convertNumber type="currency" />
 					</p:outputLabel>
 
 					<p:outputLabel value="Valor recebido (=)" styleClass="pagamento" />
 					<p:outputLabel styleClass="pagamento"
-						value="#{caixaBean.historico.valor}" disabled="true"
+						value="#{relatorioBean.historico.valor}" disabled="true"
 						style="color: #000066">
 						<f:convertNumber type="currency" />
 					</p:outputLabel>
