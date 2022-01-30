@@ -26,7 +26,7 @@ public class Municipio implements Serializable {
 
 	@Override
 	public String toString() {
-		return nome + " - " + uf.toString();
+		return nome + " - " + uf;
 	}
 
 	public Long getId() {

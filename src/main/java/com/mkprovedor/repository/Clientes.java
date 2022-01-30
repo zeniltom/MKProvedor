@@ -98,7 +98,7 @@ public class Clientes implements Serializable {
 		Object valores = query.getSingleResult();
 
 		if (valores != null)
-			total = (String) valores.toString();
+			total = valores.toString();
 
 		return Integer.parseInt(total);
 	}
@@ -111,7 +111,7 @@ public class Clientes implements Serializable {
 		Object valores = query.getSingleResult();
 
 		if (valores != null)
-			total = (String) valores.toString();
+			total = valores.toString();
 
 		return Integer.parseInt(total);
 	}
@@ -123,7 +123,7 @@ public class Clientes implements Serializable {
 		Object valores = query.getSingleResult();
 
 		if (valores != null)
-			total = (String) valores.toString();
+			total = valores.toString();
 
 		return Integer.parseInt(total);
 	}

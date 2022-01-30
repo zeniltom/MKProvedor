@@ -31,9 +31,6 @@ public class ServicoCadastroBean implements Serializable {
 
 		if (this.servico == null)
 			limpar();
-
-		if (FacesUtil.isNotPostback()) {
-		}
 	}
 
 	private void limpar() {
@@ -76,8 +73,8 @@ public class ServicoCadastroBean implements Serializable {
 		return servico;
 	}
 
-	public void setServico(Servico Servico) {
-		this.servico = Servico;
+	public void setServico(Servico servico) {
+		this.servico = servico;
 	}
 
 	public boolean isEditando() {

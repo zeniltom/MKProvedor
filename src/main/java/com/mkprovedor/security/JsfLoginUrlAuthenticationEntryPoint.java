@@ -165,7 +165,7 @@ public class JsfLoginUrlAuthenticationEntryPoint implements AuthenticationEntryP
 	 * Builds a URL to redirect the supplied request to HTTPS. Used to redirect the
 	 * current request to HTTPS, before doing a forward to the login page.
 	 */
-	protected String buildHttpsRedirectUrlForRequest(HttpServletRequest request) throws IOException, ServletException {
+	protected String buildHttpsRedirectUrlForRequest(HttpServletRequest request) {
 
 		int serverPort = portResolver.getServerPort(request);
 		Integer httpsPort = portMapper.lookupHttpsPort(Integer.valueOf(serverPort));

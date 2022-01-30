@@ -4,6 +4,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 public class FacesUtil {
+	
+	private FacesUtil() {}
 
 	public static boolean isPostback() {
 		return FacesContext.getCurrentInstance().isPostback();

@@ -35,13 +35,8 @@ public class ChamadoCadastroBean implements Serializable {
 	}
 
 	public void inicializar() {
-
 		if (this.chamado == null)
 			limpar();
-
-		if (FacesUtil.isNotPostback()) {
-
-		}
 	}
 
 	public void clienteSelecionado(SelectEvent event) {
@@ -107,8 +102,8 @@ public class ChamadoCadastroBean implements Serializable {
 		return chamado;
 	}
 
-	public void setChamado(Chamado Chamado) {
-		this.chamado = Chamado;
+	public void setChamado(Chamado chamado) {
+		this.chamado = chamado;
 	}
 
 	public boolean isEncerrar() {

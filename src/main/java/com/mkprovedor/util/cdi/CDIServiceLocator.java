@@ -8,21 +8,25 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import com.mkprovedor.exceptions.BeanManagerException;
+
 public class CDIServiceLocator {
-	
+
+	private CDIServiceLocator() {}
+
 	private static BeanManager getBeanManager() {
 		try {
 			InitialContext initialContext = new InitialContext();
 			return (BeanManager) initialContext.lookup("java:comp/env/BeanManager");
 		} catch (NamingException e) {
-			throw new RuntimeException("Não pôde encontrar BeanManager no JNDI.");
+			throw new BeanManagerException();
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	public static <T> T getBean(Class<T> clazz) {
 		BeanManager bm = getBeanManager();
-		Set<Bean<?>> beans = (Set<Bean<?>>) bm.getBeans(clazz);
+		Set<Bean<?>> beans = bm.getBeans(clazz);
 
 		if (beans == null || beans.isEmpty()) {
 			return null;
@@ -31,9 +35,7 @@ public class CDIServiceLocator {
 		Bean<T> bean = (Bean<T>) beans.iterator().next();
 
 		CreationalContext<T> ctx = bm.createCreationalContext(bean);
-		T o = (T) bm.getReference(bean, clazz, ctx);
-
-		return o;
+		return (T) bm.getReference(bean, clazz, ctx);
 	}
 
 }

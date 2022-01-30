@@ -16,6 +16,10 @@ import com.mkprovedor.model.UsuarioGrupo;
 
 public class UsuarioGrupos implements Serializable {
 
+	private static final String GRUPO = "grupo";
+
+	private static final String USUARIO = "usuario";
+
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -51,8 +55,8 @@ public class UsuarioGrupos implements Serializable {
 	public List<UsuarioGrupo> findByUsuario(Usuario usuario) {
 		Session session = entityManager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(UsuarioGrupo.class);
-		criteria.createAlias("usuario", "usuario");
-		criteria.createAlias("grupo", "grupo");
+		criteria.createAlias(USUARIO, USUARIO);
+		criteria.createAlias(GRUPO, GRUPO);
 
 		if (usuario.getId() != null)
 			criteria.add(Restrictions.eq("usuario.id", usuario.getId()));
@@ -64,8 +68,8 @@ public class UsuarioGrupos implements Serializable {
 	public List<UsuarioGrupo> findByUsuarioANDGrupo(UsuarioGrupo usuarioGrupo) {
 		Session session = entityManager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(UsuarioGrupo.class);
-		criteria.createAlias("usuario", "usuario");
-		criteria.createAlias("grupo", "grupo");
+		criteria.createAlias(USUARIO, USUARIO);
+		criteria.createAlias(GRUPO, GRUPO);
 
 		if (usuarioGrupo.getUsuario() != null && usuarioGrupo.getUsuario().getId() != null
 				&& usuarioGrupo.getUsuario().getId() != 0)

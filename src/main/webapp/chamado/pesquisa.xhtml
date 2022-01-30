@@ -66,12 +66,6 @@
 					style="text-align: center; width: 125px"
 					sortBy="#{chamado.dataChamado}">
 
-					<!-- <f:facet name="filter">
-						<p:calendar pattern="dd/MM/yyyy" size="10">
-							<p:ajax event="dateSelect" oncomplete="PF('cta').filter()" />
-						</p:calendar>
-					</f:facet> -->
-
 					<h:outputText value="#{chamado.dataChamado}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 					</h:outputText>
@@ -81,7 +75,7 @@
 					style="text-align: center; width: 75px">
 
 					<p:outputPanel rendered="#{chamado.situacao}">
-						<i class="fa fa-unlock" style="font-size: 24px; color: green"
+						<em class="fa fa-unlock" style="font-size: 24px; color: green"
 							title="Em aberto" />
 					</p:outputPanel>
 				</p:column>
@@ -138,7 +132,7 @@
 					style="text-align: center; width: 70px">
 
 					<p:outputPanel rendered="#{!chamado.situacao}">
-						<i class="fa fa-lock" style="font-size: 24px; color: #033b62"
+						<em class="fa fa-lock" style="font-size: 24px; color: #033b62"
 							title="Fechado" />
 					</p:outputPanel>
 				</p:column>

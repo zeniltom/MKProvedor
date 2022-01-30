@@ -59,7 +59,6 @@ public class DashboardBean implements Serializable {
 		title.setText("Controle de Títulos");
 		title.setFontSize(25);
 		title.setFontColor("black");
-		// title.setPadding(10);
 		title.setDisplay(true);
 		options.setTitle(title);
 

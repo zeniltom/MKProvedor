@@ -34,14 +34,6 @@ public class CaixaBean implements Serializable {
 
 	private Historico historico;
 
-	public CaixaBean() {
-		limpar();
-	}
-
-	public void limpar() {
-
-	}
-
 	public void pesquisar() {
 		historicos = historicoService.findByHistoricoDia(new Date());
 	}
@@ -54,8 +46,8 @@ public class CaixaBean implements Serializable {
 	public double total() {
 		double total = 0;
 
-		for (Historico historico : historicos)
-			total += historico.getValor();
+		for (Historico hist : historicos)
+			total += hist.getValor();
 
 		return total;
 	}
@@ -90,7 +82,6 @@ public class CaixaBean implements Serializable {
 
 	public void onRowHistoricoSelect(SelectEvent event) {
 		historico = (Historico) event.getObject();
-		System.out.println(historico);
 	}
 
 	public Historico getHistorico() {

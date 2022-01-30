@@ -67,8 +67,8 @@ public class EmpregadoPesquisaBean implements Serializable {
 		return empregadoSelecionado;
 	}
 
-	public void setEmpregadoSelecionado(Empregado EmpregadoSelecionado) {
-		this.empregadoSelecionado = EmpregadoSelecionado;
+	public void setEmpregadoSelecionado(Empregado empregadoSelecionado) {
+		this.empregadoSelecionado = empregadoSelecionado;
 	}
 
 }

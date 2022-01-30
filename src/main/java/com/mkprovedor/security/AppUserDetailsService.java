@@ -45,25 +45,4 @@ public class AppUserDetailsService implements UserDetailsService {
 		return authorities;
 	}
 
-	/*
-	 * @Override public UserDetails loadUserByUsername(String login) throws
-	 * UsernameNotFoundException { Empregados empregadoes =
-	 * CDIServiceLocator.getBean(Empregados.class); Empregado empregado =
-	 * empregadoes.findByLogin(login);
-	 * 
-	 * EmpregadoSistema user = null;
-	 * 
-	 * if (empregado != null) { user = new EmpregadoSistema(empregado,
-	 * getGrupos(empregado)); }
-	 * 
-	 * return user; }
-	 * 
-	 * private Collection<? extends GrantedAuthority> getGrupos(Empregado empregado)
-	 * { List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-	 * 
-	 * for (Grupo grupo : empregado.getGrupos()) authorities.add(new
-	 * SimpleGrantedAuthority(grupo.getNome().toUpperCase()));
-	 * 
-	 * return authorities; }
-	 */
 }

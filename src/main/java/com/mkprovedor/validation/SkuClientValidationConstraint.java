@@ -14,7 +14,7 @@ public class SkuClientValidationConstraint implements ClientValidationConstraint
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<String, Object> getMetadata(ConstraintDescriptor constraintDescriptor) {
-		Map<String, Object> metadata = new HashMap<String, Object>();
+		Map<String, Object> metadata = new HashMap<>();
 		Map attrs = constraintDescriptor.getAttributes();
 		
 		Object message = attrs.get("message");

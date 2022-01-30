@@ -53,7 +53,7 @@
 						var="mensalidade" emptyMessage="Nenhuma mensalidade encontrada"
 						rows="10" paginator="true" paginatorAlwaysVisible="false"
 						paginatorPosition="bottom" rowKey="#{mensalidade}"
-						rowStyleClass="#{!boletoPesquisaBean.mensalidadeEmDia(mensalidade)? 'pagamentoAtrasado' : 'boletos'}"
+						rowStyleClass="#{boletoPesquisaBean.mensalidadeEmDia(mensalidade)? 'pagamentoAtrasado' : 'boletos'}"
 						selectionMode="single" styleClass="abertos">
 
 						<f:facet name="header">
@@ -102,7 +102,7 @@
 						var="parcela" emptyMessage="Nenhuma parcela encontrada" rows="10"
 						paginator="true" paginatorAlwaysVisible="false"
 						paginatorPosition="bottom" rowKey="#{parcela}"
-						rowStyleClass="#{!boletoPesquisaBean.parcelaEmDia(parcela)? 'pagamentoAtrasado' : 'boletos'}"
+						rowStyleClass="#{boletoPesquisaBean.parcelaEmDia(parcela)? 'pagamentoAtrasado' : 'boletos'}"
 						selectionMode="single" styleClass="fechados">
 
 						<p:ajax event="rowSelect"
@@ -143,12 +143,12 @@
 							style="text-align: center; width: 50px">
 
 							<p:outputPanel rendered="#{parcela.situacao}">
-								<i class="fa fa-check" style="font-size: 24px; color: green"
+								<em class="fa fa-check" style="font-size: 24px; color: green"
 									title="Paga" />
 							</p:outputPanel>
 
 							<p:outputPanel rendered="#{!parcela.situacao}">
-								<i class="fa fa-close" style="font-size: 24px; color: red"
+								<em class="fa fa-close" style="font-size: 24px; color: red"
 									title="Pendente" />
 							</p:outputPanel>
 						</p:column>
@@ -285,7 +285,7 @@
 						update="parcelasTable" />
 
 					<p:commandButton id="btFinalizar" value="FINALIZAR"
-						icon="fa fa-money" disabled="#{!boletoPesquisaBean.validacao()}"
+						icon="fa fa-money" disabled="#{boletoPesquisaBean.validacao()}"
 						oncomplete="PF('confirmacaoPag').show();" styleClass="btConfirmar"
 						style="padding: 5px; margin-right: 10px; font-weight: bold"
 						process="@this" update="confirmacaoPagDialog" />

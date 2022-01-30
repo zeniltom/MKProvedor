@@ -37,4 +37,35 @@ public class UsuarioSistema extends User {
 		this.empregado = empregado;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((empregado == null) ? 0 : empregado.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UsuarioSistema other = (UsuarioSistema) obj;
+		if (empregado == null) {
+			if (other.empregado != null)
+				return false;
+		} else if (!empregado.equals(other.empregado))
+			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
+				return false;
+		} else if (!usuario.equals(other.usuario))
+			return false;
+		return true;
+	}
+
 }

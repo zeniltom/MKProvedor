@@ -17,6 +17,10 @@ import com.mkprovedor.model.Parcela;
 
 public class Parcelas implements Serializable {
 
+	private static final String MENSALIDADE_ID = "mensalidade.id";
+
+	private static final String MENSALIDADE = "mensalidade";
+
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -63,12 +67,12 @@ public class Parcelas implements Serializable {
 	public List<Parcela> findByMensalidade(Mensalidade mensalidade) {
 		Session session = entityManager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Parcela.class);
-		criteria.createAlias("mensalidade", "mensalidade");
+		criteria.createAlias(MENSALIDADE, MENSALIDADE);
 
 		if (mensalidade != null && mensalidade.getId() != null)
-			criteria.add(Restrictions.eq("mensalidade.id", mensalidade.getId()));
+			criteria.add(Restrictions.eq(MENSALIDADE_ID, mensalidade.getId()));
 		else
-			criteria.add(Restrictions.eq("mensalidade.id", (long) 0));
+			criteria.add(Restrictions.eq(MENSALIDADE_ID, (long) 0));
 
 		criteria.addOrder(Order.asc("id"));
 		criteria.addOrder(Order.asc("parcela"));
@@ -80,12 +84,12 @@ public class Parcelas implements Serializable {
 	public List<Parcela> findByParcelaVencida(Mensalidade mensalidade) {
 		Session session = entityManager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Parcela.class);
-		criteria.createAlias("mensalidade", "mensalidade");
+		criteria.createAlias(MENSALIDADE, MENSALIDADE);
 
 		if (mensalidade != null && mensalidade.getId() != null)
-			criteria.add(Restrictions.eq("mensalidade.id", mensalidade.getId()));
+			criteria.add(Restrictions.eq(MENSALIDADE_ID, mensalidade.getId()));
 		else
-			criteria.add(Restrictions.eq("mensalidade.id", (long) 0));
+			criteria.add(Restrictions.eq(MENSALIDADE_ID, (long) 0));
 
 		criteria.add(
 				Restrictions.and(Restrictions.sqlRestriction("`dataPagamento` IS NULL AND `dataVencimento` <= NOW()")));
@@ -100,7 +104,7 @@ public class Parcelas implements Serializable {
 		Object valores = query.getSingleResult();
 
 		if (valores != null)
-			total = (String) valores.toString();
+			total = valores.toString();
 
 		return Integer.parseInt(total);
 	}
@@ -113,7 +117,7 @@ public class Parcelas implements Serializable {
 		Object valores = query.getSingleResult();
 
 		if (valores != null)
-			total = (String) valores.toString();
+			total = valores.toString();
 
 		return Integer.parseInt(total);
 	}
@@ -126,7 +130,7 @@ public class Parcelas implements Serializable {
 		Object valores = query.getSingleResult();
 
 		if (valores != null)
-			total = (String) valores.toString();
+			total = valores.toString();
 
 		return Integer.parseInt(total);
 	}
@@ -138,7 +142,7 @@ public class Parcelas implements Serializable {
 		Object valores = query.getSingleResult();
 
 		if (valores != null)
-			total = (String) valores.toString();
+			total = valores.toString();
 
 		return Double.parseDouble(total);
 	}

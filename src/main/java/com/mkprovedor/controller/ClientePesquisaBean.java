@@ -1,6 +1,5 @@
 package com.mkprovedor.controller;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,8 +17,6 @@ import com.mkprovedor.service.ClienteService;
 import com.mkprovedor.service.ContratoService;
 import com.mkprovedor.service.RelatorioService;
 import com.mkprovedor.util.jsf.FacesUtil;
-
-import net.sf.jasperreports.engine.JRException;
 
 @Named
 @ViewScoped
@@ -73,7 +70,7 @@ public class ClientePesquisaBean implements Serializable {
 		}
 	}
 
-	public void imprimirContrato() throws IOException, JRException {
+	public void imprimirContrato() {
 		relatorioService.gerarContrato(this.facesContext, this.response, this.manager,
 				this.clienteSelecionado);
 	}
@@ -147,8 +144,8 @@ public class ClientePesquisaBean implements Serializable {
 		return clienteSelecionado;
 	}
 
-	public void setClienteSelecionado(Cliente ClienteSelecionado) {
-		this.clienteSelecionado = ClienteSelecionado;
+	public void setClienteSelecionado(Cliente clienteSelecionado) {
+		this.clienteSelecionado = clienteSelecionado;
 	}
 
 	public boolean isJuridico() {

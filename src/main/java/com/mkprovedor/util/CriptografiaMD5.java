@@ -4,6 +4,8 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 
 public class CriptografiaMD5 {
+	
+	private CriptografiaMD5() {	}
 
 	public static String senhaMD5(String senha) {
 		PasswordEncoder encoder = new Md5PasswordEncoder();

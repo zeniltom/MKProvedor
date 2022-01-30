@@ -33,8 +33,6 @@ import com.mkprovedor.service.ServicoService;
 import com.mkprovedor.util.Util;
 import com.mkprovedor.util.jsf.FacesUtil;
 
-import net.sf.jasperreports.engine.JRException;
-
 @Named
 @ViewScoped
 public class ClienteCadastroBean implements Serializable {
@@ -185,35 +183,11 @@ public class ClienteCadastroBean implements Serializable {
 				this.mensalidade.setValor(this.contrato.getServico().getValorPlano());
 				mensalidadeService.createNew(this.mensalidade);
 
-				salvarParcelas();
-
 			} catch (Exception e) {
 				e.printStackTrace();
 				FacesUtil.addErrorMessage("Erro ao salvar o contrato");
 			}
 		}
-	}
-
-	public void salvarParcelas() {
-		/*
-		 * int i = 0;
-		 * 
-		 * 
-		 * while (i < this.mensalidade.getQtdParcela()) { Parcela parcela = new
-		 * Parcela(); parcela.setMensalidade(this.mensalidade);
-		 * parcela.setValor(this.mensalidade.getValor());
-		 * 
-		 * Calendar data = java.util.Calendar.getInstance();
-		 * data.setTime(this.mensalidade.getDataPrimeiraParcela());
-		 * data.add(java.util.Calendar.MONTH, i);
-		 * 
-		 * parcela.setParcela(i + 1 + "/" + this.mensalidade.getQtdParcela());
-		 * parcela.setDataVencimento(data.getTime());
-		 * 
-		 * parcelaService.createNew(parcela); i++; }
-		 */
-		
-		System.out.println("TRIGGER parcela_gerar_novas executado");
 	}
 
 	public void permitirAlteracaoFinanceiro(boolean permitir) {
@@ -249,7 +223,7 @@ public class ClienteCadastroBean implements Serializable {
 			municipios = municipioService.findByUF(ENUf.valueOf(this.municipio.getUf()));
 	}
 
-	public void imprimirContrato() throws IOException, JRException {
+	public void imprimirContrato() {
 		relatorioService.gerarContrato(this.facesContext, this.response, this.manager, this.cliente);
 	}
 
@@ -261,8 +235,8 @@ public class ClienteCadastroBean implements Serializable {
 		return cliente;
 	}
 
-	public void setCliente(Cliente Cliente) {
-		this.cliente = Cliente;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public Contrato getContrato() {

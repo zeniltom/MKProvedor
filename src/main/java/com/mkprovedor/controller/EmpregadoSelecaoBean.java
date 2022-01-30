@@ -32,7 +32,7 @@ public class EmpregadoSelecaoBean implements Serializable {
 	}
 
 	public void abrirDialogo() {
-		Map<String, Object> config = new HashMap<String, Object>();
+		Map<String, Object> config = new HashMap<>();
 		config.put("modal", true);
 		config.put("width", 840);
 		config.put("height", 420);

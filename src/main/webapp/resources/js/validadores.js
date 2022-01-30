@@ -48,7 +48,7 @@ PrimeFaces.validator.NotBlank = {
 			if (!msg) {
 				msgObj = context.getMessage(this.MESSAGE_ID, label);
 			} else {
-				var msgObj = {
+				msgObj = {
 					summary : msg,
 					detail : msg
 				}

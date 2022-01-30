@@ -1,6 +1,5 @@
 package com.mkprovedor.service;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,14 +17,12 @@ import com.mkprovedor.model.Cliente;
 import com.mkprovedor.util.jsf.FacesUtil;
 import com.mkprovedor.util.report.ExecutorRelatorio;
 
-import net.sf.jasperreports.engine.JRException;
-
 public class RelatorioService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	public void gerarContrato(FacesContext facesContext, HttpServletResponse response, EntityManager manager,
-			Cliente clienteSelecionado) throws IOException, JRException {
+			Cliente clienteSelecionado) {
 
 		// PARÂMETROS PARA O RELATÓRIO
 		Map<String, Object> parametros = new HashMap<>();
@@ -47,7 +44,7 @@ public class RelatorioService implements Serializable {
 	}
 
 	public void gerarRelatorioHistorico(FacesContext facesContext, HttpServletResponse response, EntityManager manager,
-			Date dataInicio, Date dataFim) throws IOException, JRException {
+			Date dataInicio, Date dataFim) {
 
 		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 

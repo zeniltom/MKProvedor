@@ -99,7 +99,6 @@ public class BoletoPesquisaBean implements Serializable {
 			historicoService.createNew(historico);
 
 			FacesUtil.addInfoMessage(historico.toString());
-			System.out.println(historico.toString());
 		} catch (Exception e) {
 			FacesUtil.addErrorMessage("Erro ao realizar o pagamento da Parcela!");
 			e.printStackTrace();
@@ -108,7 +107,6 @@ public class BoletoPesquisaBean implements Serializable {
 
 	public boolean calcular() {
 		this.troco = 0;
-		this.valorPagoMaior = true;
 
 		if (this.valorJurosEMulta > 0) {
 
@@ -121,8 +119,6 @@ public class BoletoPesquisaBean implements Serializable {
 				valorPagoMaior = false;
 
 		} else {
-
-			valorPagoMaior = false;
 
 			if (this.valorPago >= this.parcelaSelecionada.getValor()) {
 				this.troco = this.valorPago - parcelaSelecionada.getValor();
@@ -149,18 +145,18 @@ public class BoletoPesquisaBean implements Serializable {
 
 	public boolean validacao() {
 		return (this.valorPago == 0 || this.valorPago < this.parcelaSelecionada.getValor()
-				|| this.parcelaSelecionada.getDataPagamento() == null) ? false : true;
+				|| this.parcelaSelecionada.getDataPagamento() == null);
 	}
 
 	public boolean mensalidadeEmDia(Mensalidade mensalidade) {
 		List<Parcela> parcela = null;
 		parcela = parcelaService.findByParcelaVencida(mensalidade);
 
-		return parcela.size() > 0 ? false : true;
+		return !parcela.isEmpty();
 	}
 
 	public boolean parcelaEmDia(Parcela parcela) {
-		return parcela.getDataVencimento().before(new Date()) && parcela.getDataPagamento() == null ? false : true;
+		return parcela.getDataVencimento().before(new Date()) && parcela.getDataPagamento() == null;
 	}
 
 	public void onRowMensalidadeSelect(SelectEvent event) {
@@ -178,7 +174,7 @@ public class BoletoPesquisaBean implements Serializable {
 		Parcela parcela = (Parcela) event.getObject();
 		this.parcelaSelecionada = parcela != null ? parcela : null;
 
-		desativarBtPagar = this.parcelaSelecionada != null && !this.parcelaSelecionada.isSituacao() ? false : true;
+		desativarBtPagar = !(this.parcelaSelecionada != null && !this.parcelaSelecionada.isSituacao());
 	}
 
 	public Cliente getCliente() {

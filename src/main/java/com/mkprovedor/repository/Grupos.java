@@ -37,19 +37,6 @@ public class Grupos implements Serializable {
 	}
 
 	@SuppressWarnings({ "deprecation", "unchecked" })
-	public List<Grupo> filter(Grupo grupo) {
-		Session session = entityManager.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(Grupo.class);
-
-		if (grupo.getNome() != null && !(grupo.getNome().equals("")))
-			criteria.add(Restrictions.ilike("nome", "%" + grupo.getNome() + "%"));
-
-		criteria.addOrder(Order.asc("nome"));
-
-		return criteria.list();
-	}
-
-	@SuppressWarnings({ "deprecation", "unchecked" })
 	public List<Grupo> findByNome(Grupo grupo) {
 		Session session = entityManager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Grupo.class);

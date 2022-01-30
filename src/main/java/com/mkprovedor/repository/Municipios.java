@@ -45,8 +45,7 @@ public class Municipios implements Serializable {
 		if (obj.getId() != 0)
 			criteria.add(Restrictions.eq("id", obj.getId()));
 
-		if (obj.getNome() != null)
-			if (!obj.getNome().equals(""))
+		if (obj.getNome() != null && !obj.getNome().equals(""))
 				criteria.add(Restrictions.ilike("nome", "%" + obj.getNome() + "%"));
 
 		if (obj.getCadastroUnico() != 0)

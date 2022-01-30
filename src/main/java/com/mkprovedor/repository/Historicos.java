@@ -16,6 +16,8 @@ import com.mkprovedor.model.Historico;
 
 public class Historicos implements Serializable {
 
+	private static final String DATA_PAGAMENTO = "dataPagamento";
+
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -48,12 +50,12 @@ public class Historicos implements Serializable {
 		Criteria criteria = session.createCriteria(Historico.class);
 
 		if (dataInicio != null)
-			criteria.add(Restrictions.ge("dataPagamento", dataInicio));
+			criteria.add(Restrictions.ge(DATA_PAGAMENTO, dataInicio));
 
 		if (dataFim != null)
-			criteria.add(Restrictions.le("dataPagamento", dataFim));
+			criteria.add(Restrictions.le(DATA_PAGAMENTO, dataFim));
 
-		criteria.addOrder(Order.asc("dataPagamento"));
+		criteria.addOrder(Order.asc(DATA_PAGAMENTO));
 		criteria.addOrder(Order.asc("valor"));
 
 		return criteria.list();
@@ -65,9 +67,9 @@ public class Historicos implements Serializable {
 		Criteria criteria = session.createCriteria(Historico.class);
 
 		if (dataHoje != null)
-			criteria.add(Restrictions.eq("dataPagamento", dataHoje));
+			criteria.add(Restrictions.eq(DATA_PAGAMENTO, dataHoje));
 
-		criteria.addOrder(Order.asc("dataPagamento"));
+		criteria.addOrder(Order.asc(DATA_PAGAMENTO));
 		criteria.addOrder(Order.asc("valor"));
 
 		return criteria.list();

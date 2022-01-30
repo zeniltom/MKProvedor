@@ -72,7 +72,7 @@ public class EmpregadoCadastroBean implements Serializable {
 		limpar();
 	}
 
-	public void inicializar() throws IOException {
+	public void inicializar() {
 		if (this.empregado == null)
 			limpar();
 		else
@@ -249,8 +249,8 @@ public class EmpregadoCadastroBean implements Serializable {
 		return empregado;
 	}
 
-	public void setEmpregado(Empregado Empregado) {
-		this.empregado = Empregado;
+	public void setEmpregado(Empregado empregado) {
+		this.empregado = empregado;
 	}
 
 	public UsuarioGrupo getUsuarioGrupo() {

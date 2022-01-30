@@ -1,6 +1,5 @@
 package com.mkprovedor.controller;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,8 +22,6 @@ import com.mkprovedor.service.ContratoService;
 import com.mkprovedor.service.HistoricoService;
 import com.mkprovedor.service.RelatorioService;
 import com.mkprovedor.util.jsf.FacesUtil;
-
-import net.sf.jasperreports.engine.JRException;
 
 @Named
 @ViewScoped
@@ -77,8 +74,8 @@ public class RelatorioBean implements Serializable {
 	public double total() {
 		double total = 0;
 
-		for (Historico historico : historicos)
-			total += historico.getValor();
+		for (Historico hist : historicos)
+			total += hist.getValor();
 
 		return total;
 	}
@@ -113,12 +110,11 @@ public class RelatorioBean implements Serializable {
 
 	public void onRowHistoricoSelect(SelectEvent event) {
 		historico = (Historico) event.getObject();
-		System.out.println(historico);
 		this.historicoSelecionado = historico;
 	}
 
-	public void emitir() throws IOException, JRException {
-		if (this.historicos.size() > 0) {
+	public void emitir() {
+		if (!this.historicos.isEmpty()) {
 
 			if (this.dataInicio != null && this.dataFim != null)
 				relatorioService.gerarRelatorioHistorico(this.facesContext, this.response, this.manager,
